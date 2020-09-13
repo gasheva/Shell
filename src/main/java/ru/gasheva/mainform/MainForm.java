@@ -1,32 +1,27 @@
 package ru.gasheva.mainform;
 
-import javax.activation.ActivationDataFlavor;
-import javax.activation.DataHandler;
+import ru.gasheva.controls.ControlInterface;
+
 import javax.swing.*;
-import javax.swing.plaf.FontUIResource;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.dnd.DragSource;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainForm extends JFrame{
     private JPanel mainPanel;
-    private JTabbedPane tabbedPane1;
+    private JTabbedPane tabbedPane;
     private JButton btnDelete;
     private JButton btnEdit;
     private JButton btnAdd;
-    private JTable tblRules;
+    private JTable tblInfo;
     private JPanel manageRulesPanel;
     private JSplitPane spRules;
     private JScrollPane scpRule;
-    private JPanel tbValues;
+    private JTextArea tfTop;
+    private JTextArea tfBottom;
     private JSeparator sepRules;
     private JMenuBar mbMain;
     private JMenu fileMenu;
@@ -37,6 +32,7 @@ public class MainForm extends JFrame{
     private JMenuItem miSave;
     private JMenuItem miBeginCons;
     private TableModel myModel;
+    private ControlInterface control;
 
     public MainForm() {
     }
@@ -51,12 +47,12 @@ public class MainForm extends JFrame{
     }
 
     private void createTable() {
-        tblRules.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tblInfo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         //drag & drop
-        tblRules.setDragEnabled(true);
-        tblRules.setDropMode(DropMode.INSERT_ROWS);
-        tblRules.setTransferHandler(new TableRowTransferHandler(tblRules));
+        tblInfo.setDragEnabled(true);
+        tblInfo.setDropMode(DropMode.INSERT_ROWS);
+        tblInfo.setTransferHandler(new TableRowTransferHandler(tblInfo));
 
         //model
         myModel = new TableModel();
@@ -64,36 +60,53 @@ public class MainForm extends JFrame{
         myModel.addRow(new Object[]{"Rule 2","Rullllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll" +
                 "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll" +
                 "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllleer 2"});
-        tblRules.setModel(myModel);
+        tblInfo.setModel(myModel);
 
         //column size
-        tblRules.getColumnModel().getColumn(0).setMaxWidth(100);
-        tblRules.getColumnModel().getColumn(0).setPreferredWidth(80);
+        tblInfo.getColumnModel().getColumn(0).setMaxWidth(100);
+        tblInfo.getColumnModel().getColumn(0).setPreferredWidth(80);
 
         //fonts
-        tblRules.getTableHeader().setFont(new Font("Verdana", Font.BOLD, 12));
-        tblRules.setForeground(Color.DARK_GRAY);
-        tblRules.setFont(new Font("Verdana", Font.PLAIN, 12));
+        tblInfo.getTableHeader().setFont(new Font("Verdana", Font.BOLD, 12));
+        tblInfo.setForeground(Color.DARK_GRAY);
+        tblInfo.setFont(new Font("Verdana", Font.PLAIN, 12));
 
         //cell renderer
         WrapTableCellRenderer tableCellRenderer = new WrapTableCellRenderer();
-        tblRules.getColumnModel().getColumn(1).setCellRenderer(tableCellRenderer);
-        tblRules.getColumnModel().getColumn(0).setCellRenderer(tableCellRenderer);
+        tblInfo.getColumnModel().getColumn(1).setCellRenderer(tableCellRenderer);
+        tblInfo.getColumnModel().getColumn(0).setCellRenderer(tableCellRenderer);
 
         //sorter
-        tblRules.setAutoCreateRowSorter(false);
+        tblInfo.setAutoCreateRowSorter(false);
 
         //background color
         scpRule.getViewport().setBackground(Color.white);
 
-        //tblRules.updateUI();
-        System.out.println(tblRules.getRowCount());
+        //tblInfo.updateUI();
+        System.out.println(tblInfo.getRowCount());
     }
 
     public void createControls(){
+        tabbedPane.add("Переменные", tabbedPane.getTabComponentAt(0));
+        tabbedPane.add("Домены", tabbedPane.getTabComponentAt(0));
         createTable();
         spRules.setDividerLocation(0.7);
 
+        tabbedPane.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+
+            }
+        });
+
+    }
+    private void tabbedPaneChanged(){
+        //TODO: enum
+        switch (tabbedPane.getSelectedIndex()){
+            case 0: control.changeContol(0); break;
+            case 1: control.changeContol(1); break;
+            case 2: control.changeContol(2); break;
+        }
     }
     private void createJMenuBar(){
         mbMain = new JMenuBar();
@@ -126,6 +139,6 @@ public class MainForm extends JFrame{
     private void createUIComponents() {
         // TODO: place custom component creation code here
         myModel = new TableModel();
-        tblRules = new JTable(myModel);
+        tblInfo = new JTable(myModel);
     }
 }
