@@ -6,9 +6,10 @@ import java.util.List;
 
 public class TableModel extends DefaultTableModel implements Reorderable{
 
-    public TableModel() {
-        addColumn("Правило");
-        addColumn("Описание");
+    public TableModel(String[] columns) {
+        for(String col: columns){
+            addColumn(col);
+        }
     }
 
     @Override

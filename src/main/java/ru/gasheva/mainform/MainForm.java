@@ -1,8 +1,10 @@
 package ru.gasheva.mainform;
 
-import ru.gasheva.controls.ControlInterface;
+import ru.gasheva.controls.MainControl;
+import ru.gasheva.models.ModelInterface;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
@@ -22,6 +24,8 @@ public class MainForm extends JFrame{
     private JScrollPane scpRule;
     private JTextArea tfTop;
     private JTextArea tfBottom;
+    private JPanel prepPanel;
+    private JPanel conclusionPanel;
     private JSeparator sepRules;
     private JMenuBar mbMain;
     private JMenu fileMenu;
@@ -32,9 +36,12 @@ public class MainForm extends JFrame{
     private JMenuItem miSave;
     private JMenuItem miBeginCons;
     private TableModel myModel;
-    private ControlInterface control;
+    private MainControl control;
+    ModelInterface model;
 
-    public MainForm() {
+    public MainForm(MainControl control, ModelInterface model) {
+        this.control = control;
+        this.model = model;
     }
     public void createView(){
         setContentPane(mainPanel);
@@ -42,11 +49,12 @@ public class MainForm extends JFrame{
         setSize(800, 600);
         setLocationRelativeTo(null);
         createJMenuBar();
-        createTable();
+        //initTable();
         setVisible(true);
     }
 
-    private void createTable() {
+    //вызывается один раз при создании формы
+    private void initTable() {
         tblInfo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         //drag & drop
@@ -55,7 +63,7 @@ public class MainForm extends JFrame{
         tblInfo.setTransferHandler(new TableRowTransferHandler(tblInfo));
 
         //model
-        myModel = new TableModel();
+        myModel = new TableModel(new String[]{"Правило","Описание"});
         myModel.addRow(new Object[]{"Rule 1","Rulllllllleer"});
         myModel.addRow(new Object[]{"Rule 2","Rullllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll" +
                 "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll" +
@@ -89,24 +97,28 @@ public class MainForm extends JFrame{
     public void createControls(){
         tabbedPane.add("Переменные", tabbedPane.getTabComponentAt(0));
         tabbedPane.add("Домены", tabbedPane.getTabComponentAt(0));
-        createTable();
+        initTable();
         spRules.setDividerLocation(0.7);
 
+        btnAdd.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                BtnAddClicked();
+            }
+        });
         tabbedPane.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-
+                tabbedPaneChanged();
             }
         });
 
     }
+    private void BtnAddClicked(){
+        control.add(tblInfo.getSelectedRow());
+    }
     private void tabbedPaneChanged(){
-        //TODO: enum
-        switch (tabbedPane.getSelectedIndex()){
-            case 0: control.changeContol(0); break;
-            case 1: control.changeContol(1); break;
-            case 2: control.changeContol(2); break;
-        }
+        control.changeControl(tabbedPane.getSelectedIndex());
     }
     private void createJMenuBar(){
         mbMain = new JMenuBar();
@@ -138,7 +150,31 @@ public class MainForm extends JFrame{
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
-        myModel = new TableModel();
+        myModel = new TableModel(new String[]{"Правило","Описание"});
         tblInfo = new JTable(myModel);
+    }
+
+    public void createModel(String[] columns){
+        myModel = new TableModel(columns);
+    }
+    public void setTableModel(){
+        tblInfo.setModel(myModel);
+    }
+    public void changePrepPanelText(String title){
+        Border border = prepPanel.getBorder();
+        prepPanel.setBorder(BorderFactory.createTitledBorder(border, title));
+    }
+    public void changeConclusionPanelText(String title){
+        Border border = conclusionPanel.getBorder();
+        conclusionPanel.setBorder(BorderFactory.createTitledBorder(border, title));
+    }
+    public void setPrepPanelVisible(boolean isVisible){
+        prepPanel.setVisible(isVisible);
+    }
+    public void setConclusionPanelVisible(boolean isVisible){
+        conclusionPanel.setVisible(isVisible);
+    }
+    public void Dispose(){
+        dispose();
     }
 }
