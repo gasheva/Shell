@@ -54,12 +54,12 @@ public class AddRuleForm extends JDialog {
 
     private void onOK() {
         // add your code here
-        ((RuleControl)control).ok(new String[]{});
+        //((RuleControl)control).ok(new String[]{});
     }
 
     private void onCancel() {
         // add your code here if necessary
-        control.cancel();
+        //control.cancel();
     }
     public void Dispose(){
         dispose();

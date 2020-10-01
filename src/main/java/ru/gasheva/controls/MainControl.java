@@ -1,5 +1,6 @@
 package ru.gasheva.controls;
 
+import ru.gasheva.adddomain.DomainControl;
 import ru.gasheva.addrule.RuleControl;
 import ru.gasheva.mainform.MainForm;
 import ru.gasheva.models.DomainModel;
@@ -25,8 +26,10 @@ public class MainControl {
         view = new MainForm(this);
         view.createView();
         view.createControls();
+
         ruleControl = new RuleControl(ruleModel, view);
-        //domainControl = new DomainControl
+        domainControl = new DomainControl(domainModel, view);
+
         //valuesControl = new
         currentControl = ruleControl;
 
@@ -51,7 +54,7 @@ public class MainControl {
         switch (index){
             case 0: currentControl = ruleControl; break;
             case 1: currentControl = ruleControl; break;//currentControl = valuesControl; break;
-            case 2: currentControl = ruleControl; break;//currentControl = domainControl; break;
+            case 2: currentControl = domainControl; break;
         }
         currentControl.redraw();
     }

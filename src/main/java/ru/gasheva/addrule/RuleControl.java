@@ -21,8 +21,9 @@ public class RuleControl implements ControlInterface {
     //region Methods from MainForm
     @Override
     public void add(int rowIndex) {
-        addView = new AddRuleForm(this);
-        view.createView();
+        //addRuleControl = new AddRuleControl(ruleModel, valueModel, domainModel);
+        //addView = new AddRuleForm(this);
+        //view.createView();
     }
     @Override
     public void edit(String id, String[] values) {
@@ -40,18 +41,18 @@ public class RuleControl implements ControlInterface {
         view.setTableModel();
         view.changePrepPanelText("Посылка");
         view.changeConclusionPanelText("Заключение");
-        view.setPrepPanelVisible(false);
+        view.setPrepPanelVisible(true);
         view.setConclusionPanelVisible(true);
     }
     //endregion
 
-    public void ok(String[] values){
-
-        model.add(rowIndex, values);
-    }
-
-    public void cancel() {
-        view.Dispose();
-    }
+//    public void ok(String[] values){
+//
+//        model.add(rowIndex, values);
+//    }
+//
+//    public void cancel() {
+//        view.Dispose();
+//    }
 
 }
