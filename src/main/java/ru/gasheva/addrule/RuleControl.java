@@ -2,7 +2,6 @@ package ru.gasheva.addrule;
 
 import ru.gasheva.controls.ControlInterface;
 import ru.gasheva.mainform.MainForm;
-import ru.gasheva.models.ModelInterface;
 import ru.gasheva.models.RuleModel;
 
 public class RuleControl implements ControlInterface {
@@ -20,18 +19,18 @@ public class RuleControl implements ControlInterface {
     private int rowIndex;
     //region Methods from MainForm
     @Override
-    public void add(int rowIndex) {
+    public void add() {
         //addRuleControl = new AddRuleControl(ruleModel, valueModel, domainModel);
         //addView = new AddRuleForm(this);
         //view.createView();
     }
     @Override
-    public void edit(String id, String[] values) {
+    public void edit() {
 
     }
 
     @Override
-    public void remove(String id) {
+    public void remove() {
 
     }
 

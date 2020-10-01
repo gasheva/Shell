@@ -3,12 +3,13 @@ package ru.gasheva.adddomain;
 import ru.gasheva.controls.ControlInterface;
 import ru.gasheva.mainform.MainForm;
 import ru.gasheva.models.DomainModel;
+import ru.gasheva.models.classes.Domain;
 
 public class DomainControl implements ControlInterface {
     MainForm view;
     DomainModel domainModel;
-    IDomainControl addDomain;
-    IDomainControl editDomain;
+    ManagerDomainAbstractClass addDomain;
+    ManagerDomainAbstractClass editDomain;
 
     public DomainControl(DomainModel domainModel, MainForm view) {
         this.view = view;
@@ -16,17 +17,23 @@ public class DomainControl implements ControlInterface {
     }
 
     @Override
-    public void add(int rowIndex) {
+    public void add() {
         addDomain = new AddDomainControl (domainModel);
     }
 
     @Override
-    public void edit(String id, String[] values) {
-        //editDomain = new EditDomainControl (domainModel);
+    public void edit() {
+        if(!view.isTblInfoSelectRow()){
+            view.showMessage("Выберите домен!");
+            return;
+        }
+        String domainName = view.getSelectedRowFirstColumnValue();
+        //Domain domain = domainModel.find(domainName); //TODO по идее так, но в данном случае это не нужно
+        editDomain = new EditDomainControl (domainModel, new Domain(domainName));
     }
 
     @Override
-    public void remove(String id) {
+    public void remove() {
 
     }
 

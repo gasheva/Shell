@@ -1,8 +1,8 @@
 package ru.gasheva.controls;
 
 public interface ControlInterface {
-    void add(int rowIndex);
-    void edit(String id, String[] values);
-    void remove(String id);
+    void add();
+    void edit();
+    void remove();
     void redraw();  //перерисовка формы
 }

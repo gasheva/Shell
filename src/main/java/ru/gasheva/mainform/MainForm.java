@@ -100,22 +100,20 @@ public class MainForm extends JFrame{
         initTable();
         spRules.setDividerLocation(0.7);
 
-        btnAdd.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                BtnAddClicked();
-            }
-        });
-        tabbedPane.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                tabbedPaneChanged();
-            }
-        });
+        btnAdd.addActionListener(e -> BtnAddClicked());
+        btnEdit.addActionListener(e->BtnEditClicked());
+        btnDelete.addActionListener(e->BtnDeleteClicked());
+        tabbedPane.addChangeListener(e -> tabbedPaneChanged());
 
     }
     private void BtnAddClicked(){
-        control.add(tblInfo.getSelectedRow());
+        control.add();
+    }
+    private void BtnEditClicked(){
+        control.edit();
+    }
+    private void BtnDeleteClicked(){
+        control.remove();
     }
     private void tabbedPaneChanged(){
         control.changeControl(tabbedPane.getSelectedIndex());
@@ -174,5 +172,16 @@ public class MainForm extends JFrame{
     }
     public void Dispose(){
         dispose();
+    }
+
+    public String getSelectedRowFirstColumnValue() {
+        return (String)tblInfo.getValueAt(tblInfo.getSelectedRow(), 0);
+    }
+
+    public boolean isTblInfoSelectRow() {
+        return tblInfo.getSelectedRow()!=-1;
+    }
+    public void showMessage(String msg) {
+        JOptionPane.showMessageDialog(this, msg);
     }
 }

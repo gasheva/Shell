@@ -31,7 +31,12 @@ public class DomainModel {
     }
 
 
-    public boolean findDomain(Domain domain) {
+    public boolean isDomainExisting(Domain domain) {
         return domains.stream().anyMatch(x->x.getName().equals(domain.getName()));
     }
+    //кол-во доменов с передаваемым именем
+    public int domainCount(Domain domain){
+        return (int)domains.stream().filter(x->x.getName().equals(domain.getName())).count();
+    }
+
 }

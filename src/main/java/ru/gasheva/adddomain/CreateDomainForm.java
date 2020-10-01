@@ -21,13 +21,13 @@ public class CreateDomainForm extends JDialog {
     private JButton btnAddDomainValue;
     private JButton btnEditDomainValue;
     private JScrollPane scpDomainValues;
-    private IDomainControl control;
+    private ManagerDomainAbstractClass control;
     private TableModel myModel;
     
     
 
     
-    public CreateDomainForm(IDomainControl control) {
+    public CreateDomainForm(ManagerDomainAbstractClass control) {
         this.control = control;
     }
     

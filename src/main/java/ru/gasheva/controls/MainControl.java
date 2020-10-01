@@ -35,18 +35,18 @@ public class MainControl {
 
     }
 
-    public void add(int rowIndex) {
-        currentControl.add(rowIndex);
+    public void add() {
+        currentControl.add();
     }
 
 
-    public void update(String id, String[] values) {
-        currentControl.edit(id, values);
+    public void edit() {
+        currentControl.edit();
     }
 
     //или по индексу (номеру строки)?
-    public void remove(String id) {
-        currentControl.remove(id);
+    public void remove() {
+        currentControl.remove();
     }
 
 
