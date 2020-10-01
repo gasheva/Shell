@@ -1,13 +1,11 @@
 package ru.gasheva.addrule;
 
-import ru.gasheva.controls.ControlInterface;
-import ru.gasheva.controls.RuleControl;
 import ru.gasheva.models.ModelInterface;
 
 import javax.swing.*;
 import java.awt.event.*;
 
-public class AddForm extends JDialog {
+public class AddRuleForm extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
@@ -21,17 +19,16 @@ public class AddForm extends JDialog {
     private JButton btnAddConcl;
     private JButton btnDeleteConcl;
     private JButton btnEditConcl;
-    private ModelInterface model;
-    private AddRuleControl control;
+    private RuleControl control;
 
-    public AddForm(AddRuleControl control, ModelInterface model) {
+    public AddRuleForm(RuleControl control) {
         this.control = control;
-        this.model = model;
     }
     public void createView(){
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
+        createContols();
 
         pack();
         setVisible(true);
@@ -57,7 +54,7 @@ public class AddForm extends JDialog {
 
     private void onOK() {
         // add your code here
-        //((RuleControl)control).updateModel(new String[]{});
+        ((RuleControl)control).ok(new String[]{});
     }
 
     private void onCancel() {

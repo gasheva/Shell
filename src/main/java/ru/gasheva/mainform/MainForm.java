@@ -37,11 +37,9 @@ public class MainForm extends JFrame{
     private JMenuItem miBeginCons;
     private TableModel myModel;
     private MainControl control;
-    ModelInterface model;
 
-    public MainForm(MainControl control, ModelInterface model) {
+    public MainForm(MainControl control) {
         this.control = control;
-        this.model = model;
     }
     public void createView(){
         setContentPane(mainPanel);

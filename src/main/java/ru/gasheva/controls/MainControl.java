@@ -1,26 +1,32 @@
 package ru.gasheva.controls;
 
+import ru.gasheva.addrule.RuleControl;
 import ru.gasheva.mainform.MainForm;
+import ru.gasheva.models.DomainModel;
 import ru.gasheva.models.ModelInterface;
-import sun.applet.Main;
+import ru.gasheva.models.RuleModel;
+import ru.gasheva.models.ValueModel;
 
 public class MainControl {
-    ModelInterface ruleModel;
-    ModelInterface domainModel;
-    ModelInterface valuesModel;
+    RuleModel ruleModel;
+    DomainModel domainModel;
+    ValueModel valueModel;
     MainForm view;
     ControlInterface valuesControl;
     ControlInterface domainControl;
     ControlInterface currentControl;
     ControlInterface ruleControl;
 
-    public MainControl(ModelInterface ruleModel) {
-        this.ruleModel = ruleModel;
-        view = new MainForm(this, ruleModel);
+    public MainControl() {
+        ruleModel = new RuleModel();
+        valueModel = new ValueModel();
+        domainModel = new DomainModel();
+
+        view = new MainForm(this);
         view.createView();
         view.createControls();
         ruleControl = new RuleControl(ruleModel, view);
-        //domainControl = new
+        //domainControl = new DomainControl
         //valuesControl = new
         currentControl = ruleControl;
 

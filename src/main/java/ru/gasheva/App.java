@@ -7,7 +7,6 @@ import ru.gasheva.models.RuleModel;
 
 public class App {
     public static void main(String[] args) {
-        ModelInterface ruleModel = new RuleModel();
-        MainControl control = new MainControl(ruleModel);
+        MainControl control = new MainControl();
     }
 }

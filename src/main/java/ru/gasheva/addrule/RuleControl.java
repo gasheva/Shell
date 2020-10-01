@@ -1,15 +1,16 @@
-package ru.gasheva.controls;
+package ru.gasheva.addrule;
 
+import ru.gasheva.controls.ControlInterface;
 import ru.gasheva.mainform.MainForm;
 import ru.gasheva.models.ModelInterface;
+import ru.gasheva.models.RuleModel;
 
 public class RuleControl implements ControlInterface {
-    ModelInterface model;
+    RuleModel model;
     MainForm view;
-    //AddForm addView;
-    //AddControl addControl;
+    AddRuleForm addView;
 
-    public RuleControl(ModelInterface model, MainForm view) {
+    public RuleControl(RuleModel model, MainForm view) {
         this.model = model;
         this.view = view;
         model.init();
@@ -17,15 +18,12 @@ public class RuleControl implements ControlInterface {
 
     //вставка
     private int rowIndex;
+    //region Methods from MainForm
     @Override
     public void add(int rowIndex) {
-        //addControl = new AddRuleControl();    -
-        //addView = new AddForm(this, model);
+        addView = new AddRuleForm(this);
+        view.createView();
     }
-    public void updateModel(String[] values){
-        model.add(rowIndex, values);
-    }
-
     @Override
     public void edit(String id, String[] values) {
 
@@ -45,4 +43,15 @@ public class RuleControl implements ControlInterface {
         view.setPrepPanelVisible(false);
         view.setConclusionPanelVisible(true);
     }
+    //endregion
+
+    public void ok(String[] values){
+
+        model.add(rowIndex, values);
+    }
+
+    public void cancel() {
+        view.Dispose();
+    }
+
 }
