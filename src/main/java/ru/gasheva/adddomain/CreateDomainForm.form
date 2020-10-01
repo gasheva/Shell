@@ -73,14 +73,14 @@
               <text value="Имя домена:"/>
             </properties>
           </component>
-          <scrollpane id="32f83">
+          <scrollpane id="32f83" binding="scpDomainValues">
             <constraints>
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
             <border type="none"/>
             <children>
-              <component id="b8c82" class="javax.swing.JTable" binding="table1" default-binding="true">
+              <component id="b8c82" class="javax.swing.JTable" binding="tblDomainValues">
                 <constraints/>
                 <properties/>
               </component>
@@ -94,7 +94,7 @@
               <text value="Допустимые значения домена:"/>
             </properties>
           </component>
-          <component id="3c220" class="javax.swing.JButton" binding="btnDeleteDomain">
+          <component id="3c220" class="javax.swing.JButton" binding="btnDeleteDomainValue">
             <constraints>
               <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -112,7 +112,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="742cf" class="javax.swing.JTextField" binding="tfDomainNewVal">
+          <component id="742cf" class="javax.swing.JTextField" binding="tfDomainValue">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -123,7 +123,7 @@
               <text value="Ввведите новое значение"/>
             </properties>
           </component>
-          <component id="74747" class="javax.swing.JButton" binding="btnAddDomain">
+          <component id="74747" class="javax.swing.JButton" binding="btnAddDomainValue">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -131,7 +131,7 @@
               <text value="Добавить"/>
             </properties>
           </component>
-          <component id="2abd9" class="javax.swing.JButton" binding="btnEditDomain">
+          <component id="2abd9" class="javax.swing.JButton" binding="btnEditDomainValue">
             <constraints>
               <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>

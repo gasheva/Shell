@@ -11,10 +11,10 @@ public class AddDomainControl implements IDomainControl {
         this.domainModel = domainModel;
 
         view = new CreateDomainForm(this);
+        view.createView();
     }
     public boolean checkDomainValid(Domain domain){
-        domainModel.findDomain(domain);
-        return true;
+        return !domainModel.findDomain(domain);
     }
 
     @Override
@@ -42,16 +42,42 @@ public class AddDomainControl implements IDomainControl {
 
     @Override
     public void addDomainValue() {
+        if(view.isTfDomainValueEmpty()){
+            view.showMessage("Введите новое значение!");
+            return;
+        }
+        if (!view.isDomainValuesUnique(view.getNewDomainValue())){
+            view.showMessage("У домена уже имеется это значение!");
+            return;
+        }
+        view.addTblDomainValueNewRow();
 
     }
 
     @Override
     public void deleteDomainValue() {
-
+        if(!view.isDomainValueSelect()) {
+            view.showMessage("Выберите значение домена!");
+            return;
+        }
+        view.deleteTblDomainValueSelectedRow();
     }
 
     @Override
-    public void transferDomainValue() {
+    public void editDomainValue() {
+        if(!view.isDomainValueSelect()) {
+            view.showMessage("Выберите значение домена!");
+            return;
+        }
+        if(view.isTfDomainValueEmpty()){
+            view.showMessage("Введите новое значение!");
+            return;
+        }
+        if (!view.isDomainValuesUnique(view.getNewDomainValue())){
+            view.showMessage("У домена уже имеется это значение!");
+            return;
+        }
 
+        view.editTblDomainValueSelectedRow();
     }
 }

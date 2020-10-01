@@ -161,13 +161,9 @@ public class MainForm extends JFrame{
         tblInfo.setModel(myModel);
     }
     public void changePrepPanelText(String title){
-//        Border border = prepPanel.getBorder();
-//        prepPanel.setBorder(BorderFactory.createTitledBorder(border, title));
         lblPrep.setText(title);
     }
     public void changeConclusionPanelText(String title){
-//        Border border = conclusionPanel.getBorder();
-//        conclusionPanel.setBorder(BorderFactory.createTitledBorder(border, title));
         lblConcl.setText(title);
     }
     public void setPrepPanelVisible(boolean isVisible){

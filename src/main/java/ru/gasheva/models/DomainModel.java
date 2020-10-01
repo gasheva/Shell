@@ -30,7 +30,8 @@ public class DomainModel {
         domains.get(domains.indexOf(domain)).add(value);
     }
 
-    public void findDomain(Domain domain) {
-        domains.stream().anyMatch(x->x==domain);
+
+    public boolean findDomain(Domain domain) {
+        return domains.stream().anyMatch(x->x.getName().equals(domain.getName()));
     }
 }

@@ -29,7 +29,7 @@ public class TableModel extends DefaultTableModel implements Reorderable{
         }
         return true;
     }
-    //вставка с проверкой уникальности имени правила
+    //TODO вставка с проверкой уникальности имени правила. Действительно ли так?
     public boolean specialInsert(int row, Object[] rowData) {
         if (validRuleName(rowData[0].toString())) insertRow(row, rowData);
         else return false;
