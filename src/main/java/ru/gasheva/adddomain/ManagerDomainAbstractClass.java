@@ -6,12 +6,12 @@ import ru.gasheva.models.classes.Domain;
 abstract public class ManagerDomainAbstractClass {
     DomainModel domainModel;
     CreateDomainForm view;
+    Domain newDomain = null;
 
     public ManagerDomainAbstractClass(DomainModel domainModel) {
         this.domainModel = domainModel;
-
         view = new CreateDomainForm(this);
-        view.createView();
+
     }
     abstract protected boolean isDomainValid(Domain domain);
 
@@ -24,15 +24,15 @@ abstract public class ManagerDomainAbstractClass {
             view.showMessage("Добавьте значения домена!");
             return;
         }
-        Domain domain = view.getNewDomain();
+        newDomain = view.getNewDomain();
         //проверка на уникальность имени
-        if(!isDomainValid(domain))
+        if(!isDomainValid(newDomain))
         {
             view.showMessage("Домен с таким именем уже существует!");
+            newDomain = null;
             return;
         }
-
-        domainModel.add(domain);
+        // domainModel.add(newDomain);
         view.Dispose();
     }
 
@@ -76,5 +76,8 @@ abstract public class ManagerDomainAbstractClass {
         }
 
         view.editTblDomainValueSelectedRow();
+    }
+    public Domain getResult(){
+        return newDomain;
     }
 }

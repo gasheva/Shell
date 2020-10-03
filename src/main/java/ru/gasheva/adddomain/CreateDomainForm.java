@@ -1,5 +1,6 @@
 package ru.gasheva.adddomain;
 
+import ru.gasheva.mainform.IRowReorderable;
 import ru.gasheva.mainform.TableModel;
 import ru.gasheva.mainform.TableRowTransferHandler;
 import ru.gasheva.mainform.WrapTableCellRenderer;
@@ -10,7 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class CreateDomainForm extends JDialog {
+public class CreateDomainForm extends JDialog implements IRowReorderable {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
@@ -71,7 +72,7 @@ public class CreateDomainForm extends JDialog {
         //drag & drop
         tblDomainValues.setDragEnabled(true);
         tblDomainValues.setDropMode(DropMode.INSERT_ROWS);
-        tblDomainValues.setTransferHandler(new TableRowTransferHandler(tblDomainValues));
+        tblDomainValues.setTransferHandler(new TableRowTransferHandler(tblDomainValues, this));
 
         //model
         myModel = new TableModel(new String[]{"Значение домена"});
@@ -172,5 +173,10 @@ public class CreateDomainForm extends JDialog {
 
     public void addTblDomainValueNewRow() {
         myModel.addRow(new Object[]{getNewDomainValue()});
+    }
+
+    @Override
+    public void rowReorder(int from, int to) {
+
     }
 }

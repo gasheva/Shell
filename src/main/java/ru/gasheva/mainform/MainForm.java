@@ -1,7 +1,9 @@
 package ru.gasheva.mainform;
 
 import ru.gasheva.controls.MainControl;
+import ru.gasheva.models.DomainModel;
 import ru.gasheva.models.ModelInterface;
+import ru.gasheva.models.classes.Domain;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -12,7 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
-public class MainForm extends JFrame{
+public class MainForm extends JFrame implements IRowReorderable{
     private JPanel mainPanel;
     private JTabbedPane tabbedPane;
     private JButton btnDelete;
@@ -60,7 +62,7 @@ public class MainForm extends JFrame{
         //drag & drop
         tblInfo.setDragEnabled(true);
         tblInfo.setDropMode(DropMode.INSERT_ROWS);
-        tblInfo.setTransferHandler(new TableRowTransferHandler(tblInfo));
+        tblInfo.setTransferHandler(new TableRowTransferHandler(tblInfo, this));
 
         //model
         myModel = new TableModel(new String[]{"Правило","Описание"});
@@ -68,7 +70,7 @@ public class MainForm extends JFrame{
         myModel.addRow(new Object[]{"Rule 2","Rullllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll" +
                 "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll" +
                 "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllleer 2"});
-        tblInfo.setModel(myModel);
+        setTableModel();
 
         //column size
         tblInfo.getColumnModel().getColumn(0).setMaxWidth(100);
@@ -79,19 +81,11 @@ public class MainForm extends JFrame{
         tblInfo.setForeground(Color.DARK_GRAY);
         tblInfo.setFont(new Font("Verdana", Font.PLAIN, 12));
 
-        //cell renderer
-        WrapTableCellRenderer tableCellRenderer = new WrapTableCellRenderer();
-        tblInfo.getColumnModel().getColumn(1).setCellRenderer(tableCellRenderer);
-        tblInfo.getColumnModel().getColumn(0).setCellRenderer(tableCellRenderer);
-
         //sorter
         tblInfo.setAutoCreateRowSorter(false);
 
         //background color
         scpRule.getViewport().setBackground(Color.white);
-
-        //tblInfo.updateUI();
-        System.out.println(tblInfo.getRowCount());
     }
 
     public void createControls(){
@@ -147,7 +141,6 @@ public class MainForm extends JFrame{
     }
 
     private void createUIComponents() {
-        // TODO: place custom component creation code here
         myModel = new TableModel(new String[]{"Правило","Описание"});
         tblInfo = new JTable(myModel);
     }
@@ -157,6 +150,9 @@ public class MainForm extends JFrame{
     }
     public void setTableModel(){
         tblInfo.setModel(myModel);
+        WrapTableCellRenderer tableCellRenderer = new WrapTableCellRenderer();
+        tblInfo.getColumnModel().getColumn(1).setCellRenderer(tableCellRenderer);
+        tblInfo.getColumnModel().getColumn(0).setCellRenderer(tableCellRenderer);
     }
     public void changePrepPanelText(String title){
         lblPrep.setText(title);
@@ -183,5 +179,40 @@ public class MainForm extends JFrame{
     }
     public void showMessage(String msg) {
         JOptionPane.showMessageDialog(this, msg);
+    }
+
+    public int getSelectedRowIndex() {
+        return tblInfo.getSelectedRow();
+    }
+
+    @Override
+    public void rowReorder(int from, int to) {
+        control.rowReorder(from, to);
+    }
+
+    public String getRowFirstColumnValue(int to) {
+        return (String)myModel.getValueAt(to, 0);
+    }
+
+    public void fillTable(DomainModel domainModel) {
+        for(int i =0; i<domainModel.size(); i++){
+            Domain d = domainModel.getDomain(i);
+            myModel.addRow(new Object[]{d.getName(), d.getDomainValuesInString()});
+        }
+    }
+    public void ChangeRowInTable(int selectedRowIndex, String[] domainString) {
+        for(int i=0; i<myModel.getColumnCount(); i++){
+            myModel.setValueAt(domainString[i], selectedRowIndex, i);
+        }
+        setTableModel();
+    }
+    public void InsertInTable(int selectedRowIndex, String[] domainString) {
+        myModel.insertRow(selectedRowIndex, domainString);
+        setTableModel();
+    }
+
+    public void AddInTable(String[] domainString) {
+        myModel.addRow(domainString);
+        setTableModel();
     }
 }

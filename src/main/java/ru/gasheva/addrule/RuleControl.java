@@ -43,6 +43,11 @@ public class RuleControl implements ControlInterface {
         view.setPrepPanelVisible(true);
         view.setConclusionPanelVisible(true);
     }
+
+    @Override
+    public void rowReorder(int from, int to) {
+
+    }
     //endregion
 
 //    public void ok(String[] values){

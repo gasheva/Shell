@@ -30,9 +30,18 @@ public class Domain {
     public void remove(DomainValue domainValue){
         domainValues.remove(domainValue);
     }
+    public DomainValue getDomainValue(int index){return domainValues.get(index);}
+    public int domainValuesSize(){return domainValues.size();}
+
+    public String getDomainValuesInString(){
+        final String[] values = {""};
+        domainValues.forEach(x-> values[0] +=x.getValue()+" / ");
+        return values[0].trim();
+    }
 
     @Override
     public boolean equals(Object obj) {
         return ((Domain)obj).getName().equals(this.getName());
     }
+
 }

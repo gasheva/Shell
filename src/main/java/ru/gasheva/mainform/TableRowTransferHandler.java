@@ -15,9 +15,11 @@ import java.awt.dnd.DragSource;
 public class TableRowTransferHandler extends TransferHandler {
     private final DataFlavor localObjectFlavor = new ActivationDataFlavor(Integer.class, "application/x-java-Integer;class=java.lang.Integer", "Integer Row Index");
     private JTable           table             = null;
+    private IRowReorderable view;
 
-    public TableRowTransferHandler(JTable table) {
+    public TableRowTransferHandler(JTable table, IRowReorderable view) {
         this.table = table;
+        this.view = view;
     }
 
     @Override
@@ -54,6 +56,7 @@ public class TableRowTransferHandler extends TransferHandler {
                 if (index > rowFrom)
                     index--;
                 target.getSelectionModel().addSelectionInterval(index, index);
+                view.rowReorder(rowFrom, index);
                 return true;
             }
         } catch (Exception e) {
@@ -67,6 +70,7 @@ public class TableRowTransferHandler extends TransferHandler {
         if ((act == TransferHandler.MOVE) || (act == TransferHandler.NONE)) {
             table.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         }
+
     }
 
 }

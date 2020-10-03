@@ -4,11 +4,10 @@ import ru.gasheva.adddomain.DomainControl;
 import ru.gasheva.addrule.RuleControl;
 import ru.gasheva.mainform.MainForm;
 import ru.gasheva.models.DomainModel;
-import ru.gasheva.models.ModelInterface;
 import ru.gasheva.models.RuleModel;
 import ru.gasheva.models.ValueModel;
 
-public class MainControl {
+public class MainControl{
     RuleModel ruleModel;
     DomainModel domainModel;
     ValueModel valueModel;
@@ -57,5 +56,9 @@ public class MainControl {
             case 2: currentControl = domainControl; break;
         }
         currentControl.redraw();
+    }
+
+    public void rowReorder(int from, int to) {
+        currentControl.rowReorder(from, to);
     }
 }

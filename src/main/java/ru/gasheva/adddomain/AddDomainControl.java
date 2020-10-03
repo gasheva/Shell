@@ -7,6 +7,7 @@ public class AddDomainControl extends ManagerDomainAbstractClass {
 
     public AddDomainControl(DomainModel domainModel) {
         super(domainModel);
+        view.createView();
     }
 
     @Override
