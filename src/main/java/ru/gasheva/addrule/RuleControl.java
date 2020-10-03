@@ -48,6 +48,11 @@ public class RuleControl implements ControlInterface {
     public void rowReorder(int from, int to) {
 
     }
+
+    @Override
+    public void tableSelectionValueChanged() {
+
+    }
     //endregion
 
 //    public void ok(String[] values){

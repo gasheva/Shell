@@ -6,4 +6,5 @@ public interface ControlInterface {
     void remove();
     void redraw();  //перерисовка формы
     void rowReorder(int from, int to);
+    void tableSelectionValueChanged();
 }

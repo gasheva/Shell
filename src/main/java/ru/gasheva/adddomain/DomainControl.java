@@ -81,4 +81,13 @@ public class DomainControl implements ControlInterface {
         String id = view.getRowFirstColumnValue(to);
         domainModel.reorder(from, to, id);
     }
+
+    @Override
+    public void tableSelectionValueChanged() {
+        String[] values = view.getRowValues(view.getSelectedRowIndex());
+        values[1] = " " + values[1].replaceAll("/", "\n");
+        view.setTfTopText(" " + values[0]);
+        view.setTfBottomText(values[1]);
+
+    }
 }

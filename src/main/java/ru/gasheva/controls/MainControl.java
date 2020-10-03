@@ -61,4 +61,8 @@ public class MainControl{
     public void rowReorder(int from, int to) {
         currentControl.rowReorder(from, to);
     }
+
+    public void tableSelectionValueChanged() {
+        currentControl.tableSelectionValueChanged();
+    }
 }

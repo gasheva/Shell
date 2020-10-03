@@ -7,8 +7,7 @@ import ru.gasheva.models.classes.Domain;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -66,10 +65,6 @@ public class MainForm extends JFrame implements IRowReorderable{
 
         //model
         myModel = new TableModel(new String[]{"Правило","Описание"});
-        myModel.addRow(new Object[]{"Rule 1","Rulllllllleer"});
-        myModel.addRow(new Object[]{"Rule 2","Rullllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll" +
-                "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll" +
-                "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllleer 2"});
         setTableModel();
 
         //column size
@@ -93,12 +88,19 @@ public class MainForm extends JFrame implements IRowReorderable{
         tabbedPane.add("Домены", tabbedPane.getTabComponentAt(0));
         initTable();
         spRules.setDividerLocation(0.7);
+        tfTop.setEditable(false);
+        tfBottom.setEditable(false);
+
 
         btnAdd.addActionListener(e -> BtnAddClicked());
         btnEdit.addActionListener(e->BtnEditClicked());
         btnDelete.addActionListener(e->BtnDeleteClicked());
         tabbedPane.addChangeListener(e -> tabbedPaneChanged());
+        tblInfo.getSelectionModel().addListSelectionListener(e -> TableSelectionValueChanged());
 
+    }
+    private void TableSelectionValueChanged(){
+        control.tableSelectionValueChanged();
     }
     private void BtnAddClicked(){
         control.add();
@@ -214,5 +216,21 @@ public class MainForm extends JFrame implements IRowReorderable{
     public void AddInTable(String[] domainString) {
         myModel.addRow(domainString);
         setTableModel();
+    }
+
+    public String[] getRowValues(int selectedRowIndex) {
+        String[] values = new String[myModel.getColumnCount()];
+        for(int i=0; i<myModel.getColumnCount(); i++)
+            values[i] = (String)myModel.getValueAt(selectedRowIndex, i);
+        return values;
+    }
+
+
+    public void setTfTopText(String value) {
+        tfTop.setText(value);
+    }
+
+    public void setTfBottomText(String value) {
+        tfBottom.setText(value);
     }
 }
