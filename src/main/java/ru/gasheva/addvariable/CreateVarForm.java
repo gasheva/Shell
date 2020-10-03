@@ -1,4 +1,4 @@
-package ru.gasheva.helpforms;
+package ru.gasheva.addvariable;
 
 import javax.swing.*;
 import java.awt.event.*;

@@ -1,4 +1,4 @@
 package ru.gasheva.models;
 
-public class ValueModel {
+public class VariableModel {
 }

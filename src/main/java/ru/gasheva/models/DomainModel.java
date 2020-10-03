@@ -30,6 +30,7 @@ public class DomainModel {
     public void remove(Domain domain){
         domains.remove(domain);
     }
+    public void remove(String name){domains.remove(getDomain(name));}
     public void removeValue(Domain domain, DomainValue value){
         domains.get(domains.indexOf(domain)).add(value);
     }

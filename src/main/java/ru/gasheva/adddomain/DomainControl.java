@@ -43,8 +43,8 @@ public class DomainControl implements ControlInterface {
             return;
         }
         String domainName = view.getSelectedRowFirstColumnValue();
-        //Domain domain = domainModel.find(domainName); //TODO по идее так, но в данном случае это не нужно
-        editDomain = new EditDomainControl (domainModel, new Domain(domainName));
+        Domain selecredDomain = domainModel.getDomain(domainName); //TODO по идее так, но в данном случае это не нужно
+        editDomain = new EditDomainControl (domainModel, selecredDomain);
         Domain newDomain = editDomain.getResult();
         if (newDomain==null) return;
         //обновляем модель
@@ -61,7 +61,16 @@ public class DomainControl implements ControlInterface {
 
     @Override
     public void remove() {
-
+        if(!view.isTblInfoSelectRow()){
+            view.showMessage("Выберите домен!");
+            return;
+        }
+        String id = view.getSelectedRowFirstColumnValue();
+        //удаляем из модели
+        domainModel.remove(id);
+        view.removeRow(view.getSelectedRowIndex());
+        view.setTfTopText("");
+        view.setTfBottomText("");
     }
 
     @Override
@@ -85,6 +94,7 @@ public class DomainControl implements ControlInterface {
     @Override
     public void tableSelectionValueChanged() {
         String[] values = view.getRowValues(view.getSelectedRowIndex());
+        if (values == null) return;
         values[1] = " " + values[1].replaceAll("/", "\n");
         view.setTfTopText(" " + values[0]);
         view.setTfBottomText(values[1]);

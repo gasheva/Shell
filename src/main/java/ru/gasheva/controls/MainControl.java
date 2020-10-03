@@ -5,12 +5,12 @@ import ru.gasheva.addrule.RuleControl;
 import ru.gasheva.mainform.MainForm;
 import ru.gasheva.models.DomainModel;
 import ru.gasheva.models.RuleModel;
-import ru.gasheva.models.ValueModel;
+import ru.gasheva.models.VariableModel;
 
 public class MainControl{
     RuleModel ruleModel;
     DomainModel domainModel;
-    ValueModel valueModel;
+    VariableModel valueModel;
     MainForm view;
     ControlInterface valuesControl;
     ControlInterface domainControl;
@@ -19,7 +19,7 @@ public class MainControl{
 
     public MainControl() {
         ruleModel = new RuleModel();
-        valueModel = new ValueModel();
+        valueModel = new VariableModel();
         domainModel = new DomainModel();
 
         view = new MainForm(this);

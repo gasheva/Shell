@@ -31,7 +31,8 @@ public class Domain {
         domainValues.remove(domainValue);
     }
     public DomainValue getDomainValue(int index){return domainValues.get(index);}
-    public int domainValuesSize(){return domainValues.size();}
+    public int domainValuesSize(){
+        return domainValues.size();}
 
     public String getDomainValuesInString(){
         final String[] values = {""};

@@ -9,7 +9,7 @@ public class EditDomainControl extends ManagerDomainAbstractClass {
     public EditDomainControl(DomainModel domainModel, Domain domain) {
         super(domainModel);
         oldDomain = domain;
-        view.createView();
+        view.createView(oldDomain);
     }
 
     @Override

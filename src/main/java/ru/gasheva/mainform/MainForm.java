@@ -219,6 +219,7 @@ public class MainForm extends JFrame implements IRowReorderable{
     }
 
     public String[] getRowValues(int selectedRowIndex) {
+        if (selectedRowIndex==-1) return null;
         String[] values = new String[myModel.getColumnCount()];
         for(int i=0; i<myModel.getColumnCount(); i++)
             values[i] = (String)myModel.getValueAt(selectedRowIndex, i);
@@ -232,5 +233,12 @@ public class MainForm extends JFrame implements IRowReorderable{
 
     public void setTfBottomText(String value) {
         tfBottom.setText(value);
+    }
+
+    public void removeRow(int selectedRowIndex) {
+        for(int i=0; i<myModel.getRowCount(); i++)
+            System.out.println("val = "+myModel.getValueAt(i, 0));
+        myModel.removeRow(selectedRowIndex);
+        setTableModel();
     }
 }

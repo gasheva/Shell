@@ -31,8 +31,24 @@ public class CreateDomainForm extends JDialog implements IRowReorderable {
     public CreateDomainForm(ManagerDomainAbstractClass control) {
         this.control = control;
     }
-    
 
+    public void createView(Domain domain) {
+        setContentPane(contentPane);
+        setModal(true);
+        getRootPane().setDefaultButton(buttonOK);
+        createControls();
+
+        tfDomainName.setText(domain.getName());
+
+        for (int i=0; i<domain.domainValuesSize(); i++){
+            myModel.addRow(new Object[]{domain.getDomainValue(i)});
+        }
+        tblDomainValues.setModel(myModel);
+
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
     public void createView() {
         setContentPane(contentPane);
         setModal(true);
@@ -76,9 +92,7 @@ public class CreateDomainForm extends JDialog implements IRowReorderable {
 
         //model
         myModel = new TableModel(new String[]{"Значение домена"});
-        myModel.addRow(new Object[]{"Domain value 1"});
-        myModel.addRow(new Object[]{"Domain value 2"});
-        myModel.addRow(new Object[]{"Domain value 3"});
+        //myModel.addRow(new Object[]{"Domain value 1"});
         tblDomainValues.setModel(myModel);
 
         //fonts
@@ -86,18 +100,11 @@ public class CreateDomainForm extends JDialog implements IRowReorderable {
         tblDomainValues.setForeground(Color.DARK_GRAY);
         tblDomainValues.setFont(new Font("Verdana", Font.PLAIN, 12));
 
-        //cell renderer
-        WrapTableCellRenderer tableCellRenderer = new WrapTableCellRenderer();
-        tblDomainValues.getColumnModel().getColumn(0).setCellRenderer(tableCellRenderer);
-
         //sorter
         tblDomainValues.setAutoCreateRowSorter(false);
 
         //background color
         scpDomainValues.getViewport().setBackground(Color.white);
-
-        //tblDomainValues.updateUI();
-        System.out.println(tblDomainValues.getRowCount());
     }
 
     private void BtnEditDomainValueClicked(){
@@ -126,7 +133,6 @@ public class CreateDomainForm extends JDialog implements IRowReorderable {
     }
 
     private void onOK() {
-        // add your code here
         Domain domain = new Domain();
         domain.setName(tfDomainName.getName());
 
@@ -134,16 +140,13 @@ public class CreateDomainForm extends JDialog implements IRowReorderable {
     }
 
     private void onCancel() {
-        // add your code here if necessary
         control.cancel();
     }
     public void Dispose(){
         dispose();
     }
 
-    public void showMessage(String msg) {
-        JOptionPane.showMessageDialog(this, msg);
-    }
+    public void showMessage(String msg) {JOptionPane.showMessageDialog(this, msg); }
 
     //создаем новый домен
     public Domain getNewDomain() {
@@ -154,9 +157,7 @@ public class CreateDomainForm extends JDialog implements IRowReorderable {
         return newDomain;
     }
 
-    public boolean isDomainValuesEmpty() {
-        return myModel.getRowCount()==0;
-    }
+    public boolean isDomainValuesEmpty() {return myModel.getRowCount()==0;}
     public String getSelectedDomainValue(){return (String)tblDomainValues.getValueAt(tblDomainValues.getSelectedRow(), 0);}
 
     public boolean isDomainValuesUnique(String value) {
@@ -167,13 +168,9 @@ public class CreateDomainForm extends JDialog implements IRowReorderable {
         return true;
     }
 
-    public String getNewDomainValue() {
-        return tfDomainValue.getText().trim();
-    }
+    public String getNewDomainValue() {return tfDomainValue.getText().trim();}
 
-    public void addTblDomainValueNewRow() {
-        myModel.addRow(new Object[]{getNewDomainValue()});
-    }
+    public void addTblDomainValueNewRow() {myModel.addRow(new Object[]{getNewDomainValue()});}
 
     @Override
     public void rowReorder(int from, int to) {
