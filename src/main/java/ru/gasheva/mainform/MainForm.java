@@ -196,11 +196,11 @@ public class MainForm extends JFrame implements IRowReorderable{
         return (String)myModel.getValueAt(to, 0);
     }
 
-    public void fillTable(DomainModel domainModel) {
-        for(int i =0; i<domainModel.size(); i++){
-            Domain d = domainModel.getDomain(i);
-            myModel.addRow(new Object[]{d.getName(), d.getDomainValuesInString()});
+    public void fillTable(ModelInterface model) {
+        for(int i =0; i<model.size(); i++){
+            myModel.addRow(model.getValuesForTable(i));
         }
+
     }
     public void ChangeRowInTable(int selectedRowIndex, String[] strings) {
         for(int i=0; i<myModel.getColumnCount(); i++){

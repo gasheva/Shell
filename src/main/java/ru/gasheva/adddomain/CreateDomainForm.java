@@ -8,6 +8,7 @@ import ru.gasheva.models.classes.Domain;
 import ru.gasheva.models.classes.DomainValue;
 
 import javax.swing.*;
+import javax.swing.event.MouseInputListener;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -41,7 +42,7 @@ public class CreateDomainForm extends JDialog implements IRowReorderable {
         //устанавливаем значения по умолчанию
         tfDomainName.setText(domain.getName());
         for (int i=0; i<domain.domainValuesSize(); i++){
-            myModel.addRow(new Object[]{domain.getDomainValue(i)});
+            myModel.addRow(new Object[]{domain.getDomainValue(i).getValue()});
         }
         tblDomainValues.setModel(myModel);
 
@@ -69,6 +70,33 @@ public class CreateDomainForm extends JDialog implements IRowReorderable {
         btnDeleteDomainValue.addActionListener(e -> BtnDeleteDomainValueClicked());
         btnAddDomainValue.addActionListener(e->BtnAddDomainValueClicked());
         btnEditDomainValue.addActionListener(e->BtnEditDomainValueClicked());
+        tfDomainValue.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                tfDomainValue.setSelectionStart(0);
+                tfDomainValue.setSelectionEnd(tfDomainValue.getText().length());
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
 
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {

@@ -144,7 +144,7 @@
           </component>
         </children>
       </grid>
-      <component id="43e94" class="javax.swing.JTextArea" binding="textArea1" default-binding="true">
+      <component id="43e94" class="javax.swing.JTextArea" binding="tfQuestion">
         <constraints>
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="50"/>
@@ -152,7 +152,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="f8633" class="javax.swing.JLabel" binding="tfQuestion">
+      <component id="f8633" class="javax.swing.JLabel" binding="lblQ">
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>

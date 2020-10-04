@@ -43,8 +43,8 @@ public class DomainControl implements ControlInterface {
             return;
         }
         String domainName = view.getSelectedRowFirstColumnValue();
-        Domain selecredDomain = domainModel.getDomain(domainName); //TODO по идее так, но в данном случае это не нужно
-        editDomain = new EditDomainControl (domainModel, selecredDomain);
+        Domain selectedDomain = domainModel.getDomain(domainName);
+        editDomain = new EditDomainControl (domainModel, selectedDomain);
         Domain newDomain = editDomain.getResult();
         if (newDomain==null) return;
         //обновляем модель
@@ -78,8 +78,8 @@ public class DomainControl implements ControlInterface {
         view.createModel(new String[]{"Имя", "Значения"});
         view.fillTable(domainModel);
         view.setTableModel();
-//        view.changePrepPanelText("Имя домена");
-//        view.changeConclusionPanelText("Значения");
+        view.changePrepPanelText("Имя домена");
+        view.changeConclusionPanelText("Значения");
         view.setPrepPanelVisible(true);
         view.setConclusionPanelVisible(true);
         view.setTfTopText("");

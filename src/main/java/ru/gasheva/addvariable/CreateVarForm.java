@@ -17,8 +17,8 @@ public class CreateVarForm extends JDialog {
     private JRadioButton rbAsk;
     private JRadioButton rbResolve;
     private JRadioButton rbResolveAsk;
-    private JTextArea textArea1;
-    private JLabel tfQuestion;
+    private JTextArea tfQuestion;
+    private JLabel lblQ;
     private JButton btnAddDomain;
     private  ButtonGroup G;
     private ManagerVariableAbstractClass control;

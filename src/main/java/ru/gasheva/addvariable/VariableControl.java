@@ -57,7 +57,9 @@ public class VariableControl implements ControlInterface {
         view.fillTable(variableModel);
         view.setTableModel();
         view.setPrepPanelVisible(true);
-        view.setConclusionPanelVisible(true);
+        view.setConclusionPanelVisible(false);
+        view.changePrepPanelText("Вопрос");
+        view.changeConclusionPanelText("");
         view.setTfTopText("");
         view.setTfBottomText("");
     }
@@ -69,6 +71,9 @@ public class VariableControl implements ControlInterface {
 
     @Override
     public void tableSelectionValueChanged() {
+        String[] values = view.getRowValues(view.getSelectedRowIndex());
+        if (values == null) return;
 
+        view.setTfTopText(" " + variableModel.getVariable(values[0]).getQuestion());
     }
 }
