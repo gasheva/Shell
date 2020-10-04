@@ -78,11 +78,12 @@ public class DomainControl implements ControlInterface {
         view.createModel(new String[]{"Имя", "Значения"});
         view.fillTable(domainModel);
         view.setTableModel();
-        view.changePrepPanelText("Имя домена");
-        view.changeConclusionPanelText("Значения");
+//        view.changePrepPanelText("Имя домена");
+//        view.changeConclusionPanelText("Значения");
         view.setPrepPanelVisible(true);
         view.setConclusionPanelVisible(true);
-
+        view.setTfTopText("");
+        view.setTfBottomText("");
     }
 
     @Override

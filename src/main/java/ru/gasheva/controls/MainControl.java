@@ -2,6 +2,7 @@ package ru.gasheva.controls;
 
 import ru.gasheva.adddomain.DomainControl;
 import ru.gasheva.addrule.RuleControl;
+import ru.gasheva.addvariable.VariableControl;
 import ru.gasheva.mainform.MainForm;
 import ru.gasheva.models.DomainModel;
 import ru.gasheva.models.RuleModel;
@@ -10,16 +11,16 @@ import ru.gasheva.models.VariableModel;
 public class MainControl{
     RuleModel ruleModel;
     DomainModel domainModel;
-    VariableModel valueModel;
+    VariableModel variableModel;
     MainForm view;
-    ControlInterface valuesControl;
+    ControlInterface variableControl;
     ControlInterface domainControl;
     ControlInterface currentControl;
     ControlInterface ruleControl;
 
     public MainControl() {
         ruleModel = new RuleModel();
-        valueModel = new VariableModel();
+        variableModel = new VariableModel();
         domainModel = new DomainModel();
 
         view = new MainForm(this);
@@ -28,8 +29,8 @@ public class MainControl{
 
         ruleControl = new RuleControl(ruleModel, view);
         domainControl = new DomainControl(domainModel, view);
+        variableControl = new VariableControl(view, domainModel, variableModel);
 
-        //valuesControl = new
         currentControl = ruleControl;
 
     }
@@ -52,7 +53,7 @@ public class MainControl{
     public void changeControl(int index) {
         switch (index){
             case 0: currentControl = ruleControl; break;
-            case 1: currentControl = ruleControl; break;//currentControl = valuesControl; break;
+            case 1: currentControl = variableControl; break;
             case 2: currentControl = domainControl; break;
         }
         currentControl.redraw();

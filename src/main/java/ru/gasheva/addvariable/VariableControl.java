@@ -4,6 +4,8 @@ import ru.gasheva.controls.ControlInterface;
 import ru.gasheva.mainform.MainForm;
 import ru.gasheva.models.DomainModel;
 import ru.gasheva.models.VariableModel;
+import ru.gasheva.models.classes.VarType;
+import ru.gasheva.models.classes.Variable;
 
 public class VariableControl implements ControlInterface {
     MainForm view;
@@ -20,7 +22,23 @@ public class VariableControl implements ControlInterface {
 
     @Override
     public void add() {
-
+        addVariable = new AddVariableControl (variableModel, domainModel);
+        Variable newVariable = addVariable.getResult();
+        if (newVariable==null) return;
+        String[] variableString = new String[3];
+        variableString[0] = newVariable.getName();
+        variableString[1] = newVariable.getVarType().toString();
+        variableString[2] = newVariable.getDomain().getName();
+        //добавление в конец
+        if (view.getSelectedRowIndex()==-1){
+            variableModel.add(newVariable);
+            view.AddInTable(variableString);
+        }
+        //вставка
+        else {
+            variableModel.add(view.getSelectedRowIndex(), newVariable);
+            view.InsertInTable(view.getSelectedRowIndex(), variableString);
+        }
     }
 
     @Override
@@ -35,7 +53,13 @@ public class VariableControl implements ControlInterface {
 
     @Override
     public void redraw() {
-
+        view.createModel(new String[]{"Имя", "Тип", "Домен"});
+        view.fillTable(variableModel);
+        view.setTableModel();
+        view.setPrepPanelVisible(true);
+        view.setConclusionPanelVisible(true);
+        view.setTfTopText("");
+        view.setTfBottomText("");
     }
 
     @Override

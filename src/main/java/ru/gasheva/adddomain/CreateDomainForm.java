@@ -38,8 +38,8 @@ public class CreateDomainForm extends JDialog implements IRowReorderable {
         getRootPane().setDefaultButton(buttonOK);
         createControls();
 
+        //устанавливаем значения по умолчанию
         tfDomainName.setText(domain.getName());
-
         for (int i=0; i<domain.domainValuesSize(); i++){
             myModel.addRow(new Object[]{domain.getDomainValue(i)});
         }
@@ -117,8 +117,9 @@ public class CreateDomainForm extends JDialog implements IRowReorderable {
         myModel.setValueAt(tfDomainValue.getText().trim(), tblDomainValues.getSelectedRow(), 0);
         tblDomainValues.setModel(myModel);
     }
-    public boolean isTfDomainValueEmpty(){
-        return tfDomainValue.getText().trim().isEmpty();
+    public boolean isTfDomainValueEmpty(){return tfDomainValue.getText().trim().isEmpty(); }
+    public boolean isTfDomainNameEmpty(){
+        return tfDomainName.getText().trim().isEmpty();
     }
     public boolean isDomainValueSelect(){
         return tblDomainValues.getSelectedRow()!=-1;
@@ -133,8 +134,8 @@ public class CreateDomainForm extends JDialog implements IRowReorderable {
     }
 
     private void onOK() {
-        Domain domain = new Domain();
-        domain.setName(tfDomainName.getName());
+//        Domain domain = new Domain();
+//        domain.setName(tfDomainName.getName());
 
         control.ok();
     }
@@ -156,7 +157,6 @@ public class CreateDomainForm extends JDialog implements IRowReorderable {
         }
         return newDomain;
     }
-
     public boolean isDomainValuesEmpty() {return myModel.getRowCount()==0;}
     public String getSelectedDomainValue(){return (String)tblDomainValues.getValueAt(tblDomainValues.getSelectedRow(), 0);}
 

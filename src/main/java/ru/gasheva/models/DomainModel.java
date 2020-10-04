@@ -34,7 +34,6 @@ public class DomainModel {
     public void removeValue(Domain domain, DomainValue value){
         domains.get(domains.indexOf(domain)).add(value);
     }
-    public void insertValue(int index, Domain domain) {domains.add(index, domain);}
     public Domain getDomain(int index){return domains.get(index);}
     public Domain getDomain(String name){return domains.stream().filter(x->x.getName().equals(name)).findAny().get();}
     public int size(){return domains.size();}
@@ -60,14 +59,14 @@ public class DomainModel {
     }
 
     public void reorder(int from, int to, String id) {
-        Domain d = getDomain(id);
-        if (to>from){
-            domains.remove(from);
-            domains.add(to, d);
-        }
-        if (from>to){
-            domains.add(to, d);
-            domains.remove(from);
-        }
+//        Domain d = getDomain(id);
+//        if (to>from){
+//            domains.remove(from);
+//            domains.add(to, d);
+//        }
+//        if (from>to){
+//            domains.add(to, d);
+//            domains.remove(from);
+//        }
     }
 }

@@ -1,4 +1,47 @@
 package ru.gasheva.models;
 
+import ru.gasheva.models.classes.Variable;
+
+import java.util.LinkedList;
+import java.util.List;
+
 public class VariableModel {
+    List<Variable> variables = new LinkedList<>();
+
+    //region Getter-Setter
+    public void add(Variable var) {
+        variables.add(var);
+    }
+    public Variable getVariable(int index){ return variables.get(index);}
+    public void add(int index, Variable variable){
+        variables.add(index, variable);
+    }
+    public void remove(Variable variable){
+        variables.remove(variable);
+    }
+    public void remove(String name){variables.remove(getVariable(name));}
+    public void insertValue(int index, Variable variable) {variables.add(index, variable);}
+    public Variable getVariable(String name){return variables.stream().filter(x->x.getName().equals(name)).findAny().get();}
+    public int size(){return variables.size();}
+    //endregion
+
+    //кол-во доменов с передаваемым именем
+    public int variableCount(Variable variable){
+        return (int)variables.stream().filter(x->x.equals(variable)).count();
+    }
+
+    public void setDomain(int index, Variable newVariable) {
+        variables.set(index, newVariable);
+    }
+
+    public int getDomainIndex(String name) {
+        for(int i=0; i<variables.size();i++){
+            if (variables.get(i).getName().equals(name))
+                return i;
+        }
+        return -1;
+    }
+
+    public void reorder(int from, int to, String id) {
+    }
 }

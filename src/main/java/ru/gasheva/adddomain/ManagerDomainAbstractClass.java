@@ -16,7 +16,7 @@ abstract public class ManagerDomainAbstractClass {
     abstract protected boolean isDomainValid(Domain domain);
 
     public void ok() {
-        if (view.isTfDomainValueEmpty()){
+        if (view.isTfDomainNameEmpty()){
             view.showMessage("Введите имя домена!");
             return;
         }
