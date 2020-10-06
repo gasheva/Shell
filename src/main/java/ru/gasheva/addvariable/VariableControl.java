@@ -43,12 +43,39 @@ public class VariableControl implements ControlInterface {
 
     @Override
     public void edit() {
+        if(!view.isTblInfoSelectRow()){
+            view.showMessage("Выберите переменную!");
+            return;
+        }
+        String variableName = view.getSelectedRowFirstColumnValue();
+        Variable selectedVariable = variableModel.getVariable(variableName);
+        editVariable = new EditVariableControl (variableModel, domainModel, selectedVariable);
+        Variable newVariable = editVariable.getResult();
+        if (newVariable==null) return;
+        //обновляем модель
+        variableModel.setVariable(variableModel.getVariableIndex(variableName), newVariable);
 
+        //обновляем вьюшку
+        String[] domainString = new String[3];
+        domainString[0] = newVariable.getName();
+        domainString[1] = newVariable.getVarType().toString();
+        domainString[2] = newVariable.getDomain().getName();
+        int selectedRowIndex = view.getSelectedRowIndex();
+        view.ChangeRowInTable(selectedRowIndex, domainString);
     }
 
     @Override
     public void remove() {
-
+        if(!view.isTblInfoSelectRow()){
+            view.showMessage("Выберите переменную!");
+            return;
+        }
+        String id = view.getSelectedRowFirstColumnValue();
+        //удаляем из модели
+        variableModel.remove(id);
+        view.removeRow(view.getSelectedRowIndex());
+        view.setTfTopText("");
+        view.setTfBottomText("");
     }
 
     @Override

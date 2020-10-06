@@ -38,11 +38,11 @@ public class VariableModel implements ModelInterface{
         return (int)variables.stream().filter(x->x.equals(variable)).count();
     }
 
-    public void setDomain(int index, Variable newVariable) {
+    public void setVariable(int index, Variable newVariable) {
         variables.set(index, newVariable);
     }
 
-    public int getDomainIndex(String name) {
+    public int getVariableIndex(String name) {
         for(int i=0; i<variables.size();i++){
             if (variables.get(i).getName().equals(name))
                 return i;
@@ -51,5 +51,9 @@ public class VariableModel implements ModelInterface{
     }
 
     public void reorder(int from, int to, String id) {
+    }
+
+    public boolean isVariableExisting(Variable variable) {
+        return variables.stream().anyMatch(x->x.equals(variable));
     }
 }

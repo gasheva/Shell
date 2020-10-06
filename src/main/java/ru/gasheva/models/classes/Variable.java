@@ -58,4 +58,8 @@ public class Variable {
     //endregion
 
 
+    @Override
+    public boolean equals(Object obj) {
+        return this.getName().equals(((Variable)obj).getName());
+    }
 }

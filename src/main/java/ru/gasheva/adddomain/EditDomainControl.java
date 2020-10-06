@@ -14,7 +14,6 @@ public class EditDomainControl extends ManagerDomainAbstractClass {
 
     @Override
     protected boolean isDomainValid(Domain domain) {
-        //TODO
         //если имя совпадает, то в хранилище уже есть домен с этим именем
         if (domain.equals(oldDomain)){
             return domainModel.domainCount(domain)==1;

@@ -11,7 +11,7 @@ public class AddVariableControl extends ManagerVariableAbstractClass {
     }
 
     @Override
-    protected boolean isVariableValid(Variable domain) {
-        return true;
+    protected boolean isVariableValid(Variable variable) {
+        return !variableModel.isVariableExisting(variable);
     }
 }

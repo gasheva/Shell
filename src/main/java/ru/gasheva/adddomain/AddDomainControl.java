@@ -12,7 +12,6 @@ public class AddDomainControl extends ManagerDomainAbstractClass {
 
     @Override
     protected boolean isDomainValid(Domain domain){
-        System.out.println(domain.getName());
         return !domainModel.isDomainExisting(domain);
     }
 
