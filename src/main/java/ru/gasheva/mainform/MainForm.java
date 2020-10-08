@@ -188,7 +188,7 @@ public class MainForm extends JFrame implements IRowReorderable{
     }
 
     @Override
-    public void rowReorder(int from, int to) {
+    public void rowReorder(int from, int to, JTable table) {
         control.rowReorder(from, to);
     }
 

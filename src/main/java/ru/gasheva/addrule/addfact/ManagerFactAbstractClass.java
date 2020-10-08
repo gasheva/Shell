@@ -40,7 +40,8 @@ public abstract class ManagerFactAbstractClass {
         newFact = new Fact();
         Variable choosingVar = variableModel.getVariable(view.getVariableSelectedName());
         newFact.setVariable(choosingVar);
-        newFact.setDomainValue(new DomainValue(view.getDomainSelectedName()));
+        DomainValue selectedDomainValue = new DomainValue(view.getDomainSelectedName());
+        newFact.setDomainValue(selectedDomainValue);
         view.Dispose();
     }
 

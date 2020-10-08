@@ -126,15 +126,16 @@ public class CreateRuleForm extends JDialog implements IRowReorderable {
 
 
     @Override
-    public void rowReorder(int from, int to) {
-        control.rowReorder(from, to);
-    }
+    public void rowReorder(int from, int to, JTable table) {
+        if (table==tblConclusion) control.rowReorderConclusions(from, to);
+        if (table==tblPreposition) control.rowReorderConditions(from, to);
+        }
 
     public void addCondition(String condition) {
         myModelConditions.addRow(new Object[]{condition});
     }
     public void addConclusion(String conclusion) {
-        myModelConditions.addRow(new Object[]{conclusion});
+        myModelConclusions.addRow(new Object[]{conclusion});
     }
 
     public String getConditionRowIndex(int to) {
