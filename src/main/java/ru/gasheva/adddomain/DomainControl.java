@@ -56,6 +56,10 @@ public class DomainControl implements ControlInterface {
         domainString[1] = newDomain.getDomainValuesInString();
         int selectedRowIndex = view.getSelectedRowIndex();
         view.ChangeRowInTable(selectedRowIndex, domainString);
+        view.setTfTopText(domainString[0]);
+
+        String values = " " + newDomain.getDomainValuesInString().replaceAll("/", "\n");
+        view.setTfBottomText(values);
     }
 
 

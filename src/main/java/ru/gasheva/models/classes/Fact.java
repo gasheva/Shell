@@ -2,11 +2,41 @@ package ru.gasheva.models.classes;
 
 //x = ...
 public class Fact {
-//    int id;
+    int id;
 //    int id_variable;
 //    int id_domain_value;
     Variable variable;
-    Domain domain;
+    DomainValue domainValue;
+
+    //region Getter-Setter
+    public Variable getVariable() {
+        return variable;
+    }
+
+    public void setVariable(Variable variable) {
+        this.variable = variable;
+    }
+
+    public DomainValue getDomainValue() {
+        return domainValue;
+    }
+
+    public void setDomainValue(DomainValue domain) {
+        this.domainValue = domainValue;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    //endregion
 
 
+    @Override
+    public String toString(){
+        return variable.getName()+"="+domainValue.getValue();
+    }
 }

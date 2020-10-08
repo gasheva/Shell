@@ -32,7 +32,6 @@ abstract public class ManagerDomainAbstractClass {
             newDomain = null;
             return;
         }
-        // domainModel.add(newDomain);
         view.Dispose();
     }
 

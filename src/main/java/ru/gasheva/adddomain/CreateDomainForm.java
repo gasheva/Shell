@@ -162,9 +162,6 @@ public class CreateDomainForm extends JDialog implements IRowReorderable {
     }
 
     private void onOK() {
-//        Domain domain = new Domain();
-//        domain.setName(tfDomainName.getName());
-
         control.ok();
     }
 

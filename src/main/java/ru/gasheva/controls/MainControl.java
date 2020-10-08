@@ -27,7 +27,7 @@ public class MainControl{
         view.createView();
         view.createControls();
 
-        ruleControl = new RuleControl(ruleModel, view);
+        ruleControl = new RuleControl(ruleModel, view, domainModel, variableModel);
         domainControl = new DomainControl(domainModel, view);
         variableControl = new VariableControl(view, domainModel, variableModel);
 

@@ -2,27 +2,29 @@ package ru.gasheva.addrule;
 
 import ru.gasheva.controls.ControlInterface;
 import ru.gasheva.mainform.MainForm;
+import ru.gasheva.models.DomainModel;
 import ru.gasheva.models.RuleModel;
+import ru.gasheva.models.VariableModel;
 
 public class RuleControl implements ControlInterface {
-    RuleModel model;
+    RuleModel ruleModel;
     MainForm view;
-    AddRuleForm addView;
+    DomainModel domainModel;
+    VariableModel variableModel;
+    ManagerRuleAbstractClass addRuleControl;
+    ManagerRuleAbstractClass editRuleControl;
 
-    public RuleControl(RuleModel model, MainForm view) {
-        this.model = model;
+    public RuleControl(RuleModel model, MainForm view, DomainModel domainModel, VariableModel variableModel) {
+        this.ruleModel = model;
         this.view = view;
-        model.init();
+        this.domainModel = domainModel;
+        this.variableModel = variableModel;
     }
 
-    //вставка
-    private int rowIndex;
-    //region Methods from MainForm
     @Override
     public void add() {
-        //addRuleControl = new AddRuleControl(ruleModel, valueModel, domainModel);
-        //addView = new AddRuleForm(this);
-        //view.createView();
+        addRuleControl = new AddRuleControl(variableModel, domainModel, ruleModel);
+
     }
     @Override
     public void edit() {
@@ -53,15 +55,4 @@ public class RuleControl implements ControlInterface {
     public void tableSelectionValueChanged() {
 
     }
-    //endregion
-
-//    public void ok(String[] values){
-//
-//        model.add(rowIndex, values);
-//    }
-//
-//    public void cancel() {
-//        view.Dispose();
-//    }
-
 }
