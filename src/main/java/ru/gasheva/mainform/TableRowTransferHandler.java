@@ -56,7 +56,7 @@ public class TableRowTransferHandler extends TransferHandler {
                 if (index > rowFrom)
                     index--;
                 target.getSelectionModel().addSelectionInterval(index, index);
-                view.rowReorder(rowFrom, index);
+                view.rowReorder(rowFrom, index, table);
                 return true;
             }
         } catch (Exception e) {

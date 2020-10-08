@@ -21,7 +21,7 @@ public class Fact {
         return domainValue;
     }
 
-    public void setDomainValue(DomainValue domain) {
+    public void setDomainValue(DomainValue domainValue) {
         this.domainValue = domainValue;
     }
 
@@ -33,7 +33,6 @@ public class Fact {
         this.id = id;
     }
     //endregion
-
 
     @Override
     public String toString(){

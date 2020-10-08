@@ -198,7 +198,7 @@ public class CreateDomainForm extends JDialog implements IRowReorderable {
     public void addTblDomainValueNewRow() {myModel.addRow(new Object[]{getNewDomainValue()});}
 
     @Override
-    public void rowReorder(int from, int to) {
+    public void rowReorder(int from, int to, JTable tblDomainValues) {
 
     }
 }
