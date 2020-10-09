@@ -1,5 +1,7 @@
 package ru.gasheva.models.classes;
 
+import ru.gasheva.addrule.addfact.ManagerFactAbstractClass;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -74,5 +76,29 @@ public class Rule {
         rule[0] = rule[0].substring(0, rule[0].length()-2);
         rule[0] = rule[0].trim();
         return rule[0];
+    }
+
+    public void setConclusion(int id, Fact newFact) {
+        conclutions.set(id, newFact);
+    }
+
+    public void setCondition(int id, Fact newFact) {
+        conditions.set(id, newFact);
+    }
+
+    public void removeCondition(int id) {
+        deleteFact(id, conditions);
+    }
+
+    private void deleteFact(int id, List<Fact>facts){
+        facts.remove(id);
+        for(int i=id; i<facts.size(); i++){
+            Fact f = facts.get(i);
+            f.setId(i);
+            facts.set(i, f);
+        }
+    }
+    public void removeConclusion(int id) {
+        deleteFact(id, conclutions);
     }
 }

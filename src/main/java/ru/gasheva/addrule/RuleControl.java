@@ -45,12 +45,39 @@ public class RuleControl implements ControlInterface {
     }
     @Override
     public void edit() {
+        if(!view.isTblInfoSelectRow()){
+            view.showMessage("Выберите правило!");
+            return;
+        }
+        String ruleName = view.getSelectedRowFirstColumnValue();
+        Rule selectedRule = ruleModel.getRule(ruleName);
+        editRuleControl = new EditRuleControl(variableModel,domainModel, ruleModel, selectedRule);
+        Rule newRule = editRuleControl.getResult();
+        if (newRule==null) return;
+        //обновляем модель
+        ruleModel.setRule(variableModel.getVariableIndex(ruleName), newRule);
 
+        //обновляем вьюшку
+        String[] string = new String[2];
+        string[0] = newRule.getName();
+        string[1] = newRule.getRuleToString();
+
+        int selectedRowIndex = view.getSelectedRowIndex();
+        view.ChangeRowInTable(selectedRowIndex, string);
     }
 
     @Override
     public void remove() {
-
+        if(!view.isTblInfoSelectRow()){
+            view.showMessage("Выберите правило!");
+            return;
+        }
+        String id = view.getSelectedRowFirstColumnValue();
+        //удаляем из модели
+        ruleModel.remove(id);
+        view.removeRow(view.getSelectedRowIndex());
+        view.setTfTopText("");
+        view.setTfBottomText("");
     }
 
     @Override

@@ -1,19 +1,22 @@
 package ru.gasheva.addrule;
 
 import ru.gasheva.addrule.addfact.AddFactControl;
+import ru.gasheva.addrule.addfact.EditFactControl;
 import ru.gasheva.addrule.addfact.ManagerFactAbstractClass;
 import ru.gasheva.models.DomainModel;
 import ru.gasheva.models.RuleModel;
 import ru.gasheva.models.VariableModel;
 import ru.gasheva.models.classes.Fact;
 import ru.gasheva.models.classes.Rule;
+import ru.gasheva.models.classes.Variable;
 
 public abstract class ManagerRuleAbstractClass {
     protected VariableModel variableModel;
     protected DomainModel domainModel;
     protected RuleModel ruleModel;
     protected CreateRuleForm view;
-    private Rule newRule;
+    protected Rule newRule;
+
 
     public ManagerRuleAbstractClass(VariableModel variableModel, DomainModel domainModel, RuleModel ruleModel) {
         this.variableModel = variableModel;
@@ -68,11 +71,49 @@ public abstract class ManagerRuleAbstractClass {
     }
 
     public void rowReorderConclusions(int from, int to) {
-        String id = view.getConditionRowIndex(to);
         newRule.swapConclusions(from, to);
     }
     public void rowReorderConditions(int from, int to) {
-        String id = view.getConditionRowIndex(to);
         newRule.swapConditions(from, to);
+    }
+
+    public void editCondition() {
+        if(!view.isTblConditionSelectRow()){
+            view.showMessage("Выберите предпосылку!");
+            return;
+        }
+        int id = view.getConditionRowIndex();
+        Fact fact = newRule.getCondition(id);
+        ManagerFactAbstractClass editFact = new EditFactControl(domainModel, variableModel, fact);
+        Fact newFact = editFact.getResult();
+        newFact.setId(id);
+        //обновляем правило
+        newRule.setCondition(id, newFact);
+
+        //обновляем вьюшку
+        view.setTblConditionRow(id, new String[]{newFact.toString()});
+    }
+
+    public void editConclusion(){
+        if(!view.isTblConclusionSelectRow()){
+            view.showMessage("Выберите заключение!");
+            return;
+        }
+    }
+
+    public void removeConclusion(){
+        int id = view.getConclusionRowIndex();
+        //удаляем из модели
+        newRule.removeConclusion(id);
+        //удаляем из вьюшки
+        view.removeRowFromConclusions(id);
+    }
+
+    public void removeCondition() {
+        int id = view.getConditionRowIndex();
+        //удаляем из модели
+        newRule.removeCondition(id);
+        //удаляем из вьюшки
+        view.removeRowFromConditions(id);
     }
 }

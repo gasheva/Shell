@@ -6,6 +6,7 @@ import ru.gasheva.mainform.TableRowTransferHandler;
 import ru.gasheva.models.DomainModel;
 import ru.gasheva.models.RuleModel;
 import ru.gasheva.models.VariableModel;
+import ru.gasheva.models.classes.Rule;
 
 import javax.swing.*;
 import java.awt.*;
@@ -49,6 +50,22 @@ public class CreateRuleForm extends JDialog implements IRowReorderable {
         pack();
         setVisible(true);
     }
+    public void createView(Rule oldRule){
+        setContentPane(contentPane);
+        setModal(true);
+        getRootPane().setDefaultButton(buttonOK);
+        createControls();
+        tfName.setText(oldRule.getName());
+        for(int i=0; i<oldRule.conditionsSize();i++){
+            myModelConditions.addRow(new Object[]{oldRule.getCondition(i)});
+        }
+        for(int i=0; i<oldRule.conclusionsSize();i++){
+            myModelConclusions.addRow(new Object[]{oldRule.getConclusion(i)});
+        }
+
+        pack();
+        setVisible(true);
+    }
     private void createControls(){
         //background color
         scpConclusion.getViewport().setBackground(Color.white);
@@ -72,6 +89,8 @@ public class CreateRuleForm extends JDialog implements IRowReorderable {
 
         btnAddConcl.addActionListener(e->btnAddConclClicked());
         btnAddPrep.addActionListener(e->btnAddPrepClicked());
+        btnEditConcl.addActionListener(e->btnEditConclClicked());
+        btnEditPrep.addActionListener(e->btnEditPrepClicked());
         btnDeleteConcl.addActionListener(e->btnDeleteConclClicked());
         btnDeletePrep.addActionListener(e->btnDeletePrepClicked());
     }
@@ -94,10 +113,12 @@ public class CreateRuleForm extends JDialog implements IRowReorderable {
         //sorter
         table.setAutoCreateRowSorter(false);
     }
+    private void btnEditPrepClicked(){control.editCondition();}
+    private void btnEditConclClicked(){control.editConclusion();}
     private void btnAddConclClicked(){control.addConclusion();}
     private void btnAddPrepClicked(){control.addCondition();}
-    private void btnDeleteConclClicked(){}
-    private void btnDeletePrepClicked(){}
+    private void btnDeleteConclClicked(){control.removeConclusion();}
+    private void btnDeletePrepClicked(){control.removeCondition();}
 
     private void onOK() {
         control.ok();
@@ -137,7 +158,32 @@ public class CreateRuleForm extends JDialog implements IRowReorderable {
         myModelConclusions.addRow(new Object[]{conclusion});    //TODO: забавно, но здесь я не назначаю модель для таблицы
     }
 
-    public String getConditionRowIndex(int to) {
-        return (String)myModelConditions.getValueAt(to, 0);
+    public int getConditionRowIndex() {
+        return tblPreposition.getSelectedRow();
+    }
+    public int getConclusionRowIndex() {
+        return tblConclusion.getSelectedRow();
+    }
+
+    public boolean isTblConditionSelectRow() {
+        return tblPreposition.getSelectedRowCount()>0;
+    }
+    public boolean isTblConclusionSelectRow() {
+        return tblConclusion.getSelectedRowCount()>0;
+    }
+
+    public void setTblConditionRow(int id, String[] strings) {
+        myModelConditions.setValueAt(strings[0], id, 0);
+    }
+    public void setTblConclusionRow(int id, String[] strings) {
+        myModelConclusions.setValueAt(strings[0], id, 0);
+    }
+
+    public void removeRowFromConditions(int id) {
+        myModelConditions.removeRow(id);
+    }
+
+    public void removeRowFromConclusions(int id) {
+        myModelConclusions.removeRow(id);
     }
 }
