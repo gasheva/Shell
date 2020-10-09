@@ -78,6 +78,8 @@ public class CreateVarForm extends JDialog {
 
         buttonOK.addActionListener(e -> onOK());
         buttonCancel.addActionListener(e -> onCancel());
+        btnAddDomain.addActionListener(e->BtnAddDomainClicked());
+
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -85,8 +87,9 @@ public class CreateVarForm extends JDialog {
             }
         });
         contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        contentPane.registerKeyboardAction(e -> BtnAddDomainClicked(), KeyStroke.getKeyStroke(KeyEvent.VK_INSERT, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-        btnAddDomain.addActionListener(e->BtnAddDomainClicked());
+
     }
 
     private void BtnAddDomainClicked(){control.addDomain();}

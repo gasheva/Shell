@@ -97,6 +97,7 @@ public class MainForm extends JFrame implements IRowReorderable{
         btnDelete.addActionListener(e->BtnDeleteClicked());
         tabbedPane.addChangeListener(e -> tabbedPaneChanged());
         tblInfo.getSelectionModel().addListSelectionListener(e -> TableSelectionValueChanged());
+        mainPanel.registerKeyboardAction(e -> BtnAddClicked(), KeyStroke.getKeyStroke(KeyEvent.VK_INSERT, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
     }
     private void TableSelectionValueChanged(){

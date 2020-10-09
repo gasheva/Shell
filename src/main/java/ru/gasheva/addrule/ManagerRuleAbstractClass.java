@@ -8,8 +8,6 @@ import ru.gasheva.models.VariableModel;
 import ru.gasheva.models.classes.Fact;
 import ru.gasheva.models.classes.Rule;
 
-import javax.swing.*;
-
 public abstract class ManagerRuleAbstractClass {
     protected VariableModel variableModel;
     protected DomainModel domainModel;
@@ -52,7 +50,7 @@ public abstract class ManagerRuleAbstractClass {
         ManagerFactAbstractClass addFact = new AddFactControl(domainModel, variableModel);
         Fact newFact = addFact.getResult();
         if (newFact==null) return;
-        newFact.setId(newRule.conclutionsSize());
+        newFact.setId(newRule.conclusionsSize());
         // добавляем в правило
         newRule.addConclusion(newFact);
         // обновляем форму
@@ -75,10 +73,10 @@ public abstract class ManagerRuleAbstractClass {
 
     public void rowReorderConclusions(int from, int to) {
         String id = view.getConditionRowIndex(to);
-        //domainModel.reorder(from, to, id); //TODO reorder domain values
+        newRule.swapConclusions(from, to);
     }
     public void rowReorderConditions(int from, int to) {
         String id = view.getConditionRowIndex(to);
-        //domainModel.reorder(from, to, id); //TODO reorder domain values
+        newRule.swapConditions(from, to);
     }
 }

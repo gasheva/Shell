@@ -43,10 +43,24 @@ public class Rule {
     public void addConclusion(Fact fact){conclutions.add(fact);}
     public void addConclusion(int index, Fact fact){conclutions.add(index, fact);}
     public Fact getConclusion(int index){return conclutions.get(index);}
-    public int conclutionsSize(){return conclutions.size();}
+    public int conclusionsSize(){return conclutions.size();}
 
     @Override
     public boolean equals(Object obj) {
         return ((Rule)obj).getName().equals(this.getName());
+    }
+
+    public void swapFacts(int from, int to, List<Fact> facts){
+        Fact f = facts.get(from);
+        if (from==to) return;
+        facts.remove(from);
+        facts.add(to, f);
+    }
+    public void swapConditions(int from, int to) {
+        swapFacts(from, to, conditions);
+    }
+
+    public void swapConclusions(int from, int to) {
+        swapFacts(from, to, conclutions);
     }
 }

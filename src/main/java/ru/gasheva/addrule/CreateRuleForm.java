@@ -84,7 +84,6 @@ public class CreateRuleForm extends JDialog implements IRowReorderable {
         table.setDropMode(DropMode.INSERT_ROWS);
         table.setTransferHandler(new TableRowTransferHandler(table, this));
 
-        //myModel.addRow(new Object[]{"Domain value 1"});
         table.setModel(model);
 
         //fonts
@@ -129,13 +128,13 @@ public class CreateRuleForm extends JDialog implements IRowReorderable {
     public void rowReorder(int from, int to, JTable table) {
         if (table==tblConclusion) control.rowReorderConclusions(from, to);
         if (table==tblPreposition) control.rowReorderConditions(from, to);
-        }
+    }
 
     public void addCondition(String condition) {
         myModelConditions.addRow(new Object[]{condition});
     }
     public void addConclusion(String conclusion) {
-        myModelConclusions.addRow(new Object[]{conclusion});
+        myModelConclusions.addRow(new Object[]{conclusion});    //TODO: забавно, но здесь я не назначаю модель для таблицы
     }
 
     public String getConditionRowIndex(int to) {
