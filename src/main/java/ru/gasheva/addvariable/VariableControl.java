@@ -92,9 +92,7 @@ public class VariableControl implements ControlInterface {
     }
 
     @Override
-    public void rowReorder(int from, int to) {
-
-    }
+    public void rowReorder(int from, int to) {}
 
     @Override
     public void tableSelectionValueChanged() {

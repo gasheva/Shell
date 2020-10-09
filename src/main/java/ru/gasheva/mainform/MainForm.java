@@ -66,11 +66,6 @@ public class MainForm extends JFrame implements IRowReorderable{
         //model
         myModel = new TableModel(new String[]{"Правило","Описание"});
         setTableModel();
-
-        //column size
-        tblInfo.getColumnModel().getColumn(0).setMaxWidth(100);
-        tblInfo.getColumnModel().getColumn(0).setPreferredWidth(80);
-
         //fonts
         tblInfo.getTableHeader().setFont(new Font("Verdana", Font.BOLD, 12));
         tblInfo.setForeground(Color.DARK_GRAY);
@@ -156,6 +151,10 @@ public class MainForm extends JFrame implements IRowReorderable{
         WrapTableCellRenderer tableCellRenderer = new WrapTableCellRenderer();
         tblInfo.getColumnModel().getColumn(1).setCellRenderer(tableCellRenderer);
         tblInfo.getColumnModel().getColumn(0).setCellRenderer(tableCellRenderer);
+
+        //column size
+        tblInfo.getColumnModel().getColumn(0).setMaxWidth(100);
+        tblInfo.getColumnModel().getColumn(0).setPreferredWidth(80);
     }
     public void changePrepPanelText(String title){
         lblPrep.setText(title);

@@ -68,15 +68,5 @@ public class DomainModel implements ModelInterface {
         return -1;
     }
 
-    public void reorder(int from, int to, String id) {
-//        Domain d = getDomain(id);
-//        if (to>from){
-//            domains.remove(from);
-//            domains.add(to, d);
-//        }
-//        if (from>to){
-//            domains.add(to, d);
-//            domains.remove(from);
-//        }
-    }
+    public void reorder(int from, int to, String id) {}
 }

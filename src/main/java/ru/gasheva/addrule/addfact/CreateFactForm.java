@@ -42,7 +42,7 @@ public class CreateFactForm extends JDialog {
         }
 
 
-        pack();
+        setSize(400, 200);
         setLocationRelativeTo(null);
         setVisible(true);
     }

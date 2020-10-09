@@ -2,6 +2,7 @@ package ru.gasheva.models.classes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Rule {
     //int id;
@@ -62,5 +63,16 @@ public class Rule {
 
     public void swapConclusions(int from, int to) {
         swapFacts(from, to, conclutions);
+    }
+
+    public String getRuleToString() {
+        final String[] rule = {"IF "};
+        conditions.forEach(x-> rule[0] +=x.toString()+" AND ");
+        rule[0] = rule[0].substring(0, rule[0].length()-4);
+        rule[0]+="THEN ";
+        conclutions.forEach(x-> rule[0] +=x.toString()+", ");
+        rule[0] = rule[0].substring(0, rule[0].length()-2);
+        rule[0] = rule[0].trim();
+        return rule[0];
     }
 }

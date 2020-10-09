@@ -4,7 +4,6 @@ import ru.gasheva.models.classes.Rule;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class RuleModel  implements ModelInterface{
     List<Rule> rules;
@@ -13,28 +12,32 @@ public class RuleModel  implements ModelInterface{
     }
 
 
-    public void add(int index, String[] values) {
-        Rule newRule = new Rule(values[0]);
-        newRule.setOrder(index);
-        rules.add(newRule);
+    public void add(Rule rule) {
+        rules.add(rule);
     }
-
-    public void update(String id, String newValue) {
-        //rules.set(id, ) имя, значение порядок
+    public void add(int index, Rule rule) {
+        rules.add(index, rule);
     }
-
-    public void remove(String name) {
-        Optional ruleToRemove = rules.stream().filter(x->x.getName()==name).findAny();
-        rules.remove(ruleToRemove.get());   //todo - add ifPresent() проверку на null
-    }
+    public void setRule(int index, Rule newRule) {rules.set(index, newRule);}
+    public void remove(String name) {rules.remove(getRule(name));}
+    public Rule getRule(String name){return rules.stream().filter(x->x.getName().equals(name)).findAny().get();}
+    public Rule getRule(int index){return rules.get(index);}
 
     @Override
     public int size() {
-        return 0;
+        return rules.size();
     }
 
     @Override
     public String[] getValuesForTable(int index) {
-        return new String[0];
+        Rule r = getRule(index);
+        return new String[]{r.getName(), r.getRuleToString()};
+    }
+
+    public void swapRules(int from, int to){
+        if (from==to) return;
+        Rule r = rules.get(from);
+        rules.remove(from);
+        rules.add(to, r);
     }
 }

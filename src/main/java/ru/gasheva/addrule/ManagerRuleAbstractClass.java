@@ -26,25 +26,21 @@ public abstract class ManagerRuleAbstractClass {
     public void ok(){
         if(view.isNameEmpty()){
             view.showMessage("Введите имя правила!");
-            newRule = null;
             return;
         }
         if (!view.hasConclusions()){
             view.showMessage("Добавьте заключение!");
-            newRule = null;
             return;
         }
         if (!view.hasConditions()){
             view.showMessage("Добавьте предпосылку!");
-            newRule = null;
             return;
         }
-        newRule = new Rule();
         newRule.setName(view.getRuleName());
         view.Dispose();
     }
 
-    public void cancel(){view.Dispose();}
+    public void cancel(){newRule = null; view.Dispose();}
 
     public void addConclusion(){
         ManagerFactAbstractClass addFact = new AddFactControl(domainModel, variableModel);
