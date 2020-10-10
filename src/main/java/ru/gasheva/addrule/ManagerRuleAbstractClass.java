@@ -40,6 +40,12 @@ public abstract class ManagerRuleAbstractClass {
             return;
         }
         newRule.setName(view.getRuleName());
+        //проверка на уникальность имени
+        if(!isRuleValid(newRule))
+        {
+            view.showMessage("Переменная с таким именем уже существует!");
+            return;
+        }
         view.Dispose();
     }
 
@@ -99,6 +105,17 @@ public abstract class ManagerRuleAbstractClass {
             view.showMessage("Выберите заключение!");
             return;
         }
+        int id = view.getConclusionRowIndex();
+        Fact fact = newRule.getConclusion(id);
+        ManagerFactAbstractClass editFact = new EditFactControl(domainModel, variableModel, fact);
+        Fact newFact = editFact.getResult();
+        if(newFact==null) return;
+        newFact.setId(id);
+        //обновляем правило
+        newRule.setConclusion(id, newFact);
+
+        //обновляем вьюшку
+        view.setTblConclusionRow(id, new String[]{newFact.toString()});
     }
 
     public void removeConclusion(){
@@ -116,4 +133,5 @@ public abstract class ManagerRuleAbstractClass {
         //удаляем из вьюшки
         view.removeRowFromConditions(id);
     }
+    abstract protected boolean isRuleValid(Rule rule);
 }

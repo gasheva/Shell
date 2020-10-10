@@ -62,6 +62,9 @@ public class VariableControl implements ControlInterface {
         domainString[2] = newVariable.getDomain().getName();
         int selectedRowIndex = view.getSelectedRowIndex();
         view.ChangeRowInTable(selectedRowIndex, domainString);
+
+        String values = " " + newVariable.getQuestion();
+        view.setTfTopText(values);
     }
 
     @Override

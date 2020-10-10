@@ -43,4 +43,8 @@ public class RuleModel  implements ModelInterface{
         rules.remove(from);
         rules.add(to, r);
     }
+
+    public boolean isRuleExisting(Rule rule) {return rules.stream().anyMatch(x->x.equals(rule));}
+
+    public int ruleCount(Rule rule) {return (int)rules.stream().filter(x->x.equals(rule)).count();}
 }

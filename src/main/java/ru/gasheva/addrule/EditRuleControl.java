@@ -16,4 +16,15 @@ public class EditRuleControl extends ManagerRuleAbstractClass{
             newRule.addConclusion(oldRule.getConclusion(i));
         view.createView(oldRule);
     }
+
+    @Override
+    protected boolean isRuleValid(Rule rule) {
+        //если имя совпадает, то в хранилище уже есть домен с этим именем
+        if (rule.equals(oldRule)){
+            return ruleModel.ruleCount(rule)==1;
+        }
+        else{
+            return !ruleModel.isRuleExisting(rule);
+        }
+    }
 }

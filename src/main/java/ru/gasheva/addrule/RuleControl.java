@@ -5,7 +5,10 @@ import ru.gasheva.mainform.MainForm;
 import ru.gasheva.models.DomainModel;
 import ru.gasheva.models.RuleModel;
 import ru.gasheva.models.VariableModel;
+import ru.gasheva.models.classes.Fact;
 import ru.gasheva.models.classes.Rule;
+
+import java.util.List;
 
 public class RuleControl implements ControlInterface {
     RuleModel ruleModel;
@@ -61,9 +64,20 @@ public class RuleControl implements ControlInterface {
         String[] string = new String[2];
         string[0] = newRule.getName();
         string[1] = newRule.getRuleToString();
-
         int selectedRowIndex = view.getSelectedRowIndex();
         view.ChangeRowInTable(selectedRowIndex, string);
+
+        String conditions ="";
+        String conclusions ="";
+        for(int i=0; i<newRule.conditionsSize();i++){
+            conditions+=" " + newRule.getCondition(i).toString()+"\n";
+        }
+        for(int i=0; i<newRule.conclusionsSize();i++){
+            conclusions+=" " + newRule.getConclusion(i).toString()+"\n";
+        }
+
+        view.setTfTopText(conditions);
+        view.setTfBottomText(conclusions);
     }
 
     @Override
@@ -114,6 +128,5 @@ public class RuleControl implements ControlInterface {
 
         view.setTfTopText(conditions);
         view.setTfBottomText(conclusions);
-
     }
 }
