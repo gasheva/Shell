@@ -17,7 +17,7 @@ public abstract class ManagerVariableAbstractClass {
     public ManagerVariableAbstractClass(VariableModel variableModel, DomainModel domainModel) {
         this.domainModel = domainModel;
         this.variableModel = variableModel;
-        view = new CreateVarForm(this, domainModel);
+        view = new CreateVarForm(this, variableModel, domainModel);
     }
     abstract protected boolean isVariableValid(Variable domain);
 

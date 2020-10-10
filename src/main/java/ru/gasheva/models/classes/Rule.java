@@ -36,6 +36,14 @@ public class Rule {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getExplanation() {
+        return explanation;
+    }
+
+    public void setExplanation(String explanation) {
+        this.explanation = explanation;
+    }
     //endregion
 
     public void addCondition(Fact fact){conditions.add(fact);}

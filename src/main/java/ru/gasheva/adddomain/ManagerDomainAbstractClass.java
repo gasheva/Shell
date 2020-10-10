@@ -10,7 +10,7 @@ abstract public class ManagerDomainAbstractClass {
 
     public ManagerDomainAbstractClass(DomainModel domainModel) {
         this.domainModel = domainModel;
-        view = new CreateDomainForm(this);
+        view = new CreateDomainForm(this, domainModel);
 
     }
     abstract protected boolean isDomainValid(Domain domain);

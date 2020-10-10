@@ -1,6 +1,7 @@
 package ru.gasheva.addvariable;
 
 import ru.gasheva.models.DomainModel;
+import ru.gasheva.models.VariableModel;
 import ru.gasheva.models.classes.VarType;
 import ru.gasheva.models.classes.Variable;
 
@@ -24,10 +25,12 @@ public class CreateVarForm extends JDialog {
     private  ButtonGroup G;
     private ManagerVariableAbstractClass control;
     private DomainModel domainModel;
+    private VariableModel variableModel;
 
-    public CreateVarForm(ManagerVariableAbstractClass control, DomainModel domainModel){
+    public CreateVarForm(ManagerVariableAbstractClass control, VariableModel variableModel, DomainModel domainModel){
         this.control = control;
         this.domainModel = domainModel;
+        this.variableModel = variableModel;
     }
     public void createView(Variable variable) {
         setContentPane(contentPane);
@@ -59,6 +62,7 @@ public class CreateVarForm extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
         createControls();
+        tfVarName.setText("Переменная " + variableModel.size());
         for(int i=0; i<domainModel.size(); i++){
             cbDomen.addItem(domainModel.getDomain(i).getName());
         }

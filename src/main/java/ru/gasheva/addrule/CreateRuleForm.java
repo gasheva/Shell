@@ -17,7 +17,7 @@ public class CreateRuleForm extends JDialog implements IRowReorderable {
     private JButton buttonOK;
     private JButton buttonCancel;
     private JTextField tfName;
-    private JTextArea textArea1;
+    private JTextArea tfExplanation;
     private JTable tblPreposition;
     private JTable tblConclusion;
     private JButton btnAddPrep;
@@ -46,6 +46,7 @@ public class CreateRuleForm extends JDialog implements IRowReorderable {
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
         createControls();
+        tfName.setText("Правило "+ruleModel.size());
 
         pack();
         setLocationRelativeTo(null);
@@ -63,6 +64,7 @@ public class CreateRuleForm extends JDialog implements IRowReorderable {
         for(int i=0; i<oldRule.conclusionsSize();i++){
             myModelConclusions.addRow(new Object[]{oldRule.getConclusion(i)});
         }
+        tfExplanation.setText(oldRule.getExplanation());
 
         pack();
         setLocationRelativeTo(null);
@@ -139,6 +141,9 @@ public class CreateRuleForm extends JDialog implements IRowReorderable {
     public String getRuleName() {
         return tfName.getText().trim();
 
+    }
+    public String getExplanation(){
+        return tfExplanation.getText().trim();
     }
     public void showMessage(String msg) {JOptionPane.showMessageDialog(this, msg); }
 

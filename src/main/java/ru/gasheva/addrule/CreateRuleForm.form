@@ -176,7 +176,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="d0b57" class="javax.swing.JTextArea" binding="textArea1" default-binding="true">
+          <component id="d0b57" class="javax.swing.JTextArea" binding="tfExplanation">
             <constraints/>
             <properties/>
           </component>

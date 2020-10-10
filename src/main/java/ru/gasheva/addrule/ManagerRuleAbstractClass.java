@@ -40,6 +40,7 @@ public abstract class ManagerRuleAbstractClass {
             return;
         }
         newRule.setName(view.getRuleName());
+        newRule.setExplanation(view.getExplanation());
         //проверка на уникальность имени
         if(!isRuleValid(newRule))
         {

@@ -4,6 +4,7 @@ import ru.gasheva.mainform.IRowReorderable;
 import ru.gasheva.mainform.TableModel;
 import ru.gasheva.mainform.TableRowTransferHandler;
 import ru.gasheva.mainform.WrapTableCellRenderer;
+import ru.gasheva.models.DomainModel;
 import ru.gasheva.models.classes.Domain;
 import ru.gasheva.models.classes.DomainValue;
 
@@ -25,11 +26,10 @@ public class CreateDomainForm extends JDialog implements IRowReorderable {
     private JScrollPane scpDomainValues;
     private ManagerDomainAbstractClass control;
     private TableModel myModel;
+    private DomainModel domainModel;
     
-    
-
-    
-    public CreateDomainForm(ManagerDomainAbstractClass control) {
+    public CreateDomainForm(ManagerDomainAbstractClass control, DomainModel domainModel) {
+        this.domainModel = domainModel;
         this.control = control;
     }
 
@@ -55,7 +55,7 @@ public class CreateDomainForm extends JDialog implements IRowReorderable {
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
         createControls();
-
+        tfDomainName.setText("Домен "+domainModel.size());
 
         pack();
         setLocationRelativeTo(null);
