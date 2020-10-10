@@ -19,8 +19,11 @@ public class RuleModel  implements ModelInterface{
         rules.add(index, rule);
     }
     public void setRule(int index, Rule newRule) {rules.set(index, newRule);}
+    public void setRule(Rule oldRule, Rule newRule) {rules.set(rules.indexOf(oldRule), newRule);}
     public void remove(String name) {rules.remove(getRule(name));}
-    public Rule getRule(String name){return rules.stream().filter(x->x.getName().equals(name)).findAny().get();}
+    public Rule getRule(String name){
+        return rules.stream().filter(x->x.getName().equals(name)).findAny().get();
+    }
     public Rule getRule(int index){return rules.get(index);}
 
     @Override

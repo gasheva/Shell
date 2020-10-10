@@ -55,7 +55,7 @@ public class RuleControl implements ControlInterface {
         Rule newRule = editRuleControl.getResult();
         if (newRule==null) return;
         //обновляем модель
-        ruleModel.setRule(variableModel.getVariableIndex(ruleName), newRule);
+        ruleModel.setRule(ruleModel.getRule(ruleName), newRule);
 
         //обновляем вьюшку
         String[] string = new String[2];

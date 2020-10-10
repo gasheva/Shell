@@ -48,6 +48,7 @@ public class CreateRuleForm extends JDialog implements IRowReorderable {
         createControls();
 
         pack();
+        setLocationRelativeTo(null);
         setVisible(true);
     }
     public void createView(Rule oldRule){
@@ -64,6 +65,7 @@ public class CreateRuleForm extends JDialog implements IRowReorderable {
         }
 
         pack();
+        setLocationRelativeTo(null);
         setVisible(true);
     }
     private void createControls(){

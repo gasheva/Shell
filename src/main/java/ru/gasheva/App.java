@@ -7,6 +7,7 @@ import ru.gasheva.models.ModelInterface;
 import ru.gasheva.models.RuleModel;
 import ru.gasheva.models.VariableModel;
 import ru.gasheva.models.classes.Domain;
+import ru.gasheva.models.classes.Rule;
 import ru.gasheva.models.classes.Variable;
 
 import java.util.LinkedList;
