@@ -5,6 +5,7 @@ import ru.gasheva.adddomain.ManagerDomainAbstractClass;
 import ru.gasheva.models.DomainModel;
 import ru.gasheva.models.VariableModel;
 import ru.gasheva.models.classes.Domain;
+import ru.gasheva.models.classes.VarType;
 import ru.gasheva.models.classes.Variable;
 
 public abstract class ManagerVariableAbstractClass {
@@ -57,5 +58,13 @@ public abstract class ManagerVariableAbstractClass {
 
     public Variable getResult(){
         return newVariable;
+    }
+
+    public void varTypeChanged() {
+        VarType selectedVarType = view.getSelectedType();
+        if (selectedVarType == VarType.RESOLVE){
+            view.isQuestionPanelVisible(false);
+        }
+        else view.isQuestionPanelVisible(true);
     }
 }

@@ -118,11 +118,3 @@ public class CreateFactForm extends JDialog {
 
     public String getDomainSelectedName() { return (String)cbSelectDomainValue.getSelectedItem();}
 }
-
-// в переменных выводить значения домена
-// спрятать текст вопроса у выводимой
-// у доменов убрать значения в таблице
-// баг с обновлением значений домена в tf
-// генерация всяких вопросов\имен и тд
-// где-то должно быть про цель в МЛВ или рабочей памяти
-// что-то еще было про ид эс

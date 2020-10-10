@@ -20,6 +20,7 @@ public class CreateVarForm extends JDialog {
     private JTextArea tfQuestion;
     private JLabel lblQ;
     private JButton btnAddDomain;
+    private JPanel questionPanel;
     private  ButtonGroup G;
     private ManagerVariableAbstractClass control;
     private DomainModel domainModel;
@@ -45,9 +46,10 @@ public class CreateVarForm extends JDialog {
             case RESOLVE: rbResolve.setSelected(true);break;
             case ASK_RESOLVE: rbResolveAsk.setSelected(true);break;
         }
+        control.varTypeChanged();
         tfQuestion.setText(variable.getQuestion());
 
-        pack();
+        setSize(400, 400);
         setLocationRelativeTo(null);
         setVisible(true);
 
@@ -61,7 +63,8 @@ public class CreateVarForm extends JDialog {
             cbDomen.addItem(domainModel.getDomain(i).getName());
         }
         if (cbDomen.getItemCount()>0)cbDomen.setSelectedIndex(0);
-        pack();
+
+        setSize(400, 400);
         setLocationRelativeTo(null);
         setVisible(true);
 
@@ -79,6 +82,9 @@ public class CreateVarForm extends JDialog {
         buttonOK.addActionListener(e -> onOK());
         buttonCancel.addActionListener(e -> onCancel());
         btnAddDomain.addActionListener(e->BtnAddDomainClicked());
+        rbAsk.addActionListener(e->rbButtonSelectionChanged());
+        rbResolve.addActionListener(e->rbButtonSelectionChanged());
+        rbResolveAsk.addActionListener(e->rbButtonSelectionChanged());
 
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -91,7 +97,7 @@ public class CreateVarForm extends JDialog {
 
 
     }
-
+    private void rbButtonSelectionChanged(){control.varTypeChanged();}
     private void BtnAddDomainClicked(){control.addDomain();}
     private void onOK() {control.ok();}
     private void onCancel() {control.cancel();}
@@ -101,16 +107,25 @@ public class CreateVarForm extends JDialog {
     public boolean isTfVariableNameEmpty() { return tfVarName.getText().trim().isEmpty();}
     public boolean isCbDomainItemSelected(){return cbDomen.getSelectedIndex()!=-1;}
 
+    public VarType getSelectedType(){
+        if (rbAsk.isSelected()) return VarType.ASK;
+        if (rbResolve.isSelected()) return VarType.RESOLVE;
+        if (rbResolveAsk.isSelected()) return VarType.ASK_RESOLVE;
+        return null;
+    }
     public Variable getNewVariable() {
         Variable newVariable = new Variable(tfVarName.getText().trim());
         newVariable.setDomain(domainModel.getDomain((String)cbDomen.getSelectedItem()));
         newVariable.setVarType(rbAsk.isSelected()? VarType.ASK:rbResolve.isSelected()?VarType.RESOLVE:VarType.ASK_RESOLVE);
-        newVariable.setQuestion(tfQuestion.getText().trim());
+        newVariable.setQuestion(questionPanel.isVisible()?tfQuestion.getText().trim():"");
         return newVariable;
     }
 
     public void cbDomainsAddItem(String name) {
         cbDomen.addItem(name);
         cbDomen.setSelectedItem(name);
+    }
+    public void isQuestionPanelVisible(boolean isVisible){
+        questionPanel.setVisible(isVisible);
     }
 }

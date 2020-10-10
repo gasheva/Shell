@@ -65,6 +65,7 @@ public class VariableControl implements ControlInterface {
 
         String values = " " + newVariable.getQuestion();
         view.setTfTopText(values);
+        view.setTfBottomText(" "+newVariable.getDomain().getDomainValuesInString().replaceAll("/", "\n"));
     }
 
     @Override
@@ -87,9 +88,9 @@ public class VariableControl implements ControlInterface {
         view.fillTable(variableModel);
         view.setTableModel();
         view.setPrepPanelVisible(true);
-        view.setConclusionPanelVisible(false);
+        view.setConclusionPanelVisible(true);
         view.changePrepPanelText("Вопрос");
-        view.changeConclusionPanelText("");
+        view.changeConclusionPanelText("Значения домена");
         view.setTfTopText("");
         view.setTfBottomText("");
     }
@@ -102,6 +103,8 @@ public class VariableControl implements ControlInterface {
         String[] values = view.getRowValues(view.getSelectedRowIndex());
         if (values == null) return;
 
+        Variable v = variableModel.getVariable(values[0]);
         view.setTfTopText(" " + variableModel.getVariable(values[0]).getQuestion());
+        view.setTfBottomText(" "+v.getDomain().getDomainValuesInString().replaceAll("/", "\n"));
     }
 }
