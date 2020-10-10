@@ -11,6 +11,13 @@ public class RuleModel  implements ModelInterface{
         rules = new ArrayList<>();
     }
 
+    public List<Rule> getRules() {
+        return rules;
+    }
+
+    public void setRules(List<Rule> rules) {
+        this.rules = rules;
+    }
 
     public void add(Rule rule) {
         rules.add(rule);

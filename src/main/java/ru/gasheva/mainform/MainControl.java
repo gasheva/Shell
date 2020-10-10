@@ -1,12 +1,20 @@
-package ru.gasheva.controls;
+package ru.gasheva.mainform;
 
 import ru.gasheva.adddomain.DomainControl;
 import ru.gasheva.addrule.RuleControl;
 import ru.gasheva.addvariable.VariableControl;
-import ru.gasheva.mainform.MainForm;
 import ru.gasheva.models.DomainModel;
+import ru.gasheva.models.classes.Domain;
+import ru.gasheva.models.classes.Variable;
+import ru.gasheva.models.jsonhandler.JsonHandler;
 import ru.gasheva.models.RuleModel;
 import ru.gasheva.models.VariableModel;
+import ru.gasheva.models.classes.Rule;
+import ru.gasheva.models.jsonhandler.Message;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MainControl{
     RuleModel ruleModel;
@@ -44,7 +52,6 @@ public class MainControl{
         currentControl.edit();
     }
 
-    //или по индексу (номеру строки)?
     public void remove() {
         currentControl.remove();
     }
@@ -65,5 +72,19 @@ public class MainControl{
 
     public void tableSelectionValueChanged() {
         currentControl.tableSelectionValueChanged();
+    }
+
+    public void loadData() {
+        String path = view.getFileToOpen();
+        //Message message = new Message(ruleModel.getRules().toArray(new Rule[1]), variableModel.getVariables().toArray(new Variable[1]), domainModel.getDomains().toArray(new Domain[1]));
+        Message message = new Message();
+        JsonHandler<Message> jsonHandler = new JsonHandler<Message>(Message.class);
+
+        message = jsonHandler.readFromFile(path, message);
+        if (message==null) {view.showMessage("Не удалось загрузить данные");return;}
+        ruleModel.setRules(Arrays.asList(message.getRules()));
+        variableModel.setVariables(Arrays.asList(message.getVariables()));
+        domainModel.setDomains(Arrays.asList(message.getDomains()));
+        changeControl(0);
     }
 }

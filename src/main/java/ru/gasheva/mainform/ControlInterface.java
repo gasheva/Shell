@@ -1,4 +1,4 @@
-package ru.gasheva.controls;
+package ru.gasheva.mainform;
 
 public interface ControlInterface {
     void add();

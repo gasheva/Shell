@@ -9,6 +9,15 @@ public class VariableModel implements ModelInterface{
     List<Variable> variables = new LinkedList<>();
 
     //region Getter-Setter
+
+    public List<Variable> getVariables() {
+        return variables;
+    }
+
+    public void setVariables(List<Variable> variables) {
+        this.variables = variables;
+    }
+
     public void add(Variable var) {
         variables.add(var);
     }

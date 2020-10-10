@@ -10,15 +10,15 @@ import java.util.List;
 
 public class DomainModel implements ModelInterface {
     List<Domain> domains = new LinkedList<>();
-    Domain oldDomain;
 
     //region Getter\Setter
-    public Domain getOldDomain() {
-        return oldDomain;
+
+    public List<Domain> getDomains() {
+        return domains;
     }
 
-    public void setOldDomain(Domain oldDomain) {
-        this.oldDomain = oldDomain;
+    public void setDomains(List<Domain> domains) {
+        this.domains = domains;
     }
     //endregion
 

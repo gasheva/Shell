@@ -1,10 +1,9 @@
 package ru.gasheva.addvariable;
 
-import ru.gasheva.controls.ControlInterface;
+import ru.gasheva.mainform.ControlInterface;
 import ru.gasheva.mainform.MainForm;
 import ru.gasheva.models.DomainModel;
 import ru.gasheva.models.VariableModel;
-import ru.gasheva.models.classes.VarType;
 import ru.gasheva.models.classes.Variable;
 
 public class VariableControl implements ControlInterface {

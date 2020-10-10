@@ -1,6 +1,6 @@
 package ru.gasheva.adddomain;
 
-import ru.gasheva.controls.ControlInterface;
+import ru.gasheva.mainform.ControlInterface;
 import ru.gasheva.mainform.MainForm;
 import ru.gasheva.models.DomainModel;
 import ru.gasheva.models.classes.Domain;

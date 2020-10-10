@@ -1,13 +1,10 @@
 package ru.gasheva.mainform;
 
-import ru.gasheva.controls.MainControl;
-import ru.gasheva.models.DomainModel;
 import ru.gasheva.models.ModelInterface;
-import ru.gasheva.models.classes.Domain;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.event.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -50,7 +47,6 @@ public class MainForm extends JFrame implements IRowReorderable{
         setSize(800, 600);
         setLocationRelativeTo(null);
         createJMenuBar();
-        //initTable();
         setVisible(true);
     }
 
@@ -92,9 +88,11 @@ public class MainForm extends JFrame implements IRowReorderable{
         btnDelete.addActionListener(e->BtnDeleteClicked());
         tabbedPane.addChangeListener(e -> tabbedPaneChanged());
         tblInfo.getSelectionModel().addListSelectionListener(e -> TableSelectionValueChanged());
+        miOpen.addActionListener(e->miOpenClicked());
         mainPanel.registerKeyboardAction(e -> BtnAddClicked(), KeyStroke.getKeyStroke(KeyEvent.VK_INSERT, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
     }
+    private void miOpenClicked(){control.loadData();}
     private void TableSelectionValueChanged(){
         control.tableSelectionValueChanged();
     }
@@ -240,5 +238,17 @@ public class MainForm extends JFrame implements IRowReorderable{
             System.out.println("val = "+myModel.getValueAt(i, 0));
         myModel.removeRow(selectedRowIndex);
         setTableModel();
+    }
+
+    public String getFileToOpen() {
+        JFileChooser c = new JFileChooser();
+        FileFilter imageFilter = new FileNameExtensionFilter(
+                "JSON files", ".json");
+        c.removeChoosableFileFilter(c.getFileFilter());
+        c.addChoosableFileFilter(imageFilter);
+        int rVal = c.showOpenDialog(this);
+        if (rVal!=JFileChooser.APPROVE_OPTION) return null;
+
+        return c.getSelectedFile().getAbsolutePath();
     }
 }
