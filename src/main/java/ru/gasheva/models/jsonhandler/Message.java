@@ -4,6 +4,8 @@ import ru.gasheva.models.classes.Domain;
 import ru.gasheva.models.classes.Rule;
 import ru.gasheva.models.classes.Variable;
 
+import java.util.List;
+
 public class Message {
     Rule[] rules;
     Variable[] variables;

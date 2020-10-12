@@ -32,15 +32,14 @@ public class JsonHandler<T> {
         }
         return true;
     }
-    public T readFromFile(String path, T t){
+    public T readFromFile(String path){
         Gson gson = new GsonBuilder().create();
         Path _path = new File(path).toPath();
         try(Reader reader = Files.newBufferedReader(_path, StandardCharsets.UTF_8)){
-            t = gson.fromJson(reader, type);
+            return gson.fromJson(reader, type);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
-        return t;
     }
 }

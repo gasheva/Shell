@@ -1,10 +1,12 @@
 package ru.gasheva.mainform;
 
+import javafx.stage.FileChooser;
 import ru.gasheva.models.ModelInterface;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.tools.JavaFileManager;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,6 +39,7 @@ public class MainForm extends JFrame implements IRowReorderable{
     private JMenuItem miBeginCons;
     private TableModel myModel;
     private MainControl control;
+    private WrapTableCellRenderer tableCellRenderer = new WrapTableCellRenderer();
 
     public MainForm(MainControl control) {
         this.control = control;
@@ -62,10 +65,13 @@ public class MainForm extends JFrame implements IRowReorderable{
         //model
         myModel = new TableModel(new String[]{"Правило","Описание"});
         setTableModel();
+
         //fonts
         tblInfo.getTableHeader().setFont(new Font("Verdana", Font.BOLD, 12));
         tblInfo.setForeground(Color.DARK_GRAY);
         tblInfo.setFont(new Font("Verdana", Font.PLAIN, 12));
+
+
 
         //sorter
         tblInfo.setAutoCreateRowSorter(false);
@@ -89,9 +95,11 @@ public class MainForm extends JFrame implements IRowReorderable{
         tabbedPane.addChangeListener(e -> tabbedPaneChanged());
         tblInfo.getSelectionModel().addListSelectionListener(e -> TableSelectionValueChanged());
         miOpen.addActionListener(e->miOpenClicked());
+        miSave.addActionListener(e->miSaveClicked());
         mainPanel.registerKeyboardAction(e -> BtnAddClicked(), KeyStroke.getKeyStroke(KeyEvent.VK_INSERT, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
     }
+    private void miSaveClicked(){control.saveInFile();}
     private void miOpenClicked(){control.loadData();}
     private void TableSelectionValueChanged(){
         control.tableSelectionValueChanged();
@@ -146,7 +154,7 @@ public class MainForm extends JFrame implements IRowReorderable{
     }
     public void setTableModel(){
         tblInfo.setModel(myModel);
-        WrapTableCellRenderer tableCellRenderer = new WrapTableCellRenderer();
+        // текст в несколько строк
         tblInfo.getColumnModel().getColumn(1).setCellRenderer(tableCellRenderer);
         tblInfo.getColumnModel().getColumn(0).setCellRenderer(tableCellRenderer);
 
@@ -242,13 +250,36 @@ public class MainForm extends JFrame implements IRowReorderable{
 
     public String getFileToOpen() {
         JFileChooser c = new JFileChooser();
-        FileFilter imageFilter = new FileNameExtensionFilter(
+        FileFilter filter = new FileNameExtensionFilter(
                 "JSON files", ".json");
         c.removeChoosableFileFilter(c.getFileFilter());
-        c.addChoosableFileFilter(imageFilter);
+        c.addChoosableFileFilter(filter);
         int rVal = c.showOpenDialog(this);
         if (rVal!=JFileChooser.APPROVE_OPTION) return null;
 
         return c.getSelectedFile().getAbsolutePath();
+    }
+
+    public String getFileToWrite() {
+        JFileChooser c = new JFileChooser();
+        FileFilter filter = new FileNameExtensionFilter(
+                "JSON files", ".json");
+        c.removeChoosableFileFilter(c.getFileFilter());
+        c.addChoosableFileFilter(filter);
+        if (c.showSaveDialog(this)==JFileChooser.APPROVE_OPTION){
+            return c.getSelectedFile().getAbsolutePath();
+        }
+        return null;
+
+//        JTextField tf = new JTextField();
+//        JComponent[] inputs = new JComponent[]{
+//                new JLabel("New tags separated by space:"),
+//                tf
+//        };
+//        String tag="";
+//        int result = JOptionPane.showConfirmDialog(null, inputs, "Create Tag", JOptionPane.PLAIN_MESSAGE);
+//        if (result==JOptionPane.OK_OPTION){
+//            tag = tf.getText().trim();
+//        }
     }
 }
