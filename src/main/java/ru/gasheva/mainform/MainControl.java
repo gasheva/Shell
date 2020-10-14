@@ -79,17 +79,16 @@ public class MainControl{
     public void loadData() {
         String path = view.getFileToOpen();
         if (path==null) return;
-        //Message message = new Message(ruleModel.getRules().toArray(new Rule[1]), variableModel.getVariables().toArray(new Variable[1]), domainModel.getDomains().toArray(new Domain[1]));
         Message message;
         JsonHandler<Message> jsonHandler = new JsonHandler<Message>(Message.class);
 
         message = jsonHandler.readFromFile(path);
         if (message==null) {view.showMessage("Не удалось загрузить данные");return;}
-        ruleModel.setRules(Arrays.asList(message.getRules()));
+        ruleModel.setRules(new ArrayList<>(Arrays.asList(message.getRules())));
         Variable[] v = message.getVariables();
-        if (v!=null) variableModel.setVariables(Arrays.asList(v));
+        if (v!=null) variableModel.setVariables(new ArrayList<>(Arrays.asList(v)));
         Domain[] d = message.getDomains();
-        if (d!=null) domainModel.setDomains(Arrays.asList(d));
+        if (d!=null) domainModel.setDomains(new ArrayList<>(Arrays.asList(d)));
 
         currentControl.redraw();
     }
@@ -99,7 +98,7 @@ public class MainControl{
         if (path==null) return;
         Message message = new Message(ruleModel.getRules().toArray(new Rule[0]), variableModel.getVariables().toArray(new Variable[0]), domainModel.getDomains().toArray(new Domain[0]));
         JsonHandler<Message> jsonHandler = new JsonHandler<Message>(Message.class);
-        if (!jsonHandler.writeInFile(path, message)) view.showMessage("Не сохранить данные");
+        if (!jsonHandler.writeInFile(path, message)) view.showMessage("Данные не сохранились");
     }
 
     public void beginConsultation() {

@@ -88,6 +88,7 @@ public class VariableControl implements ControlInterface {
         view.setTableModel();
         view.setPrepPanelVisible(true);
         view.setConclusionPanelVisible(true);
+        view.setExplanationPanelVisible(false);
         view.changePrepPanelText("Вопрос");
         view.changeConclusionPanelText("Значения домена");
         view.setTfTopText("");

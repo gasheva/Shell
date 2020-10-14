@@ -4,6 +4,7 @@ import ru.gasheva.models.classes.Rule;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class RuleModel  implements ModelInterface{
     List<Rule> rules;
@@ -27,9 +28,12 @@ public class RuleModel  implements ModelInterface{
     }
     public void setRule(int index, Rule newRule) {rules.set(index, newRule);}
     public void setRule(Rule oldRule, Rule newRule) {rules.set(rules.indexOf(oldRule), newRule);}
-    public void remove(String name) {rules.remove(getRule(name));}
+    public void remove(String name) {
+        int i=0;
+        rules.remove(getRule(name));
+    }
     public Rule getRule(String name){
-        return rules.stream().filter(x->x.getName().equals(name)).findAny().get();
+        return rules.stream().filter(x->x.getName()==name).findAny().get();
     }
     public Rule getRule(int index){return rules.get(index);}
 

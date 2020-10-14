@@ -67,6 +67,7 @@ public class CreateVarForm extends JDialog {
             cbDomen.addItem(domainModel.getDomain(i).getName());
         }
         if (cbDomen.getItemCount()>0)cbDomen.setSelectedIndex(0);
+        tfQuestion.setText(tfVarName.getText()+"?");
 
         setSize(400, 400);
         setLocationRelativeTo(null);
@@ -110,6 +111,7 @@ public class CreateVarForm extends JDialog {
 
     public boolean isTfVariableNameEmpty() { return tfVarName.getText().trim().isEmpty();}
     public boolean isCbDomainItemSelected(){return cbDomen.getSelectedIndex()!=-1;}
+    public String getTfQuestion(){return tfQuestion.getText().trim();}
 
     public VarType getSelectedType(){
         if (rbAsk.isSelected()) return VarType.ASK;

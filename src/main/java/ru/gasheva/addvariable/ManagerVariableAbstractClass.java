@@ -31,6 +31,12 @@ public abstract class ManagerVariableAbstractClass {
             newVariable = null;
             return;
         }
+        if(view.getSelectedType()==VarType.ASK && view.getTfQuestion().isEmpty()){
+            view.showMessage("Введите вопрос!");
+            newVariable = null;
+            return;
+        }
+
 
         newVariable = view.getNewVariable();
         //проверка на уникальность имени

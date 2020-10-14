@@ -28,6 +28,8 @@ public class MainForm extends JFrame implements IRowReorderable{
     private JPanel conclusionPanel;
     private JLabel lblPrep;
     private JLabel lblConcl;
+    private JPanel explanationPanel;
+    private JTextArea tfExplanation;
     private JSeparator sepRules;
     private JMenuBar mbMain;
     private JMenu fileMenu;
@@ -272,5 +274,13 @@ public class MainForm extends JFrame implements IRowReorderable{
             return c.getSelectedFile().getAbsolutePath();
         }
         return null;
+    }
+
+    public void setExplanationText(String s) {
+        tfExplanation.setText(s);
+    }
+
+    public void setExplanationPanelVisible(boolean b) {
+        explanationPanel.setVisible(b);
     }
 }

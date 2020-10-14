@@ -53,6 +53,10 @@ public abstract class ManagerRuleAbstractClass {
     public void cancel(){newRule = null; view.Dispose();}
 
     public void addConclusion(){
+        if (view.getConclusionCount()==1){
+            view.showMessage("В заключении уже добавлен факт");
+            return;
+        }
         ManagerFactAbstractClass addFact = new AddFactControl(domainModel, variableModel);
         Fact newFact = addFact.getResult();
         if (newFact==null) return;

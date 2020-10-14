@@ -5,6 +5,7 @@ import ru.gasheva.models.classes.Domain;
 import ru.gasheva.models.classes.DomainValue;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class DomainModel implements ModelInterface {
         return domains;
     }
 
-    public void setDomains(List<Domain> domains) {
+    public void setDomains(ArrayList<Domain> domains) {
         this.domains = domains;
     }
     //endregion

@@ -75,6 +75,7 @@ public class RuleControl implements ControlInterface {
 
         view.setTfTopText(conditions);
         view.setTfBottomText(conclusions);
+        view.setExplanationText(newRule.getExplanation());
     }
 
     @Override
@@ -89,6 +90,7 @@ public class RuleControl implements ControlInterface {
         view.removeRow(view.getSelectedRowIndex());
         view.setTfTopText("");
         view.setTfBottomText("");
+        view.setExplanationText("");
     }
 
     @Override
@@ -98,10 +100,12 @@ public class RuleControl implements ControlInterface {
         view.setTableModel();
         view.setPrepPanelVisible(true);
         view.setConclusionPanelVisible(true);
+        view.setExplanationPanelVisible(true);
         view.changePrepPanelText("Посылка");
         view.changeConclusionPanelText("Заключение");
         view.setTfTopText("");
         view.setTfBottomText("");
+        view.setExplanationText("");
     }
 
     @Override
@@ -125,5 +129,6 @@ public class RuleControl implements ControlInterface {
 
         view.setTfTopText(conditions);
         view.setTfBottomText(conclusions);
+        view.setExplanationText(r.getExplanation());
     }
 }

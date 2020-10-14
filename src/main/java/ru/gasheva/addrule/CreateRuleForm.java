@@ -194,4 +194,8 @@ public class CreateRuleForm extends JDialog implements IRowReorderable {
     public void removeRowFromConclusions(int id) {
         myModelConclusions.removeRow(id);
     }
+
+    public int getConclusionCount() {
+        return myModelConclusions.getRowCount();
+    }
 }

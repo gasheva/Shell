@@ -86,6 +86,7 @@ public class DomainControl implements ControlInterface {
         view.changeConclusionPanelText("Значения");
         view.setPrepPanelVisible(true);
         view.setConclusionPanelVisible(true);
+        view.setExplanationPanelVisible(false);
         view.setTfTopText("");
         view.setTfBottomText("");
     }
