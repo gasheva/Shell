@@ -70,13 +70,14 @@ public class CreateRuleForm extends JDialog implements IRowReorderable {
         setLocationRelativeTo(null);
         setVisible(true);
     }
+
     private void createControls(){
         //background color
         scpConclusion.getViewport().setBackground(Color.white);
         scpConditions.getViewport().setBackground(Color.white);
 
-        myModelConclusions = new TableModel(new String[]{"Предпосылка"});
-        myModelConditions = new TableModel(new String[]{"Заключение"});
+        myModelConclusions = new TableModel(new String[]{"Заключение"});
+        myModelConditions = new TableModel(new String[]{"Предпосылка"});
         initTable(tblPreposition, myModelConditions);
         initTable(tblConclusion, myModelConclusions);
 

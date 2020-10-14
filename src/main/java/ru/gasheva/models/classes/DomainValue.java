@@ -20,4 +20,9 @@ public class DomainValue {
     public void setValue(String value) {
         this.value = value;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.value.equals(((DomainValue)obj).value);
+    }
 }

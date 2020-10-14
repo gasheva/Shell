@@ -3,6 +3,7 @@ package ru.gasheva.mainform;
 import ru.gasheva.adddomain.DomainControl;
 import ru.gasheva.addrule.RuleControl;
 import ru.gasheva.addvariable.VariableControl;
+import ru.gasheva.consultation.ConsultationControl;
 import ru.gasheva.models.DomainModel;
 import ru.gasheva.models.classes.Domain;
 import ru.gasheva.models.classes.Variable;
@@ -25,6 +26,7 @@ public class MainControl{
     ControlInterface domainControl;
     ControlInterface currentControl;
     ControlInterface ruleControl;
+    ConsultationControl consultationControl;
 
     public MainControl() {
         ruleModel = new RuleModel();
@@ -76,6 +78,7 @@ public class MainControl{
 
     public void loadData() {
         String path = view.getFileToOpen();
+        if (path==null) return;
         //Message message = new Message(ruleModel.getRules().toArray(new Rule[1]), variableModel.getVariables().toArray(new Variable[1]), domainModel.getDomains().toArray(new Domain[1]));
         Message message;
         JsonHandler<Message> jsonHandler = new JsonHandler<Message>(Message.class);
@@ -97,5 +100,10 @@ public class MainControl{
         Message message = new Message(ruleModel.getRules().toArray(new Rule[0]), variableModel.getVariables().toArray(new Variable[0]), domainModel.getDomains().toArray(new Domain[0]));
         JsonHandler<Message> jsonHandler = new JsonHandler<Message>(Message.class);
         if (!jsonHandler.writeInFile(path, message)) view.showMessage("Не сохранить данные");
+    }
+
+    public void beginConsultation() {
+        consultationControl = new ConsultationControl(ruleModel, variableModel, domainModel);
+
     }
 }

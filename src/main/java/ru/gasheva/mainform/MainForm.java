@@ -96,9 +96,11 @@ public class MainForm extends JFrame implements IRowReorderable{
         tblInfo.getSelectionModel().addListSelectionListener(e -> TableSelectionValueChanged());
         miOpen.addActionListener(e->miOpenClicked());
         miSave.addActionListener(e->miSaveClicked());
+        miBeginCons.addActionListener(e->miBeginConsClicked());
         mainPanel.registerKeyboardAction(e -> BtnAddClicked(), KeyStroke.getKeyStroke(KeyEvent.VK_INSERT, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
     }
+    private void miBeginConsClicked(){control.beginConsultation();}
     private void miSaveClicked(){control.saveInFile();}
     private void miOpenClicked(){control.loadData();}
     private void TableSelectionValueChanged(){
@@ -249,9 +251,9 @@ public class MainForm extends JFrame implements IRowReorderable{
     }
 
     public String getFileToOpen() {
-        JFileChooser c = new JFileChooser();
+        JFileChooser c = new JFileChooser("C:\\Users\\Таня\\IdeaProjects\\obolochka");
         FileFilter filter = new FileNameExtensionFilter(
-                "JSON files", ".json");
+                ".json", "json");
         c.removeChoosableFileFilter(c.getFileFilter());
         c.addChoosableFileFilter(filter);
         int rVal = c.showOpenDialog(this);
@@ -261,25 +263,14 @@ public class MainForm extends JFrame implements IRowReorderable{
     }
 
     public String getFileToWrite() {
-        JFileChooser c = new JFileChooser();
+        JFileChooser c = new JFileChooser("C:\\Users\\Таня\\IdeaProjects\\obolochka");
         FileFilter filter = new FileNameExtensionFilter(
-                "JSON files", ".json");
+                ".json", "json");
         c.removeChoosableFileFilter(c.getFileFilter());
         c.addChoosableFileFilter(filter);
         if (c.showSaveDialog(this)==JFileChooser.APPROVE_OPTION){
             return c.getSelectedFile().getAbsolutePath();
         }
         return null;
-
-//        JTextField tf = new JTextField();
-//        JComponent[] inputs = new JComponent[]{
-//                new JLabel("New tags separated by space:"),
-//                tf
-//        };
-//        String tag="";
-//        int result = JOptionPane.showConfirmDialog(null, inputs, "Create Tag", JOptionPane.PLAIN_MESSAGE);
-//        if (result==JOptionPane.OK_OPTION){
-//            tag = tf.getText().trim();
-//        }
     }
 }

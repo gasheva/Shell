@@ -109,4 +109,8 @@ public class Rule {
     public void removeConclusion(int id) {
         deleteFact(id, conclutions);
     }
+
+    public boolean hasFactInConclusion(Variable target) {
+        return conclutions.get(0).getVariable().equals(target);
+    }
 }
