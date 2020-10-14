@@ -10,6 +10,7 @@ import ru.gasheva.models.RuleModel;
 import ru.gasheva.models.VariableModel;
 import ru.gasheva.models.classes.Domain;
 import ru.gasheva.models.classes.DomainValue;
+import ru.gasheva.models.classes.VarType;
 import ru.gasheva.models.classes.Variable;
 
 import javax.swing.*;
@@ -39,7 +40,7 @@ public class ConsultationForm extends JDialog{
     }
 
     public String askGlobalTarget(){
-        return createDialog("Выберите целевую переменную", variableModel.getVariables().stream().map(Variable::getName).toArray(String[]::new));
+        return createDialog("Выберите целевую переменную", variableModel.getVariables().stream().filter(x->x.getVarType() == VarType.RESOLVE).map(Variable::getName).toArray(String[]::new));
     }
     public void createView(){
         setContentPane(contentPane);

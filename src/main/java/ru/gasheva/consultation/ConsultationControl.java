@@ -40,7 +40,6 @@ public class ConsultationControl {
     public void runMLV(Variable target) {
         MLV mlv = new MLV();
         String val = mlv.defineGlobalTarget(target, ruleModel, variableModel, domainModel, this);
-        consultationView.showMessage("Целевая переменная "+target.getName()+" = "+val);
     }
 
     public void startNewConsultation() {
