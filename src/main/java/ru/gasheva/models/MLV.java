@@ -21,31 +21,51 @@ public class MLV {
         this.domainModel = domainModel;
         workingMemory = new WorkingMemory();
         this.control = control;
-        int j = 0;
-        Rule curRule = ruleModel.getRule(0);
-        while (j <= curRule.conditionsSize()) {     // проходим по предпосылкам
-            if (j == curRule.conditionsSize()) {      //если прошли все, то означиваем подцель
-                workingMemory.add(curRule);
-                workingMemory.add(globalTarget, curRule.getConclusion(0).getDomainValue());
-                break;
+        int i = 0;
+        while (i <= ruleModel.size()) {
+            if (i == ruleModel.size()) {     //если проверили все правила и не нашли подцель
+                workingMemory.add(globalTarget, new DomainValue(UNDEF));
+                return UNDEF;
             } else {
-                Variable curVar = curRule.getCondition(j).getVariable();
-                if (!workingMemory.hasValue(curVar))
-                    switch (curVar.getVarType()) {
-                        case ASK:
-                            String val = control.askVariableValue(curVar);
-                            workingMemory.add(curVar, new DomainValue(val));
-                            break;
-                        case RESOLVE:
-                            defineLocalTarget(curVar);
-                            break;
-                    }
-                if (workingMemory.get(curVar).equals(curRule.getCondition(j).getDomainValue())) {   //если значение нужное, то переходим к след переменной
-                    j++;
+                //нашли правило с подцелью
+                Rule curRule = ruleModel.getRule(i);
+                if (!curRule.hasFactInConclusion(globalTarget)) {
+                    i++;
                     continue;
-                } else {       //иначе к следующему правилу
-                    workingMemory.add(globalTarget, new DomainValue(UNDEF));
-                    break;
+                }
+                int j = 0;
+                while (j <= curRule.conditionsSize()) {     // проходим по предпосылкам
+                    if (j == curRule.conditionsSize()) {      //если прошли все, то означиваем подцель
+                        workingMemory.add(curRule);
+                        workingMemory.add(globalTarget, curRule.getConclusion(0).getDomainValue());
+                        return workingMemory.get(globalTarget).getValue();
+                    } else {
+                        Variable curVar = curRule.getCondition(j).getVariable();
+                        if (workingMemory.hasValue(curVar)) {        //если переменная означена, проверяем нужное ли значение
+                            if (workingMemory.get(curVar).equals(curRule.getCondition(j).getDomainValue())) {   //если значение нужное, то переходим к след переменной
+                                j++;
+                                continue;
+                            } else {       //иначе к следующему правилу
+                                i++;
+                                break;
+                            }
+                        } else {  // если переменная не означена
+                            switch (curVar.getVarType()) {
+                                case ASK:
+                                    String val = control.askVariableValue(curVar);
+                                    workingMemory.add(curVar, new DomainValue(val));
+                                case RESOLVE:
+                                    defineLocalTarget(curVar);
+                            }
+                            if (workingMemory.get(curVar).equals(curRule.getCondition(j).getDomainValue())) {   //если значение нужное, то переходим к след переменной
+                                j++;
+                                continue;
+                            } else {       //иначе к следующему правилу
+                                i++;
+                                break;
+                            }
+                        }
+                    }
                 }
             }
         }
