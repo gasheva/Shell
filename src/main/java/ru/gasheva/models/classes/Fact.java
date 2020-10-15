@@ -8,6 +8,14 @@ public class Fact {
     Variable variable;
     DomainValue domainValue;
 
+    public Fact() {
+    }
+
+    public Fact(Variable variable, DomainValue domainValue) {
+        this.variable = variable;
+        this.domainValue = domainValue;
+    }
+
     //region Getter-Setter
     public Variable getVariable() {
         return variable;

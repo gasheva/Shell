@@ -57,6 +57,7 @@ public class ConsultationForm extends JDialog{
         initTable(tblConsultation, myModel);
 
         btnNewConsultation.addActionListener(e->btnNewConsultationClicked());
+        btnExplanation.addActionListener(e->btnExplanationClicked());
 
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -89,6 +90,7 @@ public class ConsultationForm extends JDialog{
         tblConsultation.getColumnModel().getColumn(0).setPreferredWidth(80);
     }
     private void btnNewConsultationClicked(){control.startNewConsultation();}
+    private void btnExplanationClicked(){control.explainAnswer();}
     private void onOK() {
         control.ok();
     }

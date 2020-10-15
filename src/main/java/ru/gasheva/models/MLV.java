@@ -14,20 +14,12 @@ public class MLV {
     private WorkingMemory workingMemory;
     private final String UNDEF = "undef";
 
-    public WorkingMemory getWorkingMemory() {
-        return workingMemory;
-    }
-
-    public void setWorkingMemory(WorkingMemory workingMemory) {
-        this.workingMemory = workingMemory;
-    }
-
     public String defineGlobalTarget(Variable globalTarget, RuleModel ruleModel, VariableModel variableModel, DomainModel domainModel, ConsultationControl control) {
         this.ruleModel = ruleModel;
         this.globalTarget = globalTarget;
         this.variableModel = variableModel;
         this.domainModel = domainModel;
-        workingMemory = new WorkingMemory();
+        workingMemory = control.getWorkingMemory();
         this.control = control;
         int i = 0;
 //        while (i <= ruleModel.size()) {

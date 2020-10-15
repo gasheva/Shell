@@ -1,6 +1,7 @@
 package ru.gasheva.models;
 
 import ru.gasheva.models.classes.DomainValue;
+import ru.gasheva.models.classes.Fact;
 import ru.gasheva.models.classes.Rule;
 import ru.gasheva.models.classes.Variable;
 
@@ -34,5 +35,11 @@ public class WorkingMemory {
 
     public void add(Rule curRule) {
         usingRules.add(curRule);
+    }
+
+    public List<Fact> getAllVariables() {
+        List<Fact> facts = new LinkedList<>();
+        curVariableValues.forEach((x, y)-> facts.add(new Fact(x, y)));
+        return facts;
     }
 }
