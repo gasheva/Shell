@@ -23,7 +23,7 @@ public class WorkingMemory {
     }
     public boolean hasValue(Variable var){
         if (var == null) return false;
-        System.out.println("Has "+var.getName()+ "got value = " + curVariableValues.containsKey(var));
+        //System.out.println("Has "+var.getName()+ "got value = " + curVariableValues.containsKey(var));
         return curVariableValues.containsKey(var);
     }
     public void remove(Variable var){
@@ -41,5 +41,8 @@ public class WorkingMemory {
         List<Fact> facts = new LinkedList<>();
         curVariableValues.forEach((x, y)-> facts.add(new Fact(x, y)));
         return facts;
+    }
+    public Rule getUsingRule(int index){
+        return usingRules.get(index);
     }
 }

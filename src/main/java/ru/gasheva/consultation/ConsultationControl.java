@@ -43,13 +43,14 @@ public class ConsultationControl {
         if (varName==null){}        //TODO
         Variable target = variableModel.getVariable(varName);
         workingMemory = new WorkingMemory();
+        System.out.println("size = "+workingMemory.getAllVariables().size());
         mlv = new MLV();
         String val = mlv.defineGlobalTarget(target, ruleModel, variableModel, domainModel, this);
-        consultationView.showMessage("Целевая переменная "+target.getName()+" = "+val);
     }
 
     public void explainAnswer() {
         explanationView = new ExplanationForm(this, ruleModel, variableModel, domainModel);
+        explanationView.createView();
     }
 
 }

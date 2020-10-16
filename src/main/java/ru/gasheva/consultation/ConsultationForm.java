@@ -52,7 +52,7 @@ public class ConsultationForm extends JDialog{
         setLocationRelativeTo(null);
         setVisible(true);
     }
-    public void createControls(){
+    private void createControls(){
         myModel = new TableModel(new String[]{"Вопрос", "Ответ"});
         initTable(tblConsultation, myModel);
 

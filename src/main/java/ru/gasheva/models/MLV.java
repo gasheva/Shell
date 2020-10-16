@@ -20,6 +20,7 @@ public class MLV {
         this.variableModel = variableModel;
         this.domainModel = domainModel;
         workingMemory = control.getWorkingMemory();
+        //this.workingMemory = workingMemory;
         this.control = control;
         int i = 0;
 //        while (i <= ruleModel.size()) {
