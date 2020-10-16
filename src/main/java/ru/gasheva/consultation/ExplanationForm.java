@@ -10,6 +10,10 @@ import ru.gasheva.models.classes.Rule;
 import ru.gasheva.models.classes.Variable;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.plaf.basic.BasicTreeUI;
 import javax.swing.tree.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -21,6 +25,7 @@ public class ExplanationForm extends JDialog {
     private JButton buttonOK;
     private JTree treeRules;
     private JTable tblVariables;
+    private JScrollPane spTree;
     private TableModel myModel;
     private ConsultationControl control;
     private RuleModel ruleModel;
@@ -48,7 +53,9 @@ public class ExplanationForm extends JDialog {
     private void createControls(){
         myModel = new TableModel(new String[]{"Имя", "Значение"});
         initTable(tblVariables, myModel);
-
+        //spTree.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(50,50,50,50), new EtchedBorder()));
+        //treeRules.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10,10,10,10), new EtchedBorder()));
+        treeRules.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         fillTree();
         fillTable();
 
@@ -89,9 +96,11 @@ public class ExplanationForm extends JDialog {
 //        System.out.println("ALL RULES");
 
         treeRules.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+
+
+
         Rule r = control.getWorkingMemory().getUsingRule(0);
-        String ruleFormat = "ЦЕЛЬ: "+r.getConclusion(0).getVariable().getName()+"\n";
-        ruleFormat+=r.getRuleToString().replace("THEN", "\n THEN");
+        String ruleFormat = "<html>ЦЕЛЬ nnnnnnnnnnnnnnnnnnnnnnnnn: "+r.getConclusion(0).getVariable().getName()+"<br>"+ r.getRuleToString().replace("THEN", "<br> THEN")+"</html>";
         System.out.println(ruleFormat);
 
         r = control.getWorkingMemory().getUsingRule(1);
@@ -112,21 +121,34 @@ public class ExplanationForm extends JDialog {
             @Override
             public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded,
                                                           boolean leaf, int row, boolean hasFocus) {
+                super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
                 if(value != null ){
                     DefaultMutableTreeNode node =  (DefaultMutableTreeNode)value;
-                    if(node.isLeaf()){
+                    if(tree.getModel().getRoot().equals(node)){
+                    }
+                    else if(node.isLeaf()){
+                        setIcon(leafIcon);
                         String animal = (String) ((DefaultMutableTreeNode)value).getUserObject();
                         this.setText(animal);
-                        setIcon(leafIcon);
-                    }else {
-
-                        return super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
+                    }
+                    else{
                     }
                 }
                 return this;
             }
 
         });
+        collapseNodes();
+    }
+    private void expandNodes(){
+        for(int i=0; i<treeRules.getRowCount(); i++){
+            treeRules.expandRow(i);
+        }
+    }
+    private void collapseNodes(){
+        for(int i=0; i<treeRules.getRowCount(); i++){
+            treeRules.collapseRow(i);
+        }
     }
 
 }
