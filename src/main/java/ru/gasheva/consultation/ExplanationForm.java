@@ -26,6 +26,7 @@ public class ExplanationForm extends JDialog {
     private JTree treeRules;
     private JTable tblVariables;
     private JScrollPane spTree;
+    private JLabel lblExpandAll;
     private TableModel myModel;
     private ConsultationControl control;
     private RuleModel ruleModel;
@@ -53,8 +54,6 @@ public class ExplanationForm extends JDialog {
     private void createControls(){
         myModel = new TableModel(new String[]{"Имя", "Значение"});
         initTable(tblVariables, myModel);
-        //spTree.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(50,50,50,50), new EtchedBorder()));
-        //treeRules.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10,10,10,10), new EtchedBorder()));
         treeRules.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         fillTree();
         fillTable();
@@ -128,8 +127,8 @@ public class ExplanationForm extends JDialog {
                     }
                     else if(node.isLeaf()){
                         setIcon(leafIcon);
-                        String animal = (String) ((DefaultMutableTreeNode)value).getUserObject();
-                        this.setText(animal);
+                        String val = (String) ((DefaultMutableTreeNode)value).getUserObject();
+                        this.setText(val);
                     }
                     else{
                     }
@@ -151,4 +150,8 @@ public class ExplanationForm extends JDialog {
         }
     }
 
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+        lblExpandAll.setText("<html><u>(раскрыть все)</u></html>");
+    }
 }
