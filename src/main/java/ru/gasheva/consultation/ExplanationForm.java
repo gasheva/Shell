@@ -16,9 +16,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.plaf.basic.BasicTreeUI;
 import javax.swing.tree.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
 public class ExplanationForm extends JDialog {
     private JPanel contentPane;
@@ -58,6 +56,32 @@ public class ExplanationForm extends JDialog {
         fillTree();
         fillTable();
 
+        lblExpandAll.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                expandNodes();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
     private void initTable(JTable table, TableModel model) {
@@ -90,9 +114,9 @@ public class ExplanationForm extends JDialog {
 
     //заполнение дерева
     private void fillTree() {
-//        System.out.println("ALL RULES:");
-//         ruleModel.getRules().forEach(x-> System.out.println(x.getRuleToString()));
-//        System.out.println("ALL RULES");
+        System.out.println("ALL RULES:");
+         control.getWorkingMemory().getUsingRules().forEach(x-> System.out.println(x.getValue()+" "+x.getKey().getRuleToString()));
+        System.out.println("ALL RULES");
 
         treeRules.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 
@@ -151,7 +175,7 @@ public class ExplanationForm extends JDialog {
     }
 
     private void createUIComponents() {
-        // TODO: place custom component creation code here
-        lblExpandAll.setText("<html><u>(раскрыть все)</u></html>");
+        lblExpandAll = new JLabel("<html><u>(раскрыть все)</u></html>");
+        lblExpandAll.setForeground(Color.blue);
     }
 }

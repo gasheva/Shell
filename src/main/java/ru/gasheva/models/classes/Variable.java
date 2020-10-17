@@ -1,5 +1,7 @@
 package ru.gasheva.models.classes;
 
+import java.util.Objects;
+
 public class Variable {
     String name;
     VarType varType;
@@ -60,6 +62,12 @@ public class Variable {
 
     @Override
     public boolean equals(Object obj) {
+        if (obj==null || obj.getClass()!=getClass()) return false;
         return this.getName().equals(((Variable)obj).getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

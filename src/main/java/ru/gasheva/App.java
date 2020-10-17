@@ -5,9 +5,30 @@ import ru.gasheva.models.classes.*;
 import ru.gasheva.models.jsonhandler.JsonHandler;
 import ru.gasheva.models.jsonhandler.Message;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class App {
     public static void main(String[] args) {
-          MainControl control = new MainControl();
+          //MainControl control = new MainControl();
+        Map<Variable, DomainValue> curVariableValues = new HashMap<Variable, DomainValue>();
+        Variable v1 = new Variable("v1");
+        Variable v2 = new Variable("v1");
+        Rule r1 = new Rule("r1");
+        Rule r2 = new Rule("r2");
+        r1.addCondition(new Fact(v1, new DomainValue("d1")));
+        r2.addCondition(new Fact(v2, new DomainValue("d1")));
+        Variable v11 = r1.getCondition(0).getVariable();
+        Variable v21 = r2.getCondition(0).getVariable();
+        System.out.println(v11==v1);
+        System.out.println(v11==v21);
+        System.out.println(v11.equals(v21));
+
+        System.out.println("Equal? "+v1.equals(v2));
+        //curVariableValues.put(new Variable("v1"), new DomainValue("d1"));
+        curVariableValues.put(v2, new DomainValue("d1"));
+        System.out.println("Contain? "+curVariableValues.containsKey(v1));
+
 //        Message message = new Message();
 //        JsonHandler<Message> jsonHandler = new JsonHandler<Message>(Message.class);
 //        Rule[] rules = new Rule[1];

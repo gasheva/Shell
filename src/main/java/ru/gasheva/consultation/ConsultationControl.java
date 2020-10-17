@@ -10,7 +10,7 @@ public class ConsultationControl {
     private VariableModel variableModel;
     private DomainModel domainModel;
     private ConsultationForm consultationView;
-    ExplanationForm explanationView;
+    private ExplanationForm explanationView;
     private MLV mlv;
     private WorkingMemory workingMemory;
 
