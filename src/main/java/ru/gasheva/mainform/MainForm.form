@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="ru.gasheva.mainform.MainForm">
+  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="904" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="7b359" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <tabbedpane id="4ebf1" binding="tabbedPane">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <preferred-size width="200" height="200"/>
+              </grid>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <grid id="1b48c" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <tabbedpane title="Правила"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <splitpane id="e72c8" binding="spRules">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                        <preferred-size width="200" height="200"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <dividerLocation value="70"/>
+                    </properties>
+                    <border type="none"/>
+                    <children>
+                      <grid id="cb73b" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                        <margin top="0" left="0" bottom="0" right="0"/>
+                        <constraints>
+                          <splitpane position="left"/>
+                        </constraints>
+                        <properties>
+                          <background color="-1"/>
+                        </properties>
+                        <border type="none"/>
+                        <children>
+                          <grid id="2a3ff" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                            <margin top="0" left="0" bottom="0" right="0"/>
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                                <minimum-size width="20" height="-1"/>
+                                <preferred-size width="200" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties>
+                              <background color="-1"/>
+                            </properties>
+                            <border type="line">
+                              <color color="-15325103"/>
+                            </border>
+                            <children>
+                              <scrollpane id="c039f" binding="scpRule">
+                                <constraints>
+                                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <background color="-1"/>
+                                  <toolTipText value=""/>
+                                </properties>
+                                <border type="none"/>
+                                <children>
+                                  <component id="1ae4a" class="javax.swing.JTable" binding="tblInfo" custom-create="true">
+                                    <constraints/>
+                                    <properties/>
+                                  </component>
+                                </children>
+                              </scrollpane>
+                            </children>
+                          </grid>
+                        </children>
+                      </grid>
+                      <grid id="386d7" binding="manageRulesPanel" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                        <margin top="0" left="0" bottom="0" right="0"/>
+                        <constraints>
+                          <splitpane position="right"/>
+                        </constraints>
+                        <properties>
+                          <maximumSize width="100" height="2147483647"/>
+                          <preferredSize width="80" height="217"/>
+                        </properties>
+                        <border type="none"/>
+                        <children>
+                          <grid id="18e0a" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                            <margin top="0" left="0" bottom="0" right="0"/>
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="line" title="Редактирование">
+                              <color color="-15325103"/>
+                            </border>
+                            <children>
+                              <component id="7c26c" class="javax.swing.JButton" binding="btnDelete">
+                                <constraints>
+                                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value="Удалить"/>
+                                </properties>
+                              </component>
+                              <component id="25b7" class="javax.swing.JButton" binding="btnEdit">
+                                <constraints>
+                                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value="Изменить"/>
+                                </properties>
+                              </component>
+                              <component id="262d9" class="javax.swing.JButton" binding="btnAdd">
+                                <constraints>
+                                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value="Добавить"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                          <grid id="35305" binding="prepPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                            <margin top="0" left="0" bottom="0" right="0"/>
+                            <constraints>
+                              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none" title="">
+                              <color color="-15325103"/>
+                            </border>
+                            <children>
+                              <scrollpane id="3718d">
+                                <constraints>
+                                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties/>
+                                <border type="none"/>
+                                <children>
+                                  <component id="72e7b" class="javax.swing.JTextArea" binding="tfTop">
+                                    <constraints/>
+                                    <properties/>
+                                  </component>
+                                </children>
+                              </scrollpane>
+                              <component id="5bcf2" class="javax.swing.JLabel" binding="lblPrep">
+                                <constraints>
+                                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value="Посылка"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                          <grid id="f15df" binding="conclusionPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                            <margin top="0" left="0" bottom="0" right="0"/>
+                            <constraints>
+                              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none" title="">
+                              <color color="-15325103"/>
+                            </border>
+                            <children>
+                              <scrollpane id="5f703">
+                                <constraints>
+                                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties/>
+                                <border type="none"/>
+                                <children>
+                                  <component id="a38fd" class="javax.swing.JTextArea" binding="tfBottom">
+                                    <constraints/>
+                                    <properties/>
+                                  </component>
+                                </children>
+                              </scrollpane>
+                              <component id="d555b" class="javax.swing.JLabel" binding="lblConcl">
+                                <constraints>
+                                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value="Заключение"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                          <grid id="6aa57" binding="explanationPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                            <margin top="0" left="0" bottom="0" right="0"/>
+                            <constraints>
+                              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="33ade" class="javax.swing.JLabel">
+                                <constraints>
+                                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value="Пояснение"/>
+                                </properties>
+                              </component>
+                              <scrollpane id="1c88d">
+                                <constraints>
+                                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties/>
+                                <border type="none"/>
+                                <children>
+                                  <component id="6d1d4" class="javax.swing.JTextArea" binding="tfExplanation">
+                                    <constraints/>
+                                    <properties/>
+                                  </component>
+                                </children>
+                              </scrollpane>
+                            </children>
+                          </grid>
+                        </children>
+                      </grid>
+                    </children>
+                  </splitpane>
+                </children>
+              </grid>
+            </children>
+          </tabbedpane>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>
