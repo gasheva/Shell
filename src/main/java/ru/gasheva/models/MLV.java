@@ -70,11 +70,11 @@ public class MLV {
 //                }
 //            }
 //        }
-        defineLocalTarget(globalTarget, 0);
+        defineLocalTarget(globalTarget, "");
         return workingMemory.get(globalTarget).getValue();
     }
 
-    private void defineLocalTarget(Variable localTarget, int parentIndex) {
+    private void defineLocalTarget(Variable localTarget, String parentName) {
         if (workingMemory.hasValue(localTarget)) return;
         //находим правило с подцелью
         int i = 0;
@@ -92,7 +92,7 @@ public class MLV {
                 int j = 0;
                 while (j <= curRule.conditionsSize()) {     // проходим по предпосылкам
                     if (j == curRule.conditionsSize()) {      //если прошли все, то означиваем подцель
-                        workingMemory.add(curRule, parentIndex);
+                        workingMemory.add(curRule, parentName);
                         workingMemory.add(localTarget, curRule.getConclusion(0).getDomainValue());
                         return;
                     } else {
@@ -111,7 +111,7 @@ public class MLV {
                                     String val = control.askVariableValue(curVar);
                                     workingMemory.add(curVar, new DomainValue(val));
                                 case RESOLVE:
-                                    defineLocalTarget(curVar, i);
+                                    defineLocalTarget(curVar, curRule.getName());
                             }
                             if (workingMemory.get(curVar).equals(curRule.getCondition(j).getDomainValue())) {   //если значение нужное, то переходим к след переменной
                                 j++;

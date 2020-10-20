@@ -15,6 +15,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.plaf.basic.BasicTreeUI;
+import javax.swing.text.Position;
 import javax.swing.tree.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -114,32 +115,56 @@ public class ExplanationForm extends JDialog {
         tblVariables.getColumnModel().getColumn(0).setPreferredWidth(80);
     }
 
+    DefaultMutableTreeNode goodNode=null;
+    private void getNode(int indexInTree, DefaultMutableTreeNode node, int indexSumm){
+        if (goodNode!=null) return;
+        for (int i=0; i<node.getChildCount(); i++){
+            DefaultMutableTreeNode curNode = (DefaultMutableTreeNode)node.getChildAt(i);
+            if (indexSumm + curNode.getChildCount() + 1 >=indexInTree)  {    //где-то здесь нужный узел
+                goodNode = (DefaultMutableTreeNode)curNode.getChildAt(indexInTree-indexSumm-1);
+            }
+            else{
+                getNode(indexInTree, curNode, indexSumm+node.getChildCount()+1);
+            }
+        }
+    }
     //заполнение дерева
     private void fillTree() {
-//        System.out.println("ALL RULES:");
-//         control.getWorkingMemory().getUsingRules().forEach(x-> System.out.println(x.getValue()+" "+x.getKey().getRuleToString()));
-//        System.out.println("ALL RULES");
-        treeRules.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-        int nodeCount = 0;
+        System.out.println("ALL RULES:");
+        control.getWorkingMemory().getUsingRules().forEach(x-> System.out.println(x.getValue()+" "+x.getKey().getRuleToString()));
+        System.out.println("ALL RULES");
 
-        List<Pair<Rule, Integer>> rules = control.getWorkingMemory().getUsingRules();
-        DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode(rules.get(rules.size()-1).getKey());
+        treeRules.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+
+        List<Pair<Rule, String>> rules = control.getWorkingMemory().getUsingRules();
+        //String ruleFormat = "<html>ЦЕЛЬ: "+rules.get(0).getKey().getConclusion(0).getVariable().getName()+"<br>"+ rules.get(0).getKey().getRuleToString().replace("THEN", "<br> THEN")+"</html>";
+        String ruleFormat = "<html><b>"+rules.get(rules.size()-1).getKey().getName()+"</b><br>"+ rules.get(rules.size()-1).getKey().getRuleToString().replace("THEN", "<br> THEN")+"</html>";
+
+        DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode(ruleFormat);
+
         DefaultTreeModel model = (DefaultTreeModel) treeRules.getModel();
         model.setRoot(rootNode);
-        nodeCount++;
 
         for (int i=rules.size()-2;i>=0; i--){
-            DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(rules.get(i).getKey());
-            int j = 0;
-            for (j = 0; j<rules.size();j++){
-                if(rules.get(j).getKey().getName().equals(ruleModel.getRule((rules.get(i).getValue())).getName())) break;
-            }
-            j = nodeCount - j;
-            TreePath path = treeRules.getPathForRow(j);     //TODO: получить j узел
-            DefaultMutableTreeNode node=(DefaultMutableTreeNode)path.getLastPathComponent();
-            node.add(childNode);
-            nodeCount++;
+            Rule r = rules.get(i).getKey();
+            //DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(r.getName());
+            //ruleFormat = "<html>ЦЕЛЬ: "+r.getConclusion(0).getVariable().getName()+"<br>"+ r.getRuleToString().replace("THEN", "<br> THEN")+"</html>";
+            ruleFormat = "<html><b>"+r.getName()+"</b><br>"+ r.getRuleToString().replace("THEN", "<br> THEN")+"</html>";
+            expandNodes();
+
+            String prefix = "<html><b>"+rules.get(i).getValue();
+            TreePath path = treeRules.getNextMatch(prefix, 0, Position.Bias.Forward);
+            if (path!=null)System.out.println(path.toString());
+            else System.out.println("path is null");
+            if (path!=null)((DefaultMutableTreeNode)path.getLastPathComponent()).add(new DefaultMutableTreeNode(ruleFormat));
         }
+        treeRules.updateUI();
+
+
+
+
+
+        //System.out.println(((DefaultMutableTreeNode)path.getLastPathComponent()).getUserObject().toString());
 
 
         treeRules.setCellRenderer( new DefaultTreeCellRenderer(){
@@ -152,9 +177,11 @@ public class ExplanationForm extends JDialog {
                     if(node.isLeaf()){
                         setIcon(leafIcon);
                     }
-                    Rule r = (Rule) ((DefaultMutableTreeNode)value).getUserObject();
-                    String ruleFormat = "<html>ЦЕЛЬ: "+r.getConclusion(0).getVariable().getName()+"<br>"+ r.getRuleToString().replace("THEN", "<br> THEN")+"</html>";
-                    this.setText(ruleFormat);
+//                    Rule r = (Rule) ((DefaultMutableTreeNode)value).getUserObject();
+//                    String ruleFormat = "<html>ЦЕЛЬ: "+r.getConclusion(0).getVariable().getName()+"<br>"+ r.getRuleToString().replace("THEN", "<br> THEN")+"</html>";
+//                    this.setText(ruleFormat);
+                    String r = (String) ((DefaultMutableTreeNode)value).getUserObject();
+                    this.setText(r);
                 }
                 return this;
             }
