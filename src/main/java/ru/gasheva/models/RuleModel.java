@@ -33,7 +33,7 @@ public class RuleModel  implements ModelInterface{
         rules.remove(getRule(name));
     }
     public Rule getRule(String name){
-        return rules.stream().filter(x->x.getName()==name).findAny().get();
+        return rules.stream().filter(x->x.getName().equals(name)).findAny().get();
     }
     public Rule getRule(int index){return rules.get(index);}
 

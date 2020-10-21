@@ -123,10 +123,12 @@ public class MainForm extends JFrame implements IRowReorderable{
         });
         miOpen.addActionListener(e->miOpenClicked());
         miSave.addActionListener(e->miSaveClicked());
+        miNew.addActionListener(e->miNewClicked());
         miBeginCons.addActionListener(e->miBeginConsClicked());
         mainPanel.registerKeyboardAction(e -> BtnAddClicked(), KeyStroke.getKeyStroke(KeyEvent.VK_INSERT, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
     }
+    private void miNewClicked(){control.newConsultation();}
     private void miBeginConsClicked(){control.beginConsultation();}
     private void miSaveClicked(){control.saveInFile();}
     private void miOpenClicked(){control.loadData();}

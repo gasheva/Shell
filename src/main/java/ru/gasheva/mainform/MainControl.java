@@ -104,6 +104,9 @@ public class MainControl{
 
     public void beginConsultation() {
         consultationControl = new ConsultationControl(ruleModel, variableModel, domainModel);
+    }
 
+    public void newConsultation() {
+        //TODO
     }
 }

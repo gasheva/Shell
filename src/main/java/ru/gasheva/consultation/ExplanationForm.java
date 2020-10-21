@@ -20,6 +20,8 @@ import javax.swing.tree.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ExplanationForm extends JDialog {
     private JPanel contentPane;
@@ -28,6 +30,7 @@ public class ExplanationForm extends JDialog {
     private JTable tblVariables;
     private JScrollPane spTree;
     private JLabel lblExpandAll;
+    private JTextArea tfExplanation;
     private TableModel myModel;
     private ConsultationControl control;
     private RuleModel ruleModel;
@@ -59,6 +62,51 @@ public class ExplanationForm extends JDialog {
         fillTree();
         fillTable();
 
+        treeRules.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (treeRules.getSelectionCount()>0){
+                    TreePath path = treeRules.getSelectionPath();
+                    if (path==null) return;
+                    String nodeVal = (String)((DefaultMutableTreeNode)path.getLastPathComponent()).getUserObject();
+                    if (nodeVal==null) return;
+                    Pattern pattern = Pattern.compile("<html><b>.+?</b>");
+                    Matcher matcher = pattern.matcher(nodeVal);
+                    String name="";
+                    while (matcher.find()) {
+                        name = nodeVal.substring(matcher.start(), matcher.end());
+                    }
+                    System.out.println(name);
+                    name=name.replaceFirst("<html><b>", "");
+                    name=name.replaceFirst("</b>", "");
+
+                    Rule r = ruleModel.getRule(name);
+                    if (r!=null) {
+                        tfExplanation.setText(r.getExplanation());
+                    }
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
         lblExpandAll.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
