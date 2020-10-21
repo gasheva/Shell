@@ -31,6 +31,7 @@ public class ExplanationForm extends JDialog {
     private JScrollPane spTree;
     private JLabel lblExpandAll;
     private JTextArea tfExplanation;
+    private JSplitPane spHorizontal;
     private TableModel myModel;
     private ConsultationControl control;
     private RuleModel ruleModel;
@@ -51,11 +52,12 @@ public class ExplanationForm extends JDialog {
         setModal(true);
         createControls();
 
-        pack();
+        setSize(600, 600);
         setLocationRelativeTo(null);
         setVisible(true);
     }
     private void createControls(){
+        spHorizontal.setDividerLocation(0.8);
         myModel = new TableModel(new String[]{"Имя", "Значение"});
         initTable(tblVariables, myModel);
         treeRules.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
@@ -134,6 +136,7 @@ public class ExplanationForm extends JDialog {
             }
         });
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
     }
     private void initTable(JTable table, TableModel model) {
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -205,6 +208,7 @@ public class ExplanationForm extends JDialog {
             if (path!=null)System.out.println(path.toString());
             else System.out.println("path is null");
             if (path!=null)((DefaultMutableTreeNode)path.getLastPathComponent()).add(new DefaultMutableTreeNode(ruleFormat));
+            treeRules.updateUI();
         }
         treeRules.updateUI();
 
