@@ -96,6 +96,7 @@ public class MainControl{
     public void saveInFile() {
         String path = view.getFileToWrite();
         if (path==null) return;
+        path+=".json";
         Message message = new Message(ruleModel.getRules().toArray(new Rule[0]), variableModel.getVariables().toArray(new Variable[0]), domainModel.getDomains().toArray(new Domain[0]));
         JsonHandler<Message> jsonHandler = new JsonHandler<Message>(Message.class);
         if (!jsonHandler.writeInFile(path, message)) view.showMessage("Данные не сохранились");

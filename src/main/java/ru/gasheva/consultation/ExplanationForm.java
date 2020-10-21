@@ -160,10 +160,6 @@ public class ExplanationForm extends JDialog {
         }
         treeRules.updateUI();
 
-
-
-
-
         //System.out.println(((DefaultMutableTreeNode)path.getLastPathComponent()).getUserObject().toString());
 
 

@@ -8,9 +8,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.tools.JavaFileManager;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 
 public class MainForm extends JFrame implements IRowReorderable{
     private JPanel mainPanel;
@@ -96,6 +94,33 @@ public class MainForm extends JFrame implements IRowReorderable{
         btnDelete.addActionListener(e->BtnDeleteClicked());
         tabbedPane.addChangeListener(e -> tabbedPaneChanged());
         tblInfo.getSelectionModel().addListSelectionListener(e -> TableSelectionValueChanged());
+        tblInfo.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount()==2)
+                    tblInfo.clearSelection();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
         miOpen.addActionListener(e->miOpenClicked());
         miSave.addActionListener(e->miSaveClicked());
         miBeginCons.addActionListener(e->miBeginConsClicked());
@@ -165,6 +190,7 @@ public class MainForm extends JFrame implements IRowReorderable{
         //column size
         tblInfo.getColumnModel().getColumn(0).setMaxWidth(100);
         tblInfo.getColumnModel().getColumn(0).setPreferredWidth(80);
+
     }
     public void changePrepPanelText(String title){
         lblPrep.setText(title);

@@ -73,8 +73,10 @@ public class CreateDomainForm extends JDialog implements IRowReorderable {
         tfDomainValue.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                tfDomainValue.setSelectionStart(0);
-                tfDomainValue.setSelectionEnd(tfDomainValue.getText().length());
+                if (e.getClickCount()==2) {
+                    tfDomainValue.setSelectionStart(0);
+                    tfDomainValue.setSelectionEnd(tfDomainValue.getText().length());
+                }
             }
 
             @Override
