@@ -69,4 +69,8 @@ public class VariableModel implements ModelInterface{
     public void clear() {
         variables.clear();
     }
+
+    public boolean isEmpty() {
+        return variables.isEmpty();
+    }
 }

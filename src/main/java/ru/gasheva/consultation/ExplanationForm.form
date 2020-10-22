@@ -91,7 +91,7 @@
                     <properties/>
                     <border type="none"/>
                     <children>
-                      <component id="7403e" class="javax.swing.JTable" binding="tblVariables">
+                      <component id="7403e" class="javax.swing.JTable" binding="tblVariables" custom-create="true">
                         <constraints/>
                         <properties/>
                       </component>

@@ -62,4 +62,8 @@ public class RuleModel  implements ModelInterface{
     public void clear() {
         rules.clear();
     }
+
+    public boolean isEmpy() {
+        return rules.isEmpty();
+    }
 }

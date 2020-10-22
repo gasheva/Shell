@@ -16,8 +16,10 @@ import ru.gasheva.models.jsonhandler.Message;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Timer;
 
 public class MainControl{
+    final String BACKUP_PATH = "backup.json";
     RuleModel ruleModel;
     DomainModel domainModel;
     VariableModel variableModel;
@@ -27,11 +29,14 @@ public class MainControl{
     ControlInterface currentControl;
     ControlInterface ruleControl;
     ConsultationControl consultationControl;
+    AutoSave autoSave;
 
     public MainControl() {
+
         ruleModel = new RuleModel();
         variableModel = new VariableModel();
         domainModel = new DomainModel();
+
 
         view = new MainForm(this);
         view.createView();
@@ -43,12 +48,17 @@ public class MainControl{
 
         currentControl = ruleControl;
 
+        if (view.doesLoadAutosave())
+            loadData(BACKUP_PATH);
+
+        autoSave = new AutoSave(ruleModel, variableModel, domainModel);
+        Timer timer = new Timer();
+        timer.schedule(autoSave, 0, 1000*60*5);     //каждые 5 минут
     }
 
     public void add() {
         currentControl.add();
     }
-
 
     public void edit() {
         currentControl.edit();
@@ -76,8 +86,7 @@ public class MainControl{
         currentControl.tableSelectionValueChanged();
     }
 
-    public void loadData() {
-        String path = view.getFileToOpen();
+    public void loadData(String path) {
         if (path==null) return;
         Message message;
         JsonHandler<Message> jsonHandler = new JsonHandler<Message>(Message.class);
@@ -111,5 +120,13 @@ public class MainControl{
         variableModel.clear();
         domainModel.clear();
         currentControl.redraw();
+    }
+
+    public String getPathToAutosafe(){
+        return BACKUP_PATH;
+    }
+    public void exit() {
+        autoSave.cancel();
+        view.Dispose();
     }
 }

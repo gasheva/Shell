@@ -74,4 +74,8 @@ public class DomainModel implements ModelInterface {
     public void clear() {
         domains.clear();
     }
+
+    public boolean isEmpty() {
+        return domains.isEmpty();
+    }
 }

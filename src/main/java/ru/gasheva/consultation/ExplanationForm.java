@@ -18,11 +18,15 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.plaf.basic.BasicTreeUI;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 import javax.swing.text.Position;
 import javax.swing.tree.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,7 +46,8 @@ public class ExplanationForm extends JDialog {
     private VariableModel variableModel;
     private DomainModel domainModel;
     private WrapTableCellRenderer tableCellRenderer = new WrapTableCellRenderer();
-
+    private Set<Integer> coloredRows = new HashSet();
+    private int coloredRowTarget;
 
     public ExplanationForm(ConsultationControl control, RuleModel ruleModel, VariableModel variableModel, DomainModel domainModel) {
         this.ruleModel = ruleModel;
@@ -79,23 +84,18 @@ public class ExplanationForm extends JDialog {
                     Rule selectedRule = (Rule)((DefaultMutableTreeNode) path.getLastPathComponent()).getUserObject();
                     tfExplanation.setText(selectedRule.getExplanation());
 
+                    coloredRows.clear();
+                    for(int j=0; j<tblVariables.getRowCount(); j++){
+                        for(int i=0; i<selectedRule.conditionsSize(); i++)
+                            if (selectedRule.getCondition(i).getVariable().getName().equals(tblVariables.getValueAt(j, 0))){
+                                coloredRows.add(j);
+                                break;
+                            }
+                        if (tblVariables.getValueAt(j, 0).equals(selectedRule.getConclusion(0).getVariable().getName()))
+                            coloredRowTarget = j;
+                    }
 
-//                    String nodeVal = (String)((DefaultMutableTreeNode)path.getLastPathComponent()).getUserObject();
-//                    if (nodeVal==null) return;
-//                    Pattern pattern = Pattern.compile("<html><b>.+?</b>");
-//                    Matcher matcher = pattern.matcher(nodeVal);
-//                    String name="";
-//                    while (matcher.find()) {
-//                        name = nodeVal.substring(matcher.start(), matcher.end());
-//                    }
-//                    System.out.println(name);
-//                    name=name.replaceFirst("<html><b>", "");
-//                    name=name.replaceFirst("</b>", "");
-//
-//                    Rule r = ruleModel.getRule(name);
-//                    if (r!=null) {
-//                        tfExplanation.setText(r.getExplanation());
-//                    }
+                    tblVariables.updateUI();
                 }
             }
         });
@@ -230,5 +230,20 @@ public class ExplanationForm extends JDialog {
         lblExpandAll = new JLabel("<html><u>(раскрыть все)</u></html>");
         lblExpandAll.setForeground(Color.blue);
         lblExpandAll.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        tblVariables = new JTable( myModel )
+        {
+            public Component prepareRenderer(TableCellRenderer renderer, int row, int column)
+            {
+                Component c = super.prepareRenderer(renderer, row, column);
+                if (!isRowSelected(row))
+                    if (!coloredRows.isEmpty()) {
+                        c.setBackground(coloredRows.contains(row) ? Color.PINK : getBackground());
+                        c.setBackground(row == coloredRowTarget ? Color.YELLOW : getBackground());
+                    }
+
+                return c;
+            }
+        };
     }
 }
