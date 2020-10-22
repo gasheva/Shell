@@ -32,6 +32,7 @@ public class ExplanationForm extends JDialog {
     private JLabel lblExpandAll;
     private JTextArea tfExplanation;
     private JSplitPane spHorizontal;
+    private JScrollPane tblScroll;
     private TableModel myModel;
     private ConsultationControl control;
     private RuleModel ruleModel;
@@ -53,16 +54,17 @@ public class ExplanationForm extends JDialog {
         createControls();
 
         setSize(600, 600);
+        spHorizontal.setDividerLocation(0.8);
         setLocationRelativeTo(null);
         setVisible(true);
     }
     private void createControls(){
-        spHorizontal.setDividerLocation(0.8);
         myModel = new TableModel(new String[]{"Имя", "Значение"});
         initTable(tblVariables, myModel);
         treeRules.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         fillTree();
         fillTable();
+        tblScroll.getViewport().setBackground(Color.white);
 
         treeRules.addMouseListener(new MouseListener() {
             @Override
@@ -109,6 +111,7 @@ public class ExplanationForm extends JDialog {
 
             }
         });
+
         lblExpandAll.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -251,5 +254,6 @@ public class ExplanationForm extends JDialog {
     private void createUIComponents() {
         lblExpandAll = new JLabel("<html><u>(раскрыть все)</u></html>");
         lblExpandAll.setForeground(Color.blue);
+        lblExpandAll.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
 }

@@ -106,7 +106,10 @@ public class MainControl{
         consultationControl = new ConsultationControl(ruleModel, variableModel, domainModel);
     }
 
-    public void newConsultation() {
-        //TODO
+    public void newES() {
+        ruleModel.clear();
+        variableModel.clear();
+        domainModel.clear();
+        currentControl.redraw();
     }
 }

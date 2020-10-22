@@ -70,4 +70,8 @@ public class DomainModel implements ModelInterface {
     }
 
     public void reorder(int from, int to, String id) {}
+
+    public void clear() {
+        domains.clear();
+    }
 }

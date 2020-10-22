@@ -65,4 +65,8 @@ public class VariableModel implements ModelInterface{
     public boolean isVariableExisting(Variable variable) {
         return variables.stream().anyMatch(x->x.equals(variable));
     }
+
+    public void clear() {
+        variables.clear();
+    }
 }

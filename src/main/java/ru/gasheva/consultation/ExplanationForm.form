@@ -15,7 +15,7 @@
           </grid>
         </constraints>
         <properties>
-          <dividerLocation value="300"/>
+          <dividerLocation value="263"/>
           <orientation value="0"/>
           <resizeWeight value="0.8"/>
         </properties>
@@ -84,7 +84,7 @@
                       <text value="Переменные"/>
                     </properties>
                   </component>
-                  <scrollpane id="6499">
+                  <scrollpane id="6499" binding="tblScroll">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>

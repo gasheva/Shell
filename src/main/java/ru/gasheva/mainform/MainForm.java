@@ -1,12 +1,10 @@
 package ru.gasheva.mainform;
 
-import javafx.stage.FileChooser;
 import ru.gasheva.models.ModelInterface;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.tools.JavaFileManager;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -84,10 +82,10 @@ public class MainForm extends JFrame implements IRowReorderable{
         tabbedPane.add("Переменные", tabbedPane.getTabComponentAt(0));
         tabbedPane.add("Домены", tabbedPane.getTabComponentAt(0));
         initTable();
-        spRules.setDividerLocation(0.7);
         tfTop.setEditable(false);
         tfBottom.setEditable(false);
-
+        //spRules.setLocation(new Point(1, getHeight() - getHeight()/8)); //TODO
+        spRules.setDividerLocation(0.7);
 
         btnAdd.addActionListener(e -> BtnAddClicked());
         btnEdit.addActionListener(e->BtnEditClicked());
@@ -128,7 +126,7 @@ public class MainForm extends JFrame implements IRowReorderable{
         mainPanel.registerKeyboardAction(e -> BtnAddClicked(), KeyStroke.getKeyStroke(KeyEvent.VK_INSERT, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
     }
-    private void miNewClicked(){control.newConsultation();}
+    private void miNewClicked(){control.newES();}
     private void miBeginConsClicked(){control.beginConsultation();}
     private void miSaveClicked(){control.saveInFile();}
     private void miOpenClicked(){control.loadData();}

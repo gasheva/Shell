@@ -112,6 +112,7 @@ public class ConsultationForm extends JDialog{
         String answer=null;
         int result = JOptionPane.showConfirmDialog(this, inputs, "", JOptionPane.PLAIN_MESSAGE);
         if (result==JOptionPane.OK_OPTION){
+            if (cb.getSelectedItem()==null) return null;
             answer = cb.getSelectedItem().toString();
         }
         return answer;

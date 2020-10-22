@@ -49,6 +49,10 @@ public class ConsultationControl {
     }
 
     public void explainAnswer() {
+        if (workingMemory.getUsingRules()==null ||workingMemory.getUsingRules().isEmpty()) {
+            consultationView.showMessage("Консультация не была проведена");
+            return;
+        }
         explanationView = new ExplanationForm(this, ruleModel, variableModel, domainModel);
         explanationView.createView();
     }
