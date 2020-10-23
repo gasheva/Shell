@@ -3,11 +3,11 @@ package ru.gasheva.models.classes;
 import java.util.Objects;
 
 public class Variable {
-    String name;
-    VarType varType;
-    String question;
-    Domain domain;
-    boolean isUsed = false;
+    private String name;
+    private VarType varType;
+    private String question;
+    private Domain domain;
+    private boolean isUsed = false;
 
     public Variable() {
     }
@@ -45,7 +45,11 @@ public class Variable {
         return domain;
     }
 
+    //TODO: добавление домена в переменную. Домен должен знать ид переменных
     public void setDomain(Domain domain) {
+        if (this.domain!=null)
+            this.domain.setUsed(false);
+        domain.setUsed(true);
         this.domain = domain;
     }
 

@@ -55,4 +55,10 @@ public class Domain {
         return ((Domain)obj).getName().equals(this.getName());
     }
 
+
+    public static void copy(Domain from, Domain to){
+        to.name = from.name;
+        to.isUsed = from.isUsed;
+        to.domainValues = from.domainValues;
+    }
 }

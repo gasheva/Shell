@@ -48,7 +48,9 @@ public class DomainControl implements ControlInterface {
         Domain newDomain = editDomain.getResult();
         if (newDomain==null) return;
         //обновляем модель
-        domainModel.setDomain(domainModel.getDomainIndex(domainName), newDomain);
+        Domain.copy(newDomain, selectedDomain);
+        //domainModel.setDomain(domainModel.getDomainIndex(domainName), selectedDomain);
+        System.out.println(domainModel.getDomain(0).getName());
 
         //обновляем вьюшку
         String[] domainString = new String[2];

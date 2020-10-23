@@ -45,4 +45,8 @@ public class Message {
         this.domains = domains;
     }
     //endregion
+
+//    public Message createMessage(){
+//
+//    }
 }
