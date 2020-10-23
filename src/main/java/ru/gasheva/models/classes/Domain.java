@@ -6,6 +6,7 @@ import java.util.List;
 public class Domain {
     //int id;
     String name;
+    boolean isUsed = false;
     List<DomainValue> domainValues = new ArrayList<>();
 
     public Domain() {
@@ -16,6 +17,15 @@ public class Domain {
     }
 
     //region Getter\Setter
+
+    public boolean isUsed() {
+        return isUsed;
+    }
+
+    public void setUsed(boolean used) {
+        isUsed = used;
+    }
+
     public String getName() {
         return name;
     }

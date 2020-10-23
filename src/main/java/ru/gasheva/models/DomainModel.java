@@ -43,7 +43,7 @@ public class DomainModel implements ModelInterface {
     public int size(){return domains.size();}
 
     @Override
-    public String[] getValuesForTable(int index) {
+    public String[] getValuesForTable(int index){
         Domain d = getDomain(index);
         //System.out.println("Domain name = "+d.getName());
         return new String[]{d.getName(), d.getDomainValuesInString()};
