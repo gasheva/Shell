@@ -93,6 +93,7 @@ public class MainControl{
 
         message = jsonHandler.readFromFile(path);
         if (message==null) {view.showMessage("Не удалось загрузить данные");return;}
+        message.setUsages();
         ruleModel.setRules(new ArrayList<>(Arrays.asList(message.getRules())));
         Variable[] v = message.getVariables();
         if (v!=null) variableModel.setVariables(new ArrayList<>(Arrays.asList(v)));
@@ -105,9 +106,14 @@ public class MainControl{
     public void saveInFile() {
         String path = view.getFileToWrite();
         if (path==null) return;
-        path+=".json";
-        Message message = new Message(ruleModel.getRules().toArray(new Rule[0]), variableModel.getVariables().toArray(new Variable[0]), domainModel.getDomains().toArray(new Domain[0]));
+        path = path.trim();
+        if (path.trim().length()==0) return;
+        if (path.lastIndexOf(".json")!=path.length()-".json".length())
+            path+=".json";
+        Message message = new Message(ruleModel.getRules(), variableModel.getVariables(), domainModel.getDomains());
         JsonHandler<Message> jsonHandler = new JsonHandler<Message>(Message.class);
+        message.createMessageToWrite();
+        System.out.println(domainModel.getDomain(0));
         if (!jsonHandler.writeInFile(path, message)) view.showMessage("Данные не сохранились");
     }
 

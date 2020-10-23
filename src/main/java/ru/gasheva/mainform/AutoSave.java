@@ -31,7 +31,7 @@ public class AutoSave extends TimerTask {
     public void run() {
         if (!ruleModel.isEmpy() || !variableModel.isEmpty() || !domainModel.isEmpty()) {
             System.out.println("Autosaving...");
-            Message message = new Message(ruleModel.getRules().toArray(new Rule[0]), variableModel.getVariables().toArray(new Variable[0]), domainModel.getDomains().toArray(new Domain[0]));
+            Message message = new Message(ruleModel.getRules(), variableModel.getVariables(), domainModel.getDomains());
             JsonHandler<Message> jsonHandler = new JsonHandler<Message>(Message.class);
             jsonHandler.writeInFile("backup.json", message);
         }
