@@ -52,7 +52,9 @@ public class VariableControl implements ControlInterface {
         Variable newVariable = editVariable.getResult();
         if (newVariable==null) return;
         //обновляем модель
-        variableModel.setVariable(variableModel.getVariableIndex(variableName), newVariable);
+        selectedVariable.getDomain().unsubscribe(selectedVariable); //отписываем старую переменную
+        Variable.copy(newVariable, selectedVariable);
+        //variableModel.setVariable(variableModel.getVariableIndex(variableName), newVariable);
 
         //обновляем вьюшку
         String[] domainString = new String[3];

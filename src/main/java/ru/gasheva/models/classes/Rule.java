@@ -46,13 +46,25 @@ public class Rule {
     }
     //endregion
 
-    public void addCondition(Fact fact){conditions.add(fact);}
-    public void addCondition(int index, Fact fact){conditions.add(index, fact);}
+    public void addCondition(Fact fact){
+        fact.getVariable().setUsed(true);
+        conditions.add(fact);
+    }
+    public void addCondition(int index, Fact fact){
+        fact.getVariable().setUsed(true);
+        conditions.add(index, fact);
+    }
     public Fact getCondition(int index){return conditions.get(index);}
     public int conditionsSize(){return conditions.size();}
 
-    public void addConclusion(Fact fact){conclutions.add(fact);}
-    public void addConclusion(int index, Fact fact){conclutions.add(index, fact);}
+    public void addConclusion(Fact fact){
+        fact.getVariable().setUsed(true);
+        conclutions.add(fact);
+    }
+    public void addConclusion(int index, Fact fact){
+        fact.getVariable().setUsed(true);
+        conclutions.add(index, fact);
+    }
     public Fact getConclusion(int index){return conclutions.get(index);}
     public int conclusionsSize(){return conclutions.size();}
 
@@ -87,6 +99,7 @@ public class Rule {
     }
 
     public void setConclusion(int id, Fact newFact) {
+        conclutions.forEach(x->x.getVariable().setUsed(false));
         conclutions.set(id, newFact);
     }
 

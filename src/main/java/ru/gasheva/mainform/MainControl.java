@@ -94,11 +94,12 @@ public class MainControl{
         message = jsonHandler.readFromFile(path);
         if (message==null) {view.showMessage("Не удалось загрузить данные");return;}
         message.setUsages();
+
         ruleModel.setRules(new ArrayList<>(Arrays.asList(message.getRules())));
         Variable[] v = message.getVariables();
         if (v!=null) variableModel.setVariables(new ArrayList<>(Arrays.asList(v)));
-        Domain[] d = message.getDomains();
-        if (d!=null) domainModel.setDomains(new ArrayList<>(Arrays.asList(d)));
+        ArrayList<Domain> d = message.getDomains();
+        if (d!=null) domainModel.setDomains(d);
 
         currentControl.redraw();
     }

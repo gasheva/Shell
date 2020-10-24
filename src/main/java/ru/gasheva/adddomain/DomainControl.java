@@ -44,6 +44,15 @@ public class DomainControl implements ControlInterface {
         }
         String domainName = view.getSelectedRowFirstColumnValue();
         Domain selectedDomain = domainModel.getDomain(domainName);
+        if (selectedDomain.isUsed()){
+            String msg = "Домен используется в переменных: ";
+            for(int i=0; i<selectedDomain.subscribersNumber(); i++){
+                msg+=selectedDomain.getSubscriber(i).getName() + (i<selectedDomain.subscribersNumber()-1 ? ", " : "");
+            }
+            view.showMessage(msg);
+        }
+
+
         editDomain = new EditDomainControl (domainModel, selectedDomain);
         Domain newDomain = editDomain.getResult();
         if (newDomain==null) return;

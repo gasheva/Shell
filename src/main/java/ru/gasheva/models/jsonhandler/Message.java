@@ -38,8 +38,8 @@ public class Message {
         this.variables = variables;
     }
 
-    public Domain[] getDomains() {
-        return domains.toArray(new Domain[0]);
+    public ArrayList<Domain> getDomains() {
+        return (ArrayList<Domain>) domains;
     }
 
     public void setDomains(List<Domain> domains) {
@@ -51,10 +51,14 @@ public class Message {
         List<Domain> notUsedDomains = new ArrayList<>();
         domains.forEach(x->{if (!x.isUsed()) notUsedDomains.add(x);});
         domains = notUsedDomains;
+
+
     }
     public void setUsages(){
-        variables.forEach(x->domains.add(x.getDomain()));
+        variables.forEach(x->{domains.add(x.getDomain()); x.getDomain().subscribe(x);});
+
     }
+
 //    public void setUsages(){
 //        for(int i=0; i<variables.length; i++){
 //            for(int j=0; j<domains.length; j++){

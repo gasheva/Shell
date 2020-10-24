@@ -16,6 +16,14 @@ public class Variable {
         this.name = name;
     }
 
+    public static void copy(Variable from, Variable to){
+        to.name = from.name;
+        to.varType = from.varType;
+        to.question = from.question;
+        to.domain = from.domain;
+        to.isUsed = from.isUsed;
+    }
+
     //region Getter-Setter
     public String getName() {
         return name;
@@ -45,11 +53,10 @@ public class Variable {
         return domain;
     }
 
-    //TODO: добавление домена в переменную. Домен должен знать ид переменных
     public void setDomain(Domain domain) {
         if (this.domain!=null)
-            this.domain.setUsed(false);
-        domain.setUsed(true);
+            this.domain.unsubscribe(this);
+        domain.subscribe(this);
         this.domain = domain;
     }
 
