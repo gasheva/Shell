@@ -35,7 +35,7 @@ public class VariableModel implements ModelInterface{
         variables.remove(removingVar);
     }
     public void insertValue(int index, Variable variable) {variables.add(index, variable);}
-    public Variable getVariable(String name){return variables.stream().filter(x->x.getName().equals(name)).findAny().get();}
+    public Variable getVariable(String name){return variables.stream().filter(x->x.getName().equals(name)).findAny().orElse(null);}
 
     @Override
     public int size(){return variables.size();}

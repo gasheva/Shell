@@ -3,8 +3,6 @@ package ru.gasheva.models.classes;
 //x = ...
 public class Fact {
     int id;
-//    int id_variable;
-//    int id_domain_value;
     Variable variable;
     DomainValue domainValue;
 
@@ -45,5 +43,19 @@ public class Fact {
     @Override
     public String toString(){
         return variable.getName()+"="+domainValue.getValue();
+    }
+
+    public static void copy(Fact from, Fact to){
+        to.id = from.id;
+        to.variable = from.variable;
+        to.domainValue = from.domainValue;
+    }
+
+    public Fact clone(){
+        Fact newFact = new Fact();
+        newFact.domainValue=this.domainValue;
+        newFact.variable = this.variable;
+        newFact.id = this.id;
+        return newFact;
     }
 }

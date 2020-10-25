@@ -93,11 +93,14 @@ public class MainControl{
 
         message = jsonHandler.readFromFile(path);
         if (message==null) {view.showMessage("Не удалось загрузить данные");return;}
-        message.setUsages();
+        message.setUsages(ruleModel, variableModel, domainModel);
 
-        ruleModel.setRules(new ArrayList<>(Arrays.asList(message.getRules())));
-        Variable[] v = message.getVariables();
-        if (v!=null) variableModel.setVariables(new ArrayList<>(Arrays.asList(v)));
+        ArrayList<Rule> r = message.getRules();
+        if (r!=null) ruleModel.setRules(r);
+
+        ArrayList<Variable> v = message.getVariables();
+        if (v!=null) variableModel.setVariables(v);
+
         ArrayList<Domain> d = message.getDomains();
         if (d!=null) domainModel.setDomains(d);
 
@@ -114,7 +117,6 @@ public class MainControl{
         Message message = new Message(ruleModel.getRules(), variableModel.getVariables(), domainModel.getDomains());
         JsonHandler<Message> jsonHandler = new JsonHandler<Message>(Message.class);
         message.createMessageToWrite();
-        System.out.println(domainModel.getDomain(0));
         if (!jsonHandler.writeInFile(path, message)) view.showMessage("Данные не сохранились");
     }
 

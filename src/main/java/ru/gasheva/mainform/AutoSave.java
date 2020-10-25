@@ -33,7 +33,8 @@ public class AutoSave extends TimerTask {
             System.out.println("Autosaving...");
             Message message = new Message(ruleModel.getRules(), variableModel.getVariables(), domainModel.getDomains());
             JsonHandler<Message> jsonHandler = new JsonHandler<Message>(Message.class);
-            jsonHandler.writeInFile("backup.json", message);
+            message.createMessageToWrite();
+            if (!jsonHandler.writeInFile("backup.json", message)) System.out.println("Данные не сохранились");
         }
     }
 

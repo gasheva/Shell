@@ -37,7 +37,7 @@ public class DomainModel implements ModelInterface {
         domains.get(domains.indexOf(domain)).add(value);
     }
     public Domain getDomain(int index){return domains.get(index);}
-    public Domain getDomain(String name){return domains.stream().filter(x->x.getName().equals(name)).findAny().get();}
+    public Domain getDomain(String name){return domains.stream().filter(x->x.getName().equals(name)).findAny().orElse(null);}
 
     @Override
     public int size(){return domains.size();}

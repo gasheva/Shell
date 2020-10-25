@@ -16,7 +16,15 @@ public class ObserverManager<T> {
         subscribers.add(o);
     }
     public void unsubscribe(T o){
+        int j=0;
+//        for(int i=0; i<subscribers.size();i++){
+//            if (subscribers.get(i)==o){
+//                subscribers.remove(i);
+//                break;
+//            }
+//        }
         subscribers.remove(o);
+        j=0;
         if (subscribers.size()==0) observable.setUsed(false);
     }
 

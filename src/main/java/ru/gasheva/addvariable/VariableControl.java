@@ -48,6 +48,13 @@ public class VariableControl implements ControlInterface {
         }
         String variableName = view.getSelectedRowFirstColumnValue();
         Variable selectedVariable = variableModel.getVariable(variableName);
+        if (selectedVariable.isUsed()){
+            String msg = "Переменная используется в правилах: ";
+            for(int i=0; i<selectedVariable.subscribersNumber(); i++){
+                msg+=selectedVariable.getSubscriber(i).getName() + (i<selectedVariable.subscribersNumber()-1 ? ", " : "");
+            }
+            view.showMessage(msg);
+        }
         editVariable = new EditVariableControl (variableModel, domainModel, selectedVariable);
         Variable newVariable = editVariable.getResult();
         if (newVariable==null) return;

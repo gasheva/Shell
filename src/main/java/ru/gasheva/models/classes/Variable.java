@@ -2,12 +2,13 @@ package ru.gasheva.models.classes;
 
 import java.util.Objects;
 
-public class Variable {
+public class Variable implements Observable<Rule>{
     private String name;
     private VarType varType;
     private String question;
     private Domain domain;
     private boolean isUsed = false;
+    private transient ObserverManager<Rule> observerManager = new ObserverManager<Rule>(this);
 
     public Variable() {
     }
@@ -81,4 +82,28 @@ public class Variable {
     public int hashCode() {
         return Objects.hash(name);
     }
+
+    //region Subscribers
+
+    @Override
+    public void subscribe(Rule subscriber) {
+        observerManager.subscribe(subscriber);
+    }
+
+    @Override
+    public void unsubscribe(Rule subscriber) {
+        observerManager.unsubscribe(subscriber);
+    }
+
+    @Override
+    public int subscribersNumber() {
+        return observerManager.size();
+    }
+
+    @Override
+    public Rule getSubscriber(int index) {
+        return observerManager.getSubscriber(index);
+    }
+
+    //endregion
 }

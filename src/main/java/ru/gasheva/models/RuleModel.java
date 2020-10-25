@@ -21,16 +21,19 @@ public class RuleModel  implements ModelInterface{
     }
 
     public void add(Rule rule) {
+        rule.subscribeToAll();
         rules.add(rule);
     }
     public void add(int index, Rule rule) {
+        rule.subscribeToAll();
         rules.add(index, rule);
     }
     public void setRule(int index, Rule newRule) {rules.set(index, newRule);}
     public void setRule(Rule oldRule, Rule newRule) {rules.set(rules.indexOf(oldRule), newRule);}
     public void remove(String name) {
-        int i=0;
-        rules.remove(getRule(name));
+        Rule r = getRule(name);
+        r.unsubscribeFromAll();
+        rules.remove(r);
     }
     public Rule getRule(String name){
         return rules.stream().filter(x->x.getName().equals(name)).findAny().get();
