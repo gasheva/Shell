@@ -118,6 +118,7 @@ public class MainControl{
         JsonHandler<Message> jsonHandler = new JsonHandler<Message>(Message.class);
         message.createMessageToWrite();
         if (!jsonHandler.writeInFile(path, message)) view.showMessage("Данные не сохранились");
+        else view.showMessage("Данные успешно сохранены");
     }
 
     public void beginConsultation() {
