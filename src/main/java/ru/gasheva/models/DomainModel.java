@@ -37,13 +37,13 @@ public class DomainModel implements ModelInterface {
         domains.get(domains.indexOf(domain)).add(value);
     }
     public Domain getDomain(int index){return domains.get(index);}
-    public Domain getDomain(String name){return domains.stream().filter(x->x.getName().equals(name)).findAny().get();}
+    public Domain getDomain(String name){return domains.stream().filter(x->x.getName().equals(name)).findAny().orElse(null);}
 
     @Override
     public int size(){return domains.size();}
 
     @Override
-    public String[] getValuesForTable(int index) {
+    public String[] getValuesForTable(int index){
         Domain d = getDomain(index);
         //System.out.println("Domain name = "+d.getName());
         return new String[]{d.getName(), d.getDomainValuesInString()};
@@ -70,4 +70,12 @@ public class DomainModel implements ModelInterface {
     }
 
     public void reorder(int from, int to, String id) {}
+
+    public void clear() {
+        domains.clear();
+    }
+
+    public boolean isEmpty() {
+        return domains.isEmpty();
+    }
 }

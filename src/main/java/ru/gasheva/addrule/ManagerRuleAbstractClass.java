@@ -8,7 +8,6 @@ import ru.gasheva.models.RuleModel;
 import ru.gasheva.models.VariableModel;
 import ru.gasheva.models.classes.Fact;
 import ru.gasheva.models.classes.Rule;
-import ru.gasheva.models.classes.Variable;
 
 public abstract class ManagerRuleAbstractClass {
     protected VariableModel variableModel;
@@ -16,7 +15,6 @@ public abstract class ManagerRuleAbstractClass {
     protected RuleModel ruleModel;
     protected CreateRuleForm view;
     protected Rule newRule;
-
 
     public ManagerRuleAbstractClass(VariableModel variableModel, DomainModel domainModel, RuleModel ruleModel) {
         this.variableModel = variableModel;
@@ -94,12 +92,13 @@ public abstract class ManagerRuleAbstractClass {
             return;
         }
         int id = view.getConditionRowIndex();
-        Fact fact = newRule.getCondition(id);
-        ManagerFactAbstractClass editFact = new EditFactControl(domainModel, variableModel, fact);
+        Fact oldFact = newRule.getCondition(id);
+        ManagerFactAbstractClass editFact = new EditFactControl(domainModel, variableModel, oldFact);
         Fact newFact = editFact.getResult();
         newFact.setId(id);
         //обновляем правило
-        newRule.setCondition(id, newFact);
+        Fact.copy(newFact, oldFact);
+        //newRule.setCondition(id, newFact);
 
         //обновляем вьюшку
         view.setTblConditionRow(id, new String[]{newFact.toString()});
@@ -111,13 +110,14 @@ public abstract class ManagerRuleAbstractClass {
             return;
         }
         int id = view.getConclusionRowIndex();
-        Fact fact = newRule.getConclusion(id);
-        ManagerFactAbstractClass editFact = new EditFactControl(domainModel, variableModel, fact);
+        Fact oldFact = newRule.getConclusion(id);
+        ManagerFactAbstractClass editFact = new EditFactControl(domainModel, variableModel, oldFact);
         Fact newFact = editFact.getResult();
         if(newFact==null) return;
         newFact.setId(id);
         //обновляем правило
-        newRule.setConclusion(id, newFact);
+        Fact.copy(newFact, oldFact);
+        //newRule.setConclusion(id, newFact);
 
         //обновляем вьюшку
         view.setTblConclusionRow(id, new String[]{newFact.toString()});

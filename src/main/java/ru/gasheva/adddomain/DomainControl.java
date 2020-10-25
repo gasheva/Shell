@@ -5,6 +5,9 @@ import ru.gasheva.mainform.MainForm;
 import ru.gasheva.models.DomainModel;
 import ru.gasheva.models.classes.Domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class DomainControl implements ControlInterface {
     MainForm view;
     DomainModel domainModel;
@@ -44,11 +47,22 @@ public class DomainControl implements ControlInterface {
         }
         String domainName = view.getSelectedRowFirstColumnValue();
         Domain selectedDomain = domainModel.getDomain(domainName);
+        if (selectedDomain.isUsed()){
+            String msg = "Домен используется в переменных: ";
+            for(int i=0; i<selectedDomain.subscribersNumber(); i++){
+                msg+=selectedDomain.getSubscriber(i).getName() + (i<selectedDomain.subscribersNumber()-1 ? ", " : "");
+            }
+            view.showMessage(msg);
+        }
+
+
         editDomain = new EditDomainControl (domainModel, selectedDomain);
         Domain newDomain = editDomain.getResult();
         if (newDomain==null) return;
         //обновляем модель
-        domainModel.setDomain(domainModel.getDomainIndex(domainName), newDomain);
+        Domain.copy(newDomain, selectedDomain);
+        //domainModel.setDomain(domainModel.getDomainIndex(domainName), selectedDomain);
+        System.out.println(domainModel.getDomain(0).getName());
 
         //обновляем вьюшку
         String[] domainString = new String[2];
@@ -93,8 +107,8 @@ public class DomainControl implements ControlInterface {
 
     @Override
     public void rowReorder(int from, int to) {
-        String id = view.getRowFirstColumnValue(to);
-        domainModel.reorder(from, to, id);
+//        String id = view.getRowFirstColumnValue(to);
+//        domainModel.reorder(from, to, id);
     }
 
     @Override

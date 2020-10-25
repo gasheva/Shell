@@ -4,10 +4,10 @@ import ru.gasheva.addrule.addfact.ManagerFactAbstractClass;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Rule {
-    //int id;
     private int order;
     private String name;
     private String explanation;
@@ -44,21 +44,53 @@ public class Rule {
     public void setExplanation(String explanation) {
         this.explanation = explanation;
     }
+
+    public List<Fact> getConditions() {
+        return conditions;
+    }
+
+    public List<Fact> getConclutions() {
+        return conclutions;
+    }
+
     //endregion
 
-    public void addCondition(Fact fact){conditions.add(fact);}
-    public void addCondition(int index, Fact fact){conditions.add(index, fact);}
+    public void addCondition(Fact fact){
+        conditions.add(fact);
+    }
+    public void addCondition(int index, Fact fact){
+        conditions.add(index, fact);
+    }
     public Fact getCondition(int index){return conditions.get(index);}
     public int conditionsSize(){return conditions.size();}
 
-    public void addConclusion(Fact fact){conclutions.add(fact);}
-    public void addConclusion(int index, Fact fact){conclutions.add(index, fact);}
+    public void addConclusion(Fact fact){
+        conclutions.add(fact);
+    }
+    public void addConclusion(int index, Fact fact){
+        conclutions.add(index, fact);
+    }
     public Fact getConclusion(int index){return conclutions.get(index);}
     public int conclusionsSize(){return conclutions.size();}
 
+    //@Override
+//    public boolean equals(Object obj) {
+//        if(((Rule)obj).getName()==null) return false;
+//        return ((Rule)obj).getName().equals(this.getName());
+//    }
+
+
     @Override
-    public boolean equals(Object obj) {
-        return ((Rule)obj).getName().equals(this.getName());
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Rule rule = (Rule) o;
+        return name.equals(rule.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 
     public void swapFacts(int from, int to, List<Fact> facts){
@@ -90,9 +122,10 @@ public class Rule {
         conclutions.set(id, newFact);
     }
 
-    public void setCondition(int id, Fact newFact) {
-        conditions.set(id, newFact);
-    }
+//    public void setCondition(int id, Fact newFact)
+//    {
+//        conditions.set(id, newFact);
+//    }
 
     public void removeCondition(int id) {
         deleteFact(id, conditions);
@@ -106,11 +139,39 @@ public class Rule {
             facts.set(i, f);
         }
     }
-    public void removeConclusion(int id) {
+    public void removeConclusion(int id)
+    {
         deleteFact(id, conclutions);
     }
 
     public boolean hasFactInConclusion(Variable target) {
         return conclutions.get(0).getVariable().equals(target);
+    }
+
+    public static void copy(Rule from, Rule to){
+        to.conclutions = from.conclutions;
+        to.conditions = from.conditions;
+        to.explanation = from.explanation;
+        to.name = from.name;
+        to.order = from.order;
+    }
+
+    public void unsubscribeFromAll() {
+        conclutions.get(0).getVariable().unsubscribe(this);
+        conditions.forEach(x->x.getVariable().unsubscribe(this));
+    }
+    public void subscribeToAll(){
+        conclutions.get(0).getVariable().subscribe(this);
+        conditions.forEach(x->x.getVariable().subscribe(this));
+    }
+
+    public Rule clone(){
+        Rule newRule = new Rule();
+        newRule.name = this.name;
+        newRule.order = this.order;
+        newRule.explanation = this.explanation;
+        this.conditions.forEach(x->newRule.addCondition(x.clone()));
+        this.conclutions.forEach(x->newRule.addConclusion(x.clone()));
+        return newRule;
     }
 }

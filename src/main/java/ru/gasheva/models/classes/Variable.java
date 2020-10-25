@@ -2,18 +2,25 @@ package ru.gasheva.models.classes;
 
 import java.util.Objects;
 
-public class Variable {
-    String name;
-    VarType varType;
-    String question;
-    Domain domain;
-    boolean isUsed = false;
+public class Variable implements Observable<Rule>{
+    private String name;
+    private VarType varType;
+    private String question;
+    private Domain domain;
+    private transient ObserverManager<Rule> observerManager = new ObserverManager<Rule>(this);
 
     public Variable() {
     }
 
     public Variable(String name) {
         this.name = name;
+    }
+
+    public static void copy(Variable from, Variable to){
+        to.name = from.name;
+        to.varType = from.varType;
+        to.question = from.question;
+        to.domain = from.domain;
     }
 
     //region Getter-Setter
@@ -46,15 +53,14 @@ public class Variable {
     }
 
     public void setDomain(Domain domain) {
+        if (this.domain!=null)
+            this.domain.unsubscribe(this);
+        domain.subscribe(this);
         this.domain = domain;
     }
 
     public boolean isUsed() {
-        return isUsed;
-    }
-
-    public void setUsed(boolean used) {
-        isUsed = used;
+        return observerManager.size()>0;
     }
 
     //endregion
@@ -70,4 +76,28 @@ public class Variable {
     public int hashCode() {
         return Objects.hash(name);
     }
+
+    //region Subscribers
+
+    @Override
+    public void subscribe(Rule subscriber) {
+        observerManager.subscribe(subscriber);
+    }
+
+    @Override
+    public void unsubscribe(Rule subscriber) {
+        observerManager.unsubscribe(subscriber);
+    }
+
+    @Override
+    public int subscribersNumber() {
+        return observerManager.size();
+    }
+
+    @Override
+    public Rule getSubscriber(int index) {
+        return observerManager.getSubscriber(index);
+    }
+
+    //endregion
 }

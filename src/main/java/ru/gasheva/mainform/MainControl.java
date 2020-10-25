@@ -16,8 +16,10 @@ import ru.gasheva.models.jsonhandler.Message;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Timer;
 
 public class MainControl{
+    final String BACKUP_PATH = "backup.json";
     RuleModel ruleModel;
     DomainModel domainModel;
     VariableModel variableModel;
@@ -27,11 +29,14 @@ public class MainControl{
     ControlInterface currentControl;
     ControlInterface ruleControl;
     ConsultationControl consultationControl;
+    AutoSave autoSave;
 
     public MainControl() {
+
         ruleModel = new RuleModel();
         variableModel = new VariableModel();
         domainModel = new DomainModel();
+
 
         view = new MainForm(this);
         view.createView();
@@ -43,12 +48,17 @@ public class MainControl{
 
         currentControl = ruleControl;
 
+        if (view.doesLoadAutosave())
+            loadData(BACKUP_PATH);
+
+        autoSave = new AutoSave(ruleModel, variableModel, domainModel);
+        Timer timer = new Timer();
+        timer.schedule(autoSave, 0, 1000*60*5);     //каждые 5 минут
     }
 
     public void add() {
         currentControl.add();
     }
-
 
     public void edit() {
         currentControl.edit();
@@ -76,19 +86,23 @@ public class MainControl{
         currentControl.tableSelectionValueChanged();
     }
 
-    public void loadData() {
-        String path = view.getFileToOpen();
+    public void loadData(String path) {
         if (path==null) return;
         Message message;
         JsonHandler<Message> jsonHandler = new JsonHandler<Message>(Message.class);
 
         message = jsonHandler.readFromFile(path);
         if (message==null) {view.showMessage("Не удалось загрузить данные");return;}
-        ruleModel.setRules(new ArrayList<>(Arrays.asList(message.getRules())));
-        Variable[] v = message.getVariables();
-        if (v!=null) variableModel.setVariables(new ArrayList<>(Arrays.asList(v)));
-        Domain[] d = message.getDomains();
-        if (d!=null) domainModel.setDomains(new ArrayList<>(Arrays.asList(d)));
+        message.setUsages(ruleModel, variableModel, domainModel);
+
+        ArrayList<Rule> r = message.getRules();
+        if (r!=null) ruleModel.setRules(r);
+
+        ArrayList<Variable> v = message.getVariables();
+        if (v!=null) variableModel.setVariables(v);
+
+        ArrayList<Domain> d = message.getDomains();
+        if (d!=null) domainModel.setDomains(d);
 
         currentControl.redraw();
     }
@@ -96,13 +110,32 @@ public class MainControl{
     public void saveInFile() {
         String path = view.getFileToWrite();
         if (path==null) return;
-        Message message = new Message(ruleModel.getRules().toArray(new Rule[0]), variableModel.getVariables().toArray(new Variable[0]), domainModel.getDomains().toArray(new Domain[0]));
+        path = path.trim();
+        if (path.trim().length()==0) return;
+        if (path.lastIndexOf(".json")!=path.length()-".json".length())
+            path+=".json";
+        Message message = new Message(ruleModel.getRules(), variableModel.getVariables(), domainModel.getDomains());
         JsonHandler<Message> jsonHandler = new JsonHandler<Message>(Message.class);
+        message.createMessageToWrite();
         if (!jsonHandler.writeInFile(path, message)) view.showMessage("Данные не сохранились");
     }
 
     public void beginConsultation() {
         consultationControl = new ConsultationControl(ruleModel, variableModel, domainModel);
+    }
 
+    public void newES() {
+        ruleModel.clear();
+        variableModel.clear();
+        domainModel.clear();
+        currentControl.redraw();
+    }
+
+    public String getPathToAutosafe(){
+        return BACKUP_PATH;
+    }
+    public void exit() {
+        autoSave.cancel();
+        view.Dispose();
     }
 }

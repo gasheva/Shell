@@ -26,11 +26,16 @@ public class VariableModel implements ModelInterface{
         variables.add(index, variable);
     }
     public void remove(Variable variable){
+        variable.getDomain().unsubscribe(variable);
         variables.remove(variable);
     }
-    public void remove(String name){variables.remove(getVariable(name));}
+    public void remove(String name){
+        Variable removingVar = getVariable(name);
+        removingVar.getDomain().unsubscribe(removingVar);
+        variables.remove(removingVar);
+    }
     public void insertValue(int index, Variable variable) {variables.add(index, variable);}
-    public Variable getVariable(String name){return variables.stream().filter(x->x.getName().equals(name)).findAny().get();}
+    public Variable getVariable(String name){return variables.stream().filter(x->x.getName().equals(name)).findAny().orElse(null);}
 
     @Override
     public int size(){return variables.size();}
@@ -47,9 +52,9 @@ public class VariableModel implements ModelInterface{
         return (int)variables.stream().filter(x->x.equals(variable)).count();
     }
 
-    public void setVariable(int index, Variable newVariable) {
-        variables.set(index, newVariable);
-    }
+//    public void setVariable(int index, Variable newVariable) {
+//        variables.set(index, newVariable);
+//    }
 
     public int getVariableIndex(String name) {
         for(int i=0; i<variables.size();i++){
@@ -64,5 +69,13 @@ public class VariableModel implements ModelInterface{
 
     public boolean isVariableExisting(Variable variable) {
         return variables.stream().anyMatch(x->x.equals(variable));
+    }
+
+    public void clear() {
+        variables.clear();
+    }
+
+    public boolean isEmpty() {
+        return variables.isEmpty();
     }
 }

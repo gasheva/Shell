@@ -1,16 +1,12 @@
 package ru.gasheva.mainform;
 
-import javafx.stage.FileChooser;
 import ru.gasheva.models.ModelInterface;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.tools.JavaFileManager;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 
 public class MainForm extends JFrame implements IRowReorderable{
     private JPanel mainPanel;
@@ -39,6 +35,7 @@ public class MainForm extends JFrame implements IRowReorderable{
     private JMenuItem miExit;
     private JMenuItem miSave;
     private JMenuItem miBeginCons;
+    private JMenuItem miLoadAutosave;
     private TableModel myModel;
     private MainControl control;
     private WrapTableCellRenderer tableCellRenderer = new WrapTableCellRenderer();
@@ -48,7 +45,6 @@ public class MainForm extends JFrame implements IRowReorderable{
     }
     public void createView(){
         setContentPane(mainPanel);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);
         createJMenuBar();
@@ -86,25 +82,64 @@ public class MainForm extends JFrame implements IRowReorderable{
         tabbedPane.add("Переменные", tabbedPane.getTabComponentAt(0));
         tabbedPane.add("Домены", tabbedPane.getTabComponentAt(0));
         initTable();
-        spRules.setDividerLocation(0.7);
         tfTop.setEditable(false);
         tfBottom.setEditable(false);
-
+        //spRules.setLocation(new Point(1, getHeight() - getHeight()/8)); //TODO
+        spRules.setDividerLocation(0.7);
 
         btnAdd.addActionListener(e -> BtnAddClicked());
         btnEdit.addActionListener(e->BtnEditClicked());
         btnDelete.addActionListener(e->BtnDeleteClicked());
         tabbedPane.addChangeListener(e -> tabbedPaneChanged());
         tblInfo.getSelectionModel().addListSelectionListener(e -> TableSelectionValueChanged());
+        tblInfo.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount()==2)
+                    tblInfo.clearSelection();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                onExit();
+            }
+        });
+
         miOpen.addActionListener(e->miOpenClicked());
         miSave.addActionListener(e->miSaveClicked());
+        miNew.addActionListener(e->miNewClicked());
         miBeginCons.addActionListener(e->miBeginConsClicked());
+        miLoadAutosave.addActionListener(e->miLoadAutosaveClicked());
         mainPanel.registerKeyboardAction(e -> BtnAddClicked(), KeyStroke.getKeyStroke(KeyEvent.VK_INSERT, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
     }
+    private void miLoadAutosaveClicked(){control.loadData(control.getPathToAutosafe());}
+    private void onExit(){control.exit();}
+    private void miNewClicked(){control.newES();}
     private void miBeginConsClicked(){control.beginConsultation();}
     private void miSaveClicked(){control.saveInFile();}
-    private void miOpenClicked(){control.loadData();}
+    private void miOpenClicked(){control.loadData(getFileToOpen());}
     private void TableSelectionValueChanged(){
         control.tableSelectionValueChanged();
     }
@@ -127,6 +162,7 @@ public class MainForm extends JFrame implements IRowReorderable{
         miNew = new JMenuItem("Новый");
         miSave = new JMenuItem("Сохранить");
         miOpen = new JMenuItem("Открыть файл");
+        miLoadAutosave = new JMenuItem("Загрузить автосохранение");
         miExit = new JMenuItem("Выход");
         miExit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -136,6 +172,7 @@ public class MainForm extends JFrame implements IRowReorderable{
         fileMenu.add(miNew);
         fileMenu.add(miOpen);
         fileMenu.add(miSave);
+        fileMenu.add(miLoadAutosave);
         fileMenu.add(miExit);
 
         consultMenu = new JMenu("Консультация");
@@ -165,6 +202,7 @@ public class MainForm extends JFrame implements IRowReorderable{
         //column size
         tblInfo.getColumnModel().getColumn(0).setMaxWidth(100);
         tblInfo.getColumnModel().getColumn(0).setPreferredWidth(80);
+
     }
     public void changePrepPanelText(String title){
         lblPrep.setText(title);
@@ -180,6 +218,7 @@ public class MainForm extends JFrame implements IRowReorderable{
     }
     public void Dispose(){
         dispose();
+        System.exit(0);
     }
 
     public String getSelectedRowFirstColumnValue() {
@@ -282,5 +321,17 @@ public class MainForm extends JFrame implements IRowReorderable{
 
     public void setExplanationPanelVisible(boolean b) {
         explanationPanel.setVisible(b);
+    }
+
+    public boolean doesLoadAutosave(){
+        JComponent[] inputs = new JComponent[]{
+                new JLabel("Загрузить автосохранение?"),
+        };
+        String answer=null;
+        int result = JOptionPane.showConfirmDialog(this, inputs, "", JOptionPane.PLAIN_MESSAGE);
+        if (result==JOptionPane.OK_OPTION){
+            return true;
+        }
+        return false;
     }
 }

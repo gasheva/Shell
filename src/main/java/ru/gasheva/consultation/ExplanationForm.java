@@ -6,6 +6,7 @@ import ru.gasheva.mainform.WrapTableCellRenderer;
 import ru.gasheva.models.DomainModel;
 import ru.gasheva.models.RuleModel;
 import ru.gasheva.models.VariableModel;
+import ru.gasheva.models.WorkingMemory;
 import ru.gasheva.models.classes.Fact;
 import ru.gasheva.models.classes.Rule;
 import ru.gasheva.models.classes.Variable;
@@ -14,11 +15,20 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.plaf.basic.BasicTreeUI;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.text.Position;
 import javax.swing.tree.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ExplanationForm extends JDialog {
     private JPanel contentPane;
@@ -27,13 +37,17 @@ public class ExplanationForm extends JDialog {
     private JTable tblVariables;
     private JScrollPane spTree;
     private JLabel lblExpandAll;
+    private JTextArea tfExplanation;
+    private JSplitPane spHorizontal;
+    private JScrollPane tblScroll;
     private TableModel myModel;
     private ConsultationControl control;
     private RuleModel ruleModel;
     private VariableModel variableModel;
     private DomainModel domainModel;
     private WrapTableCellRenderer tableCellRenderer = new WrapTableCellRenderer();
-
+    private Set<Integer> coloredRows = new HashSet();
+    private int coloredRowTarget;
 
     public ExplanationForm(ConsultationControl control, RuleModel ruleModel, VariableModel variableModel, DomainModel domainModel) {
         this.ruleModel = ruleModel;
@@ -47,7 +61,8 @@ public class ExplanationForm extends JDialog {
         setModal(true);
         createControls();
 
-        pack();
+        setSize(600, 600);
+        spHorizontal.setDividerLocation(0.8);
         setLocationRelativeTo(null);
         setVisible(true);
     }
@@ -57,6 +72,33 @@ public class ExplanationForm extends JDialog {
         treeRules.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         fillTree();
         fillTable();
+        tblScroll.getViewport().setBackground(Color.white);
+
+        treeRules.addTreeSelectionListener(new TreeSelectionListener() {
+            @Override
+            public void valueChanged(TreeSelectionEvent e) {
+                if (treeRules.getSelectionCount()>0){
+                    TreePath path = treeRules.getSelectionPath();
+                    if (path==null) return;
+
+                    Rule selectedRule = (Rule)((DefaultMutableTreeNode) path.getLastPathComponent()).getUserObject();
+                    tfExplanation.setText(selectedRule.getExplanation());
+
+                    coloredRows.clear();
+                    for(int j=0; j<tblVariables.getRowCount(); j++){
+                        for(int i=0; i<selectedRule.conditionsSize(); i++)
+                            if (selectedRule.getCondition(i).getVariable().getName().equals(tblVariables.getValueAt(j, 0))){
+                                coloredRows.add(j);
+                                break;
+                            }
+                        if (tblVariables.getValueAt(j, 0).equals(selectedRule.getConclusion(0).getVariable().getName()))
+                            coloredRowTarget = j;
+                    }
+
+                    tblVariables.updateUI();
+                }
+            }
+        });
 
         lblExpandAll.addMouseListener(new MouseListener() {
             @Override
@@ -85,6 +127,7 @@ public class ExplanationForm extends JDialog {
             }
         });
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
     }
     private void initTable(JTable table, TableModel model) {
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -116,30 +159,38 @@ public class ExplanationForm extends JDialog {
 
     //заполнение дерева
     private void fillTree() {
-//        System.out.println("ALL RULES:");
-//         control.getWorkingMemory().getUsingRules().forEach(x-> System.out.println(x.getValue()+" "+x.getKey().getRuleToString()));
-//        System.out.println("ALL RULES");
-        treeRules.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-        int nodeCount = 0;
+        System.out.println("ALL RULES:");
+        control.getWorkingMemory().getUsingRules().forEach(x-> System.out.println(x.getValue()+" "+x.getKey().getRuleToString()));
+        System.out.println("ALL RULES");
 
-        List<Pair<Rule, Integer>> rules = control.getWorkingMemory().getUsingRules();
+        treeRules.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+
+        List<Pair<Rule, String>> rules = control.getWorkingMemory().getUsingRules();
+        //String ruleFormat = "<html>ЦЕЛЬ: "+rules.get(0).getKey().getConclusion(0).getVariable().getName()+"<br>"+ rules.get(0).getKey().getRuleToString().replace("THEN", "<br> THEN")+"</html>";
+        //String ruleFormat = "<html><b>"+rules.get(rules.size()-1).getKey().getName()+"</b><br>"+ rules.get(rules.size()-1).getKey().getRuleToString().replace("THEN", "<br> THEN")+"</html>";
+
         DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode(rules.get(rules.size()-1).getKey());
+
         DefaultTreeModel model = (DefaultTreeModel) treeRules.getModel();
         model.setRoot(rootNode);
-        nodeCount++;
 
         for (int i=rules.size()-2;i>=0; i--){
-            DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(rules.get(i).getKey());
-            int j = 0;
-            for (j = 0; j<rules.size();j++){
-                if(rules.get(j).getKey().getName().equals(ruleModel.getRule((rules.get(i).getValue())).getName())) break;
-            }
-            j = nodeCount - j;
-            TreePath path = treeRules.getPathForRow(j);     //TODO: получить j узел
-            DefaultMutableTreeNode node=(DefaultMutableTreeNode)path.getLastPathComponent();
-            node.add(childNode);
-            nodeCount++;
+            Rule r = rules.get(i).getKey();
+            //DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(r.getName());
+            //ruleFormat = "<html>ЦЕЛЬ: "+r.getConclusion(0).getVariable().getName()+"<br>"+ r.getRuleToString().replace("THEN", "<br> THEN")+"</html>";
+            //ruleFormat = "<html><b>"+r.getName()+"</b><br>"+ r.getRuleToString().replace("THEN", "<br> THEN")+"</html>";
+            expandNodes();
+
+            String prefix = control.getWorkingMemory().getRule(rules.get(i).getValue()).toString();
+            TreePath path = treeRules.getNextMatch(prefix, 0, Position.Bias.Forward);
+            if (path!=null)System.out.println(path.toString());
+            else System.out.println("path is null");
+            if (path!=null)((DefaultMutableTreeNode)path.getLastPathComponent()).add(new DefaultMutableTreeNode(r));
+            treeRules.updateUI();
         }
+        treeRules.updateUI();
+
+        //System.out.println(((DefaultMutableTreeNode)path.getLastPathComponent()).getUserObject().toString());
 
 
         treeRules.setCellRenderer( new DefaultTreeCellRenderer(){
@@ -153,8 +204,10 @@ public class ExplanationForm extends JDialog {
                         setIcon(leafIcon);
                     }
                     Rule r = (Rule) ((DefaultMutableTreeNode)value).getUserObject();
-                    String ruleFormat = "<html>ЦЕЛЬ: "+r.getConclusion(0).getVariable().getName()+"<br>"+ r.getRuleToString().replace("THEN", "<br> THEN")+"</html>";
+                    String ruleFormat = "<html><b>"+r.getName()+"</b><br>"+ r.getRuleToString().replace("THEN", "<br> THEN")+"</html>";
                     this.setText(ruleFormat);
+//                    String r = (String) ((DefaultMutableTreeNode)value).getUserObject();
+//                    this.setText(r);
                 }
                 return this;
             }
@@ -176,5 +229,21 @@ public class ExplanationForm extends JDialog {
     private void createUIComponents() {
         lblExpandAll = new JLabel("<html><u>(раскрыть все)</u></html>");
         lblExpandAll.setForeground(Color.blue);
+        lblExpandAll.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        tblVariables = new JTable( myModel )
+        {
+            public Component prepareRenderer(TableCellRenderer renderer, int row, int column)
+            {
+                Component c = super.prepareRenderer(renderer, row, column);
+                if (!isRowSelected(row))
+                    if (!coloredRows.isEmpty()) {
+                        c.setBackground(coloredRows.contains(row) ? Color.PINK : getBackground());
+                        c.setBackground(row == coloredRowTarget ? Color.YELLOW : getBackground());
+                    }
+
+                return c;
+            }
+        };
     }
 }

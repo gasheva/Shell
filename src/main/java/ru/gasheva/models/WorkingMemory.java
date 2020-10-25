@@ -10,13 +10,13 @@ import java.util.*;
 
 public class WorkingMemory {
     Map<Variable, DomainValue> curVariableValues = new HashMap<Variable, DomainValue>();
-    List<Pair<Rule, Integer>> usingRules;
+    List<Pair<Rule, String>> usingRules;
 
     public WorkingMemory() {
         usingRules = new LinkedList<>();
     }
 
-    public List<Pair<Rule, Integer>> getUsingRules() {
+    public List<Pair<Rule, String>> getUsingRules() {
         return usingRules;
     }
 
@@ -35,8 +35,8 @@ public class WorkingMemory {
         return curVariableValues.get(var);
     }
 
-    public void add(Rule curRule, int parentIndex) {
-        usingRules.add(new Pair<Rule, Integer>(curRule, parentIndex));
+    public void add(Rule curRule, String parentName) {
+        usingRules.add(new Pair<Rule, String>(curRule, parentName));
     }
 
     public List<Fact> getAllVariables() {
@@ -47,7 +47,11 @@ public class WorkingMemory {
     public Rule getUsingRule(int index){
         return usingRules.get(index).getKey();
     }
-    public int getParentIndex(int index){
+    public int getUsingRuleNumber(){return usingRules.size();}
+    public String getParentIndex(int index){
         return usingRules.get(index).getValue();
+    }
+    public Rule getRule(String name){
+        return usingRules.stream().filter(x->x.getKey().getName().equals(name)).findAny().get().getKey();
     }
 }

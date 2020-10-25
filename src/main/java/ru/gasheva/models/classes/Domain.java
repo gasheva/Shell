@@ -1,12 +1,13 @@
 package ru.gasheva.models.classes;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
-public class Domain {
-    //int id;
+public class Domain implements Observable<Variable>{
     String name;
     List<DomainValue> domainValues = new ArrayList<>();
+    private transient ObserverManager<Variable> observerManager = new ObserverManager<Variable>(this);
 
     public Domain() {
     }
@@ -16,6 +17,11 @@ public class Domain {
     }
 
     //region Getter\Setter
+
+    public boolean isUsed() {
+        return observerManager.size()>0;
+    }
+
     public String getName() {
         return name;
     }
@@ -45,4 +51,31 @@ public class Domain {
         return ((Domain)obj).getName().equals(this.getName());
     }
 
+
+    public static void copy(Domain from, Domain to){
+        to.name = from.name;
+        to.domainValues = from.domainValues;
+    }
+
+    //region Subscribers
+    @Override
+    public void subscribe(Variable subscriber) {
+        observerManager.subscribe(subscriber);
+    }
+
+    @Override
+    public void unsubscribe(Variable subscriber) {
+        observerManager.unsubscribe(subscriber);
+    }
+
+    @Override
+    public int subscribersNumber() {
+        return observerManager.size();
+    }
+
+    @Override
+    public Variable getSubscriber(int index) {
+        return observerManager.getSubscriber(index);
+    }
+    //endregion
 }

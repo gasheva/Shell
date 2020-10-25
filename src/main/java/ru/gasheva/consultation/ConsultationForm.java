@@ -1,10 +1,5 @@
 package ru.gasheva.consultation;
 
-import javafx.scene.control.ComboBox;
-import ru.gasheva.mainform.IRowReorderable;
-import ru.gasheva.mainform.TableModel;
-import ru.gasheva.mainform.TableRowTransferHandler;
-import ru.gasheva.mainform.WrapTableCellRenderer;
 import ru.gasheva.models.DomainModel;
 import ru.gasheva.models.RuleModel;
 import ru.gasheva.models.VariableModel;
@@ -13,24 +8,31 @@ import ru.gasheva.models.classes.DomainValue;
 import ru.gasheva.models.classes.VarType;
 import ru.gasheva.models.classes.Variable;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ConsultationForm extends JDialog{
     private JPanel contentPane;
     private JButton btnAnswer;
     private JButton buttonCancel;
-    private JTable tblConsultation;
     private JButton btnNewConsultation;
     private JButton btnExplanation;
-    private TableModel myModel;
+    private JPanel imagePanel;
+    private JLabel lblImage;
+    private JPanel btnsPanel;
     private ConsultationControl control;
     private RuleModel ruleModel;
     private VariableModel variableModel;
     private DomainModel domainModel;
-    private WrapTableCellRenderer tableCellRenderer = new WrapTableCellRenderer();
 
     public ConsultationForm(ConsultationControl control, RuleModel ruleModel, VariableModel variableModel, DomainModel domainModel) {
         this.ruleModel = ruleModel;
@@ -53,12 +55,18 @@ public class ConsultationForm extends JDialog{
         setVisible(true);
     }
     private void createControls(){
-        myModel = new TableModel(new String[]{"Вопрос", "Ответ"});
-        initTable(tblConsultation, myModel);
 
         btnNewConsultation.addActionListener(e->btnNewConsultationClicked());
         btnExplanation.addActionListener(e->btnExplanationClicked());
+        try{
+            BufferedImage myPicture = ImageIO.read(new File("src/main/resources/images/_title.jpg"));
+            lblImage.setIcon(new ImageIcon(myPicture));
+        } catch (IOException e) {
+            System.out.println("Не удалось открыть изображение");
+            e.printStackTrace();
+        }
 
+        btnsPanel.setBorder(new CompoundBorder(new LineBorder(new Color(0x162851)), new EmptyBorder(2, 2, 2, 2)));
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -67,28 +75,7 @@ public class ConsultationForm extends JDialog{
         });
         contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
-    private void initTable(JTable table, TableModel model) {
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        table.setModel(model);
 
-        //fonts
-        table.getTableHeader().setFont(new Font("Verdana", Font.BOLD, 12));
-        table.setForeground(Color.DARK_GRAY);
-        table.setFont(new Font("Verdana", Font.PLAIN, 12));
-
-        //sorter
-        table.setAutoCreateRowSorter(false);
-    }
-    public void setTableModel(){
-        tblConsultation.setModel(myModel);
-        // текст в несколько строк
-        tblConsultation.getColumnModel().getColumn(1).setCellRenderer(tableCellRenderer);
-        tblConsultation.getColumnModel().getColumn(0).setCellRenderer(tableCellRenderer);
-
-        //column size
-        tblConsultation.getColumnModel().getColumn(0).setMaxWidth(100);
-        tblConsultation.getColumnModel().getColumn(0).setPreferredWidth(80);
-    }
     private void btnNewConsultationClicked(){control.startNewConsultation();}
     private void btnExplanationClicked(){control.explainAnswer();}
     private void onOK() {
@@ -125,6 +112,7 @@ public class ConsultationForm extends JDialog{
         String answer=null;
         int result = JOptionPane.showConfirmDialog(this, inputs, "", JOptionPane.PLAIN_MESSAGE);
         if (result==JOptionPane.OK_OPTION){
+            if (cb.getSelectedItem()==null) return null;
             answer = cb.getSelectedItem().toString();
         }
         return answer;

@@ -6,6 +6,9 @@ import ru.gasheva.models.DomainModel;
 import ru.gasheva.models.VariableModel;
 import ru.gasheva.models.classes.Variable;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class VariableControl implements ControlInterface {
     MainForm view;
     DomainModel domainModel;
@@ -48,11 +51,22 @@ public class VariableControl implements ControlInterface {
         }
         String variableName = view.getSelectedRowFirstColumnValue();
         Variable selectedVariable = variableModel.getVariable(variableName);
+        if (selectedVariable.isUsed()){
+            String msg = "Переменная используется в правилах: ";
+            Set s = new HashSet();
+            for(int i=0; i<selectedVariable.subscribersNumber(); i++){
+                if(s.add(selectedVariable.getSubscriber(i).getName()))
+                    msg+=selectedVariable.getSubscriber(i).getName() + (i<selectedVariable.subscribersNumber()-1 ? ", " : "");
+            }
+            view.showMessage(msg);
+        }
         editVariable = new EditVariableControl (variableModel, domainModel, selectedVariable);
         Variable newVariable = editVariable.getResult();
         if (newVariable==null) return;
         //обновляем модель
-        variableModel.setVariable(variableModel.getVariableIndex(variableName), newVariable);
+        selectedVariable.getDomain().unsubscribe(selectedVariable); //отписываем старую переменную
+        Variable.copy(newVariable, selectedVariable);
+        //variableModel.setVariable(variableModel.getVariableIndex(variableName), newVariable);
 
         //обновляем вьюшку
         String[] domainString = new String[3];

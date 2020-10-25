@@ -3,7 +3,11 @@ package ru.gasheva.addrule;
 import ru.gasheva.models.DomainModel;
 import ru.gasheva.models.RuleModel;
 import ru.gasheva.models.VariableModel;
+import ru.gasheva.models.classes.Fact;
 import ru.gasheva.models.classes.Rule;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EditRuleControl extends ManagerRuleAbstractClass{
     Rule oldRule;

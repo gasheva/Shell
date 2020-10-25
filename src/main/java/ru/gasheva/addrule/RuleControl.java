@@ -27,6 +27,8 @@ public class RuleControl implements ControlInterface {
         addRuleControl = new AddRuleControl(variableModel, domainModel, ruleModel);
         Rule newRule = addRuleControl.getResult();
         if (newRule==null) return;
+        //newRule.subscribeToAll();
+
         String[] ruleString = new String[2];
         ruleString[0] = newRule.getName();
         ruleString[1] = newRule.getRuleToString();
@@ -51,11 +53,15 @@ public class RuleControl implements ControlInterface {
         }
         String ruleName = view.getSelectedRowFirstColumnValue();
         Rule selectedRule = ruleModel.getRule(ruleName);
-        editRuleControl = new EditRuleControl(variableModel,domainModel, ruleModel, selectedRule);
+
+        editRuleControl = new EditRuleControl(variableModel,domainModel, ruleModel, selectedRule.clone());
         Rule newRule = editRuleControl.getResult();
         if (newRule==null) return;
         //обновляем модель
-        ruleModel.setRule(ruleModel.getRule(ruleName), newRule);
+        selectedRule.unsubscribeFromAll();
+        Rule.copy(newRule, selectedRule);
+        selectedRule.subscribeToAll();
+        //ruleModel.setRule(ruleModel.getRule(ruleName), newRule);
 
         //обновляем вьюшку
         String[] string = new String[2];
