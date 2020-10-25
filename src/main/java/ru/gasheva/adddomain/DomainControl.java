@@ -5,6 +5,9 @@ import ru.gasheva.mainform.MainForm;
 import ru.gasheva.models.DomainModel;
 import ru.gasheva.models.classes.Domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class DomainControl implements ControlInterface {
     MainForm view;
     DomainModel domainModel;
@@ -104,8 +107,8 @@ public class DomainControl implements ControlInterface {
 
     @Override
     public void rowReorder(int from, int to) {
-        String id = view.getRowFirstColumnValue(to);
-        domainModel.reorder(from, to, id);
+//        String id = view.getRowFirstColumnValue(to);
+//        domainModel.reorder(from, to, id);
     }
 
     @Override

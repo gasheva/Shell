@@ -12,11 +12,9 @@ public class ObserverManager<T> {
     }
 
     public void subscribe(T o){
-        observable.setUsed(true);
         subscribers.add(o);
     }
     public void unsubscribe(T o){
-        int j=0;
 //        for(int i=0; i<subscribers.size();i++){
 //            if (subscribers.get(i)==o){
 //                subscribers.remove(i);
@@ -24,8 +22,6 @@ public class ObserverManager<T> {
 //            }
 //        }
         subscribers.remove(o);
-        j=0;
-        if (subscribers.size()==0) observable.setUsed(false);
     }
 
     public T getSubscriber(int index){

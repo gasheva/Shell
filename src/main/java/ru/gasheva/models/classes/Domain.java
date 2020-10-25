@@ -6,7 +6,6 @@ import java.util.List;
 
 public class Domain implements Observable<Variable>{
     String name;
-    boolean isUsed = false;
     List<DomainValue> domainValues = new ArrayList<>();
     private transient ObserverManager<Variable> observerManager = new ObserverManager<Variable>(this);
 
@@ -20,11 +19,7 @@ public class Domain implements Observable<Variable>{
     //region Getter\Setter
 
     public boolean isUsed() {
-        return isUsed;
-    }
-
-    public void setUsed(boolean used) {
-        isUsed = used;
+        return observerManager.size()>0;
     }
 
     public String getName() {
@@ -59,7 +54,6 @@ public class Domain implements Observable<Variable>{
 
     public static void copy(Domain from, Domain to){
         to.name = from.name;
-        to.isUsed = from.isUsed;
         to.domainValues = from.domainValues;
     }
 

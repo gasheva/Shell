@@ -7,7 +7,6 @@ public class Variable implements Observable<Rule>{
     private VarType varType;
     private String question;
     private Domain domain;
-    private boolean isUsed = false;
     private transient ObserverManager<Rule> observerManager = new ObserverManager<Rule>(this);
 
     public Variable() {
@@ -22,7 +21,6 @@ public class Variable implements Observable<Rule>{
         to.varType = from.varType;
         to.question = from.question;
         to.domain = from.domain;
-        to.isUsed = from.isUsed;
     }
 
     //region Getter-Setter
@@ -62,11 +60,7 @@ public class Variable implements Observable<Rule>{
     }
 
     public boolean isUsed() {
-        return isUsed;
-    }
-
-    public void setUsed(boolean used) {
-        isUsed = used;
+        return observerManager.size()>0;
     }
 
     //endregion

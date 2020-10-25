@@ -6,6 +6,9 @@ import ru.gasheva.models.DomainModel;
 import ru.gasheva.models.VariableModel;
 import ru.gasheva.models.classes.Variable;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class VariableControl implements ControlInterface {
     MainForm view;
     DomainModel domainModel;
@@ -50,8 +53,10 @@ public class VariableControl implements ControlInterface {
         Variable selectedVariable = variableModel.getVariable(variableName);
         if (selectedVariable.isUsed()){
             String msg = "Переменная используется в правилах: ";
+            Set s = new HashSet();
             for(int i=0; i<selectedVariable.subscribersNumber(); i++){
-                msg+=selectedVariable.getSubscriber(i).getName() + (i<selectedVariable.subscribersNumber()-1 ? ", " : "");
+                if(s.add(selectedVariable.getSubscriber(i).getName()))
+                    msg+=selectedVariable.getSubscriber(i).getName() + (i<selectedVariable.subscribersNumber()-1 ? ", " : "");
             }
             view.showMessage(msg);
         }
