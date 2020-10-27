@@ -110,8 +110,14 @@ public class MLV {
                                 case ASK:
                                     String val = control.askVariableValue(curVar);
                                     workingMemory.add(curVar, new DomainValue(val));
+                                    break;
                                 case RESOLVE:
+                                    System.out.println(curVar.getName()+' '+curRule.getName());
                                     defineLocalTarget(curVar, curRule.getName());
+                                    break;
+                                case ASK_RESOLVE:
+
+                                    break;
                             }
                             if (workingMemory.get(curVar).equals(curRule.getCondition(j).getDomainValue())) {   //если значение нужное, то переходим к след переменной
                                 j++;

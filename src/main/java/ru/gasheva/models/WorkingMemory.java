@@ -52,6 +52,9 @@ public class WorkingMemory {
         return usingRules.get(index).getValue();
     }
     public Rule getRule(String name){
-        return usingRules.stream().filter(x->x.getKey().getName().equals(name)).findAny().get().getKey();
+        return usingRules.stream()
+                .filter(x->x.getKey().getName().equals(name))
+                .findAny()
+                .get().getKey();
     }
 }

@@ -12,6 +12,7 @@ import ru.gasheva.models.RuleModel;
 import ru.gasheva.models.VariableModel;
 import ru.gasheva.models.classes.Rule;
 import ru.gasheva.models.jsonhandler.Message;
+import ru.gasheva.models.oldjsonhandler.OldMessage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -103,6 +104,23 @@ public class MainControl{
 
         ArrayList<Domain> d = message.getDomains();
         if (d!=null) domainModel.setDomains(d);
+
+        currentControl.redraw();
+    }
+
+    public void loadData2() {
+        String path = view.getFileToOpen();
+        if (path==null) return;
+        OldMessage message;
+        JsonHandler<OldMessage> jsonHandler = new JsonHandler<OldMessage>(OldMessage.class);
+
+        message = jsonHandler.readFromFile(path);
+        if (message==null) {view.showMessage("Не удалось загрузить данные");return;}
+        ruleModel.setRules(new ArrayList<>(Arrays.asList(message.getRules())));
+        Variable[] v = message.getVariables();
+        if (v!=null) variableModel.setVariables(new ArrayList<>(Arrays.asList(v)));
+        Domain[] d = message.getDomains();
+        if (d!=null) domainModel.setDomains(new ArrayList<>(Arrays.asList(d)));
 
         currentControl.redraw();
     }
