@@ -54,7 +54,7 @@ public class MainControl{
 
         autoSave = new AutoSave(ruleModel, variableModel, domainModel);
         Timer timer = new Timer();
-        timer.schedule(autoSave, 0, 1000*60*5);     //каждые 5 минут
+        timer.schedule(autoSave, 0, 1000*60*1);     //каждые 5 минут
     }
 
     public void add() {

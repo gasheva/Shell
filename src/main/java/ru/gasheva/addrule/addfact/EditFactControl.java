@@ -6,9 +6,9 @@ import ru.gasheva.models.classes.Fact;
 
 public class EditFactControl extends ManagerFactAbstractClass{
     Fact oldFact;
-    public EditFactControl(DomainModel domainModel, VariableModel variableModel, Fact oldFact) {
-        super(domainModel, variableModel);
+    public EditFactControl(DomainModel domainModel, VariableModel variableModel, Fact oldFact, String type) {
+        super(domainModel, variableModel, type);
         this.oldFact = oldFact;
-        view.createView(oldFact);
+        view.createView(oldFact, type);
     }
 }

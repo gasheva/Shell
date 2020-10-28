@@ -4,10 +4,7 @@ import ru.gasheva.addvariable.AddVariableControl;
 import ru.gasheva.addvariable.ManagerVariableAbstractClass;
 import ru.gasheva.models.DomainModel;
 import ru.gasheva.models.VariableModel;
-import ru.gasheva.models.classes.Domain;
-import ru.gasheva.models.classes.DomainValue;
-import ru.gasheva.models.classes.Fact;
-import ru.gasheva.models.classes.Variable;
+import ru.gasheva.models.classes.*;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -17,10 +14,12 @@ public abstract class ManagerFactAbstractClass {
     VariableModel variableModel;
     CreateFactForm view;
     Fact newFact;
+    private String factType;
 
-    public ManagerFactAbstractClass(DomainModel domainModel, VariableModel variableModel) {
+    public ManagerFactAbstractClass(DomainModel domainModel, VariableModel variableModel, String type) {
         this.domainModel = domainModel;
         this.variableModel = variableModel;
+        factType = type;
 
         view = new CreateFactForm(domainModel, variableModel, this);
 
@@ -58,7 +57,12 @@ public abstract class ManagerFactAbstractClass {
         Variable newVariable = addVariable.getResult();
         if (newVariable==null) return;
         variableModel.add(newVariable);
-        view.cbVariableAddItem(newVariable.getName());
+        if (factType.equals("concl")) {
+            if (newVariable.getVarType()==VarType.RESOLVE)
+                view.cbVariableAddItem(newVariable.getName());
+        }
+        else
+            view.cbVariableAddItem(newVariable.getName());
     }
 
     public void variableSelectionChanged() {

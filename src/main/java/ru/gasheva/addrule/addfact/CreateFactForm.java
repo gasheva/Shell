@@ -5,6 +5,7 @@ import ru.gasheva.models.DomainModel;
 import ru.gasheva.models.VariableModel;
 import ru.gasheva.models.classes.DomainValue;
 import ru.gasheva.models.classes.Fact;
+import ru.gasheva.models.classes.VarType;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -27,18 +28,23 @@ public class CreateFactForm extends JDialog {
         this.control = control;
     }
 
-    public void createView(){
+    public void createView(String type){
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
         createControls();
 
         for(int i=0; i<variableModel.size(); i++){
-            cbSelectVariable.addItem(variableModel.getVariable(i).getName());
+            if (type.equals("concl")){
+                if (variableModel.getVariable(i).getVarType()== VarType.RESOLVE)
+                    cbSelectVariable.addItem(variableModel.getVariable(i).getName());
+            }
+            else
+                cbSelectVariable.addItem(variableModel.getVariable(i).getName());
         }
         if (cbSelectVariable.getItemCount()>0) {
             cbSelectVariable.setSelectedIndex(0);
-            control.variableSelectionChanged(); //TODO по идее контрол должен сам заполнить это вот все, но это не точно
+            control.variableSelectionChanged();
         }
 
 
@@ -46,17 +52,22 @@ public class CreateFactForm extends JDialog {
         setLocationRelativeTo(null);
         setVisible(true);
     }
-    public void createView(Fact oldFact){
+    public void createView(Fact oldFact, String type){
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
         createControls();
 
         for(int i=0; i<variableModel.size(); i++){
-            cbSelectVariable.addItem(variableModel.getVariable(i).getName());
+            if (type.equals("concl")){
+                if (variableModel.getVariable(i).getVarType()== VarType.RESOLVE)
+                    cbSelectVariable.addItem(variableModel.getVariable(i).getName());
+            }
+            else
+                cbSelectVariable.addItem(variableModel.getVariable(i).getName());
         }
         cbSelectVariable.setSelectedItem(oldFact.getVariable().getName());
-        control.variableSelectionChanged(); //TODO по идее контрол должен сам заполнить это вот все, но это не точно
+        control.variableSelectionChanged();
 
         pack();
         setLocationRelativeTo(null);

@@ -55,7 +55,7 @@ public abstract class ManagerRuleAbstractClass {
             view.showMessage("В заключении уже добавлен факт");
             return;
         }
-        ManagerFactAbstractClass addFact = new AddFactControl(domainModel, variableModel);
+        ManagerFactAbstractClass addFact = new AddFactControl(domainModel, variableModel, "concl");
         Fact newFact = addFact.getResult();
         if (newFact==null) return;
         newFact.setId(newRule.conclusionsSize());
@@ -65,7 +65,7 @@ public abstract class ManagerRuleAbstractClass {
         view.addConclusion(newFact.toString());
     }
     public void addCondition(){
-        ManagerFactAbstractClass addFact = new AddFactControl(domainModel, variableModel);
+        ManagerFactAbstractClass addFact = new AddFactControl(domainModel, variableModel,"cond");
         Fact newFact = addFact.getResult();
         if (newFact==null) return;
         newFact.setId(newRule.conditionsSize());
@@ -93,7 +93,7 @@ public abstract class ManagerRuleAbstractClass {
         }
         int id = view.getConditionRowIndex();
         Fact oldFact = newRule.getCondition(id);
-        ManagerFactAbstractClass editFact = new EditFactControl(domainModel, variableModel, oldFact);
+        ManagerFactAbstractClass editFact = new EditFactControl(domainModel, variableModel, oldFact, "cond");
         Fact newFact = editFact.getResult();
         newFact.setId(id);
         //обновляем правило
@@ -111,7 +111,7 @@ public abstract class ManagerRuleAbstractClass {
         }
         int id = view.getConclusionRowIndex();
         Fact oldFact = newRule.getConclusion(id);
-        ManagerFactAbstractClass editFact = new EditFactControl(domainModel, variableModel, oldFact);
+        ManagerFactAbstractClass editFact = new EditFactControl(domainModel, variableModel, oldFact, "concl");
         Fact newFact = editFact.getResult();
         if(newFact==null) return;
         newFact.setId(id);
