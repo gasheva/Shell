@@ -84,6 +84,10 @@ public class MainForm extends JFrame implements IRowReorderable{
         initTable();
         tfTop.setEditable(false);
         tfBottom.setEditable(false);
+        tfExplanation.setEditable(false);
+
+        tfExplanation.setLineWrap(true);
+        tfExplanation.setWrapStyleWord(true);
         //spRules.setLocation(new Point(1, getHeight() - getHeight()/8)); //TODO
         spRules.setDividerLocation(0.7);
 

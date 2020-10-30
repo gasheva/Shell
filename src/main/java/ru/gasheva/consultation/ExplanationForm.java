@@ -74,6 +74,9 @@ public class ExplanationForm extends JDialog {
         fillTree();
         fillTable();
         tblScroll.getViewport().setBackground(Color.white);
+        tfExplanation.setEditable(false);
+        tfExplanation.setLineWrap(true);
+        tfExplanation.setWrapStyleWord(true);
 
         treeRules.addTreeSelectionListener(new TreeSelectionListener() {
             @Override

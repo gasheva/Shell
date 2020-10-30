@@ -82,6 +82,8 @@ public class CreateVarForm extends JDialog {
         rbAsk.setSelected(true);
         rbResolveAsk.setSelected(false);
         rbResolve.setSelected(false);
+        tfQuestion.setLineWrap(true);
+        tfQuestion.setWrapStyleWord(true);
 
 
         buttonOK.addActionListener(e -> onOK());
