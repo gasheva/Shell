@@ -42,7 +42,7 @@ public abstract class ManagerVariableAbstractClass {
         //проверка на уникальность имени
         if(!isVariableValid(newVariable))
         {
-            view.showMessage("Переменная с таким именем уже существует!");
+            view.showMessage("Переменная с именем \""+ newVariable.getName() +"\" уже существует!");
             newVariable = null;
             return;
         }

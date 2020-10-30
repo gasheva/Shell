@@ -49,6 +49,7 @@ public class ExplanationForm extends JDialog {
     private WrapTableCellRenderer tableCellRenderer = new WrapTableCellRenderer();
     private Set<Integer> coloredRows = new HashSet();
     private int coloredRowTarget;
+    private boolean isCollapsed = true;
 
     public ExplanationForm(ConsultationControl control, RuleModel ruleModel, VariableModel variableModel, DomainModel domainModel) {
         this.ruleModel = ruleModel;
@@ -106,8 +107,18 @@ public class ExplanationForm extends JDialog {
 
         lblExpandAll.addMouseListener(new MouseListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                expandNodes();
+            public void mouseClicked(MouseEvent e)
+            {
+                if (isCollapsed) {
+                    isCollapsed=false;
+                    lblExpandAll.setText("<html><u>(свернуть все)</u></html>");
+                    expandNodes();
+                }
+                else{
+                    isCollapsed=true;
+                    lblExpandAll.setText("<html><u>(раскрыть все)</u></html>");
+                    collapseNodes();
+                }
             }
 
             @Override

@@ -28,7 +28,7 @@ abstract public class ManagerDomainAbstractClass {
         //проверка на уникальность имени
         if(!isDomainValid(newDomain))
         {
-            view.showMessage("Домен с таким именем уже существует!");
+            view.showMessage("Домен с именем \""+ newDomain.getName() +"\"уже существует!");
             newDomain = null;
             return;
         }

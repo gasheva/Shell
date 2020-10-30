@@ -42,7 +42,7 @@ public abstract class ManagerRuleAbstractClass {
         //проверка на уникальность имени
         if(!isRuleValid(newRule))
         {
-            view.showMessage("Переменная с таким именем уже существует!");
+            view.showMessage("Правило с именем \""+ newRule.getName() +"\" уже существует!");
             return;
         }
         view.Dispose();
