@@ -117,4 +117,4 @@ fabric.properties
 
 # End of https://www.gitignore.io/api/java,jetbrains
 
-!LGoodDatePicker-10.4.1.jar
+!Tests/*
