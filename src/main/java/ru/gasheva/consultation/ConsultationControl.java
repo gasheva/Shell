@@ -45,7 +45,7 @@ public class ConsultationControl {
         workingMemory = new WorkingMemory();
         mlv = new MLV();
         String val = mlv.defineGlobalTarget(target, ruleModel, variableModel, domainModel, this);
-        consultationView.showMessage(varName+" равна "+val);
+        consultationView.showMessage("<html><body><p style='width: 200px;'>"+varName+" равна "+val+"</p></body></html>");
     }
 
     public void explainAnswer() {

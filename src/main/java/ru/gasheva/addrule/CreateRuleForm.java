@@ -47,7 +47,6 @@ public class CreateRuleForm extends JDialog implements IRowReorderable {
         getRootPane().setDefaultButton(buttonOK);
         createControls();
         tfName.setText("Правило "+ruleModel.size());
-        tfExplanation.setEditable(false);
         tfExplanation.setLineWrap(true);
         tfExplanation.setWrapStyleWord(true);
 

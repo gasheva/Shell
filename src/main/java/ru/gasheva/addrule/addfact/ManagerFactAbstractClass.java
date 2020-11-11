@@ -58,7 +58,7 @@ public abstract class ManagerFactAbstractClass {
         if (newVariable==null) return;
         variableModel.add(newVariable);
         if (factType.equals("concl")) {
-            if (newVariable.getVarType()==VarType.RESOLVE)
+            if (newVariable.getVarType()==VarType.RESOLVE||newVariable.getVarType()==VarType.ASK_RESOLVE)
                 view.cbVariableAddItem(newVariable.getName());
         }
         else

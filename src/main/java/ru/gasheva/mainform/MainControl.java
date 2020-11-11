@@ -16,7 +16,6 @@ import ru.gasheva.models.oldjsonhandler.OldMessage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Timer;
 
 public class MainControl{
@@ -49,7 +48,7 @@ public class MainControl{
 
         currentControl = ruleControl;
 
-        if (view.doesLoadAutosave())
+        if (view.askUser("Загрузить автосохранение?"))
             loadData(BACKUP_PATH);
 
         autoSave = new AutoSave(ruleModel, variableModel, domainModel);

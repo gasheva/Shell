@@ -36,7 +36,7 @@ public class CreateFactForm extends JDialog {
 
         for(int i=0; i<variableModel.size(); i++){
             if (type.equals("concl")){
-                if (variableModel.getVariable(i).getVarType()== VarType.RESOLVE)
+                if (variableModel.getVariable(i).getVarType()== VarType.RESOLVE ||variableModel.getVariable(i).getVarType()==VarType.ASK_RESOLVE)
                     cbSelectVariable.addItem(variableModel.getVariable(i).getName());
             }
             else

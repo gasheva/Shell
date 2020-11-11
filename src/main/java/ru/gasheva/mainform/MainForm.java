@@ -327,12 +327,12 @@ public class MainForm extends JFrame implements IRowReorderable{
         explanationPanel.setVisible(b);
     }
 
-    public boolean doesLoadAutosave(){
+    public boolean askUser(String msg){
         JComponent[] inputs = new JComponent[]{
-                new JLabel("Загрузить автосохранение?"),
+                new JLabel(msg),
         };
         String answer=null;
-        int result = JOptionPane.showConfirmDialog(this, inputs, "", JOptionPane.PLAIN_MESSAGE);
+        int result = JOptionPane.showConfirmDialog(this, inputs, "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
         if (result==JOptionPane.OK_OPTION){
             return true;
         }

@@ -87,6 +87,19 @@ public class VariableControl implements ControlInterface {
             view.showMessage("Выберите переменную!");
             return;
         }
+
+        String variableName = view.getSelectedRowFirstColumnValue();
+        Variable selectedVariable = variableModel.getVariable(variableName);
+        if (selectedVariable.isUsed()) {
+            String msg = "Переменная используется в правилах: ";
+            Set s = new HashSet();
+            for (int i = 0; i < selectedVariable.subscribersNumber(); i++) {
+                if (s.add(selectedVariable.getSubscriber(i).getName()))
+                    msg += selectedVariable.getSubscriber(i).getName() + (i < selectedVariable.subscribersNumber() - 1 ? ", " : "");
+            }
+            if (!view.askUser(msg + ". Продолжить?")) return;
+        }
+
         String id = view.getSelectedRowFirstColumnValue();
         //удаляем из модели
         variableModel.remove(id);

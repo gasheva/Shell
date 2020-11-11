@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>ru.gasheva</OriginalElement>
+  <nodes>
+    <node x="281.9678726035869" y="728.0">ru.gasheva.models.MLV</node>
+    <node x="48.981240981240944" y="602.0">ru.gasheva.models.WorkingMemory</node>
+    <node x="50.64828901257471" y="0.0">ru.gasheva.models.classes.Fact</node>
+    <node x="60.367872603586875" y="158.0">ru.gasheva.models.classes.Rule</node>
+    <node x="198.02020202020202" y="390.0">ru.gasheva.models.classes.Variable</node>
+    <node x="598.3678726035869" y="180.0">ru.gasheva.models.classes.VarType</node>
+    <node x="282.3678726035869" y="180.0">ru.gasheva.models.classes.Domain</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic Group" zoom="0.6413276231263383" x="375.5" y="457.00000000000006" />
+  <SelectedNodes>
+    <node>ru.gasheva.models.MLV</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

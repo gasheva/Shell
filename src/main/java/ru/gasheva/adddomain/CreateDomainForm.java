@@ -27,6 +27,7 @@ public class CreateDomainForm extends JDialog implements IRowReorderable {
     private ManagerDomainAbstractClass control;
     private TableModel myModel;
     private DomainModel domainModel;
+    private WrapTableCellRenderer tableCellRenderer = new WrapTableCellRenderer();
     
     public CreateDomainForm(ManagerDomainAbstractClass control, DomainModel domainModel) {
         this.domainModel = domainModel;
@@ -44,7 +45,7 @@ public class CreateDomainForm extends JDialog implements IRowReorderable {
         for (int i=0; i<domain.domainValuesSize(); i++){
             myModel.addRow(new Object[]{domain.getDomainValue(i).getValue()});
         }
-        tblDomainValues.setModel(myModel);
+        setModel();
 
         pack();
         setLocationRelativeTo(null);
@@ -124,8 +125,7 @@ public class CreateDomainForm extends JDialog implements IRowReorderable {
 
         //model
         myModel = new TableModel(new String[]{"Значение домена"});
-        //myModel.addRow(new Object[]{"Domain value 1"});
-        tblDomainValues.setModel(myModel);
+        setModel();
 
         //fonts
         tblDomainValues.getTableHeader().setFont(new Font("Verdana", Font.BOLD, 12));
@@ -147,7 +147,7 @@ public class CreateDomainForm extends JDialog implements IRowReorderable {
     }
     public void editTblDomainValueSelectedRow(){
         myModel.setValueAt(tfDomainValue.getText().trim(), tblDomainValues.getSelectedRow(), 0);
-        tblDomainValues.setModel(myModel);
+        setModel();
     }
     public boolean isTfDomainValueEmpty(){return tfDomainValue.getText().trim().isEmpty(); }
     public boolean isTfDomainNameEmpty(){
@@ -162,7 +162,7 @@ public class CreateDomainForm extends JDialog implements IRowReorderable {
     }
     public void deleteTblDomainValueSelectedRow(){
         myModel.removeRow(tblDomainValues.getSelectedRow());
-        tblDomainValues.setModel(myModel);
+        setModel();
     }
 
     private void onOK() {
@@ -178,6 +178,11 @@ public class CreateDomainForm extends JDialog implements IRowReorderable {
 
     public void showMessage(String msg) {JOptionPane.showMessageDialog(this, msg); }
 
+    private void setModel(){
+        tblDomainValues.setModel(myModel);
+        tblDomainValues.getColumnModel().getColumn(0).setCellRenderer(tableCellRenderer);
+
+    }
     //создаем новый домен
     public Domain getNewDomain() {
         Domain newDomain = new Domain(tfDomainName.getText());
@@ -204,5 +209,8 @@ public class CreateDomainForm extends JDialog implements IRowReorderable {
     @Override
     public void rowReorder(int from, int to, JTable tblDomainValues) {
 
+    }
+
+    private void createUIComponents() {
     }
 }

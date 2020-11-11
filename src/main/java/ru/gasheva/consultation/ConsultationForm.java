@@ -33,6 +33,7 @@ public class ConsultationForm extends JDialog{
     private RuleModel ruleModel;
     private VariableModel variableModel;
     private DomainModel domainModel;
+    private final String UNDEF = "undefined";
 
     public ConsultationForm(ConsultationControl control, RuleModel ruleModel, VariableModel variableModel, DomainModel domainModel) {
         this.ruleModel = ruleModel;
@@ -93,10 +94,13 @@ public class ConsultationForm extends JDialog{
     }
     public String askVarValue(Variable var){
         Domain d = var.getDomain();
-        String[] values = new String[d.domainValuesSize()];
+        String[] values = new String[var.getVarType()!=VarType.ASK_RESOLVE?d.domainValuesSize():d.domainValuesSize()+1];
         for(int i=0; i<d.domainValuesSize(); i++){
             values[i]=d.getDomainValue(i).getValue();
         }
+        if(var.getVarType()==VarType.ASK_RESOLVE)
+            values[values.length-1] = UNDEF;
+
         return createDialog(var.getQuestion(), values);
     }
     public String createDialog(String labelText, String[] cbItems){
